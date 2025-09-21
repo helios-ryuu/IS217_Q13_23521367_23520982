@@ -1,0 +1,178 @@
+📄 BÁO CÁO QUÁ TRÌNH TIỀN XỪLÝ DỮ LIỆU
+================================================================================
+Ngày tạo: 2025-09-21 21:04:35
+File đầu vào: ../US_Accidents_March23.csv
+File đầu ra: ../US_Accidents_March23-preprocessed.csv
+
+🔍 THÔNG TIN TỔNG QUAN
+--------------------------------------------------
+Dataset gốc:
+  - Số dòng: 7,728,394
+  - Số cột: 46
+  - Kích thước file: 2.85 GB
+  - Bộ nhớ: 12.5 MB
+
+Dataset đã xử lý:
+  - Số dòng: 5,495,185
+  - Số cột: 47
+  - Kích thước file: 1.06 GB
+  - Bộ nhớ: 10.2 MB
+
+📊 THAY ĐỔI SAU TIỀN XỪLÝ
+--------------------------------------------------
+Số dòng: -2,233,209 (-28.9%)
+Số cột: +1 cột
+Kích thước file: -1829.5 MB (-62.7%)
+Bộ nhớ: -2.3 MB (-18.2%)
+
+🔄 CHI TIẾT QUÁ TRÌNH XỪ LÝ
+--------------------------------------------------
+Tổng số khối đã xử lý: 3
+Cột đã xóa: 6
+Đặc trưng thời gian thêm: 7
+
+Cột đã xóa (46):
+  - Airport_Code
+  - Amenity
+  - Astronomical_Twilight
+  - Bump
+  - City
+  - Civil_Twilight
+  - Country
+  - County
+  - Crossing
+  - Description
+  - Distance(mi)
+  - End_Lat
+  - End_Lng
+  - End_Time
+  - Give_Way
+  - Humidity(%)
+  - ID
+  - Junction
+  - Nautical_Twilight
+  - No_Exit
+  - Precipitation(in)
+  - Pressure(in)
+  - Railway
+  - Roundabout
+  - Severity
+  - Source
+  - Start_Lat
+  - Start_Lng
+  - Start_Time
+  - State
+  - Station
+  - Stop
+  - Street
+  - Sunrise_Sunset
+  - Temperature(F)
+  - Timezone
+  - Traffic_Calming
+  - Traffic_Signal
+  - Turning_Loop
+  - Visibility(mi)
+  - Weather_Condition
+  - Weather_Timestamp
+  - Wind_Chill(F)
+  - Wind_Direction
+  - Wind_Speed(mph)
+  - Zipcode
+
+Cột đã thêm (47):
+  + AIRPORT_CODE
+  + AMENITY
+  + ASTRONOMICAL_TWILIGHT
+  + BUMP
+  + CITY
+  + CIVIL_TWILIGHT
+  + COUNTRY
+  + COUNTY
+  + CROSSING
+  + DAY
+  + DISTANCE
+  + GIVE_WAY
+  + HOUR
+  + HUMIDITY
+  + IS_WEEKEND
+  + JUNCTION
+  + LATITUDE
+  + LONGITUDE
+  + MINUTE
+  + MONTH
+  + NAUTICAL_TWILIGHT
+  + NO_EXIT
+  + PRECIPITATION
+  + PRESSURE
+  + QUARTER
+  + RAILWAY
+  + ROUNDABOUT
+  + SECOND
+  + SEVERITY
+  + SOURCE
+  + STATE
+  + STATION
+  + STOP
+  + STREET
+  + SUNRISE_SUNSET
+  + TEMPERATURE
+  + TIMEZONE
+  + TRAFFIC_CALMING
+  + TRAFFIC_SIGNAL
+  + TURNING_LOOP
+  + VISIBILITY
+  + WEATHER_CONDITION
+  + WIND_CHILL
+  + WIND_DIRECTION
+  + WIND_SPEED
+  + YEAR
+  + ZIPCODE
+
+🏷️ SO SÁNH KIỂU DỮ LIỆU
+--------------------------------------------------
+Dataset gốc:
+  object         :  20 cột
+  bool           :  13 cột
+  float64        :  12 cột
+  int64          :   1 cột
+
+Dataset đã xử lý:
+  int64          :  22 cột
+  object         :  15 cột
+  float64        :  10 cột
+
+🔍 SO SÁNH CHẤT LƯỢNG DỮ LIỆU
+--------------------------------------------------
+Giá trị thiếu:
+  Gốc: 39,707 (8.63%)
+  Đã xử lý: 2,540 (0.54%)
+
+Bản sao (trong mẫu):
+  Gốc: 0
+  Đã xử lý: 0
+
+🔄 CHI TIẾT CÁC PHA TIỀN XỪLÝ
+--------------------------------------------------
+Pha 1: Xóa cột không cần thiết
+   Loại bỏ các cột ID, Description, End_Time, v.v.
+
+Pha 2: Lọc dữ liệu theo ngày
+   Chỉ giữ lại dữ liệu từ 2018 trở lên
+
+Pha 3: Tạo đặc trưng thời gian
+   Thêm các cột YEAR, MONTH, DAY, HOUR, v.v.
+
+Pha 4: Chuyển đổi kiểu dữ liệu SQL
+   Tối ưu hóa kiểu dữ liệu cho SQL Server
+
+Pha 5: Chuẩn hóa tên cột
+   Chuyển tên cột thành chữ hoa và chuẩn hóa
+
+Pha 6: Xác thực và làm sạch
+   Loại bỏ bản sao và dữ liệu không hợp lệ
+
+🎆 KẾT QUẢ
+--------------------------------------------------
+✅ Tiền xử lý hoàn thành thành công!
+Dataset đã được tối ưu hóa cho SQL Server
+Sẵn sàng cho việc import vào cơ sở dữ liệu

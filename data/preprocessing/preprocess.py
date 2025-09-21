@@ -19,6 +19,500 @@ warnings.filterwarnings('ignore', category=FutureWarning)
 pd.options.mode.chained_assignment = None
 
 # ==========================================
+# Preprocessing Reporter
+# ==========================================
+
+class PreprocessingReporter:
+    """Tạo báo cáo quá trình tiền xử lý"""
+    
+    def __init__(self, input_file: str, output_file: str):
+        self.input_file = input_file
+        self.output_file = output_file
+        # Tạo tên file report
+        dataset_name = os.path.splitext(os.path.basename(input_file))[0]
+        self.report_file = os.path.join(os.path.dirname(output_file), f"{dataset_name}-preprocess_report.txt")
+        self.report_content = []
+        
+    def add_to_report(self, text: str):
+        """Thêm nội dung vào báo cáo"""
+        self.report_content.append(text)
+        
+    def save_report(self) -> bool:
+        """Lưu báo cáo ra file"""
+        try:
+            with open(self.report_file, 'w', encoding='utf-8') as f:
+                f.write("\n".join(self.report_content))
+            print(f"\n📄 Báo cáo tiền xử lý đã được lưu tại: {self.report_file}")
+            return True
+        except Exception as e:
+            print(f"❌ Lỗi khi lưu báo cáo: {str(e)}")
+            return False
+    
+    def generate_header(self):
+        """Tạo header cho báo cáo"""
+        self.add_to_report("📄 BÁO CÁO QUÁ TRÌNH TIỀN XỬ LÝ DỮ LIỆU")
+        self.add_to_report("="*80)
+        self.add_to_report(f"Ngày tạo: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        self.add_to_report(f"File đầu vào: {self.input_file}")
+        self.add_to_report(f"File đầu ra: {self.output_file}")
+        self.add_to_report("")
+    
+    def analyze_original_dataset(self) -> Optional[Dict]:
+        """Phân tích dataset gốc"""
+        if not os.path.exists(self.input_file):
+            return None
+        
+        try:
+            # Đọc mẫu dữ liệu để phân tích
+            sample_df = pd.read_csv(self.input_file, nrows=10000, low_memory=False)
+            total_rows = sum(1 for _ in open(self.input_file, encoding='utf-8')) - 1
+            
+            file_info = get_file_info(self.input_file)
+            
+            analysis = {
+                'total_rows': total_rows,
+                'total_columns': len(sample_df.columns),
+                'file_size': file_info,
+                'column_names': list(sample_df.columns),
+                'data_types': sample_df.dtypes.value_counts().to_dict(),
+                'missing_values': sample_df.isnull().sum().sum(),
+                'missing_percentage': (sample_df.isnull().sum().sum() / (len(sample_df) * len(sample_df.columns))) * 100,
+                'duplicates': sample_df.duplicated().sum(),
+                'memory_usage': sample_df.memory_usage(deep=True).sum() / (1024 * 1024)  # MB
+            }
+            
+            return analysis
+            
+        except Exception as e:
+            self.add_to_report(f"❌ Lỗi phân tích dataset gốc: {e}")
+            return None
+    
+    def analyze_processed_dataset(self) -> Optional[Dict]:
+        """Phân tích dataset đã xử lý"""
+        if not os.path.exists(self.output_file):
+            return None
+        
+        try:
+            # Đọc mẫu dữ liệu để phân tích
+            sample_df = pd.read_csv(self.output_file, nrows=10000, low_memory=False)
+            total_rows = sum(1 for _ in open(self.output_file, encoding='utf-8')) - 1
+            
+            file_info = get_file_info(self.output_file)
+            
+            analysis = {
+                'total_rows': total_rows,
+                'total_columns': len(sample_df.columns),
+                'file_size': file_info,
+                'column_names': list(sample_df.columns),
+                'data_types': sample_df.dtypes.value_counts().to_dict(),
+                'missing_values': sample_df.isnull().sum().sum(),
+                'missing_percentage': (sample_df.isnull().sum().sum() / (len(sample_df) * len(sample_df.columns))) * 100,
+                'duplicates': sample_df.duplicated().sum(),
+                'memory_usage': sample_df.memory_usage(deep=True).sum() / (1024 * 1024)  # MB
+            }
+            
+            return analysis
+            
+        except Exception as e:
+            self.add_to_report(f"❌ Lỗi phân tích dataset đã xử lý: {e}")
+            return None
+    
+    def generate_comparison_report(self, original_analysis: Dict, processed_analysis: Dict, processing_stats: Dict):
+        """Tạo báo cáo so sánh chi tiết"""
+        
+        self.add_to_report("🔍 THÔNG TIN TỔNG QUAN")
+        self.add_to_report("-" * 50)
+        
+        # Thông tin cơ bản
+        self.add_to_report(f"Dataset gốc:")
+        self.add_to_report(f"  - Số dòng: {original_analysis['total_rows']:,}")
+        self.add_to_report(f"  - Số cột: {original_analysis['total_columns']}")
+        self.add_to_report(f"  - Kích thước file: {original_analysis['file_size']['formatted']}")
+        self.add_to_report(f"  - Bộ nhớ: {original_analysis['memory_usage']:.1f} MB")
+        
+        self.add_to_report(f"\nDataset đã xử lý:")
+        self.add_to_report(f"  - Số dòng: {processed_analysis['total_rows']:,}")
+        self.add_to_report(f"  - Số cột: {processed_analysis['total_columns']}")
+        self.add_to_report(f"  - Kích thước file: {processed_analysis['file_size']['formatted']}")
+        self.add_to_report(f"  - Bộ nhớ: {processed_analysis['memory_usage']:.1f} MB")
+        
+        # Thống kê thay đổi
+        self.add_to_report(f"\n📊 THAY ĐỔI SAU TIỀN XỬ LÝ")
+        self.add_to_report("-" * 50)
+        
+        # Thay đổi số dòng
+        row_change = processed_analysis['total_rows'] - original_analysis['total_rows']
+        row_change_pct = (row_change / original_analysis['total_rows']) * 100
+        self.add_to_report(f"Số dòng: {row_change:+,} ({row_change_pct:+.1f}%)")
+        
+        # Thay đổi số cột
+        col_change = processed_analysis['total_columns'] - original_analysis['total_columns']
+        self.add_to_report(f"Số cột: {col_change:+} cột")
+        
+        # Thay đổi kích thước file
+        size_change_mb = processed_analysis['file_size']['size_mb'] - original_analysis['file_size']['size_mb']
+        size_change_pct = (size_change_mb / original_analysis['file_size']['size_mb']) * 100
+        self.add_to_report(f"Kích thước file: {size_change_mb:+.1f} MB ({size_change_pct:+.1f}%)")
+        
+        # Thay đổi bộ nhớ
+        memory_change = processed_analysis['memory_usage'] - original_analysis['memory_usage']
+        memory_change_pct = (memory_change / original_analysis['memory_usage']) * 100
+        self.add_to_report(f"Bộ nhớ: {memory_change:+.1f} MB ({memory_change_pct:+.1f}%)")
+        
+        # Chi tiết các pha xử lý
+        self.add_to_report(f"\n🔄 CHI TIẾT QUÁ TRÌNH XỬ LÝ")
+        self.add_to_report("-" * 50)
+        self.add_to_report(f"Tổng số khối đã xử lý: {processing_stats['chunks_processed']}")
+        self.add_to_report(f"Cột đã xóa: {processing_stats['columns_deleted']}")
+        self.add_to_report(f"Đặc trưng thời gian thêm: {processing_stats['time_features_added']}")
+        
+        # Cột đã xóa
+        original_cols = set(original_analysis['column_names'])
+        processed_cols = set(processed_analysis['column_names'])
+        deleted_cols = original_cols - processed_cols
+        added_cols = processed_cols - original_cols
+        
+        if deleted_cols:
+            self.add_to_report(f"\nCột đã xóa ({len(deleted_cols)}):")
+            for col in sorted(deleted_cols):
+                self.add_to_report(f"  - {col}")
+        
+        if added_cols:
+            self.add_to_report(f"\nCột đã thêm ({len(added_cols)}):")
+            for col in sorted(added_cols):
+                self.add_to_report(f"  + {col}")
+    
+    def generate_data_types_comparison(self, original_analysis: Dict, processed_analysis: Dict):
+        """So sánh kiểu dữ liệu"""
+        self.add_to_report(f"\n🏷️ SO SÁNH KIỂU DỮ LIỆU")
+        self.add_to_report("-" * 50)
+        
+        # Kiểu dữ liệu gốc
+        self.add_to_report("Dataset gốc:")
+        for dtype, count in original_analysis['data_types'].items():
+            self.add_to_report(f"  {str(dtype):15s}: {count:3d} cột")
+        
+        # Kiểu dữ liệu sau xử lý
+        self.add_to_report("\nDataset đã xử lý:")
+        for dtype, count in processed_analysis['data_types'].items():
+            self.add_to_report(f"  {str(dtype):15s}: {count:3d} cột")
+    
+    def generate_data_quality_comparison(self, original_analysis: Dict, processed_analysis: Dict):
+        """So sánh chất lượng dữ liệu"""
+        self.add_to_report(f"\n🔍 SO SÁNH CHẤT LƯỢNG DỮ LIỆU")
+        self.add_to_report("-" * 50)
+        
+        # Giá trị thiếu
+        self.add_to_report("Giá trị thiếu:")
+        self.add_to_report(f"  Gốc: {original_analysis['missing_values']:,} ({original_analysis['missing_percentage']:.2f}%)")
+        self.add_to_report(f"  Đã xử lý: {processed_analysis['missing_values']:,} ({processed_analysis['missing_percentage']:.2f}%)")
+        
+        # Bản sao
+        self.add_to_report(f"\nBản sao (trong mẫu):")
+        self.add_to_report(f"  Gốc: {original_analysis['duplicates']:,}")
+        self.add_to_report(f"  Đã xử lý: {processed_analysis['duplicates']:,}")
+    
+    def generate_processing_phases_detail(self):
+        """Chi tiết các pha xử lý"""
+        self.add_to_report(f"\n🔄 CHI TIẾT CÁC PHA TIỀN XỬ LÝ")
+        self.add_to_report("-" * 50)
+        
+        phases = [
+            ("Pha 1", "Xóa cột không cần thiết", "Loại bỏ các cột ID, Description, End_Time, v.v."),
+            ("Pha 2", "Lọc dữ liệu theo ngày", "Chỉ giữ lại dữ liệu từ 2018 trở lên"),
+            ("Pha 3", "Tạo đặc trưng thời gian", "Thêm các cột YEAR, MONTH, DAY, HOUR, v.v."),
+            ("Pha 4", "Chuyển đổi kiểu dữ liệu SQL", "Tối ưu hóa kiểu dữ liệu cho SQL Server"),
+            ("Pha 5", "Chuẩn hóa tên cột", "Chuyển tên cột thành chữ hoa và chuẩn hóa"),
+            ("Pha 6", "Xác thực và làm sạch", "Loại bỏ bản sao và dữ liệu không hợp lệ")
+        ]
+        
+        for phase_num, phase_name, description in phases:
+            self.add_to_report(f"{phase_num}: {phase_name}")
+            self.add_to_report(f"   {description}")
+            self.add_to_report("")
+    
+    def generate_full_report(self, processing_stats: Dict) -> bool:
+        """Tạo báo cáo đầy đủ"""
+        # Header
+        self.generate_header()
+        
+        # Phân tích dataset gốc và đã xử lý
+        original_analysis = self.analyze_original_dataset()
+        processed_analysis = self.analyze_processed_dataset()
+        
+        if not original_analysis or not processed_analysis:
+            self.add_to_report("❌ Không thể phân tích được các dataset")
+            return self.save_report()
+        
+        # So sánh chi tiết
+        self.generate_comparison_report(original_analysis, processed_analysis, processing_stats)
+        
+        # So sánh kiểu dữ liệu
+        self.generate_data_types_comparison(original_analysis, processed_analysis)
+        
+        # So sánh chất lượng
+        self.generate_data_quality_comparison(original_analysis, processed_analysis)
+        
+        # Chi tiết các pha xử lý
+        self.generate_processing_phases_detail()
+        
+        # Kết luận
+        self.add_to_report("🎆 KẾT QUẢ")
+        self.add_to_report("-" * 50)
+        self.add_to_report("✅ Tiền xử lý hoàn thành thành công!")
+        self.add_to_report(f"Dataset đã được tối ưu hóa cho SQL Server")
+        self.add_to_report(f"Sẵn sàng cho việc import vào cơ sở dữ liệu")
+        
+        return self.save_report()
+
+# ==========================================
+# Preprocessing Reporter
+# ==========================================
+
+class PreprocessingReporter:
+    """Tạo báo cáo quá trình tiền xử lý"""
+    
+    def __init__(self, input_file: str, output_file: str):
+        self.input_file = input_file
+        self.output_file = output_file
+        # Tạo tên file report
+        dataset_name = os.path.splitext(os.path.basename(input_file))[0]
+        self.report_file = os.path.join(os.path.dirname(output_file), f"{dataset_name}-preprocess_report.txt")
+        self.report_content = []
+        
+    def add_to_report(self, text: str):
+        """Thêm nội dung vào báo cáo"""
+        self.report_content.append(text)
+        
+    def save_report(self) -> bool:
+        """Lưu báo cáo ra file"""
+        try:
+            with open(self.report_file, 'w', encoding='utf-8') as f:
+                f.write("\n".join(self.report_content))
+            print(f"\n📄 Báo cáo tiền xử lý đã được lưu tại: {self.report_file}")
+            return True
+        except Exception as e:
+            print(f"❌ Lỗi khi lưu báo cáo: {str(e)}")
+            return False
+    
+    def generate_header(self):
+        """Tạo header cho báo cáo"""
+        self.add_to_report("📄 BÁO CÁO QUÁ TRÌNH TIỀN XỪLÝ DỮ LIỆU")
+        self.add_to_report("="*80)
+        self.add_to_report(f"Ngày tạo: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        self.add_to_report(f"File đầu vào: {self.input_file}")
+        self.add_to_report(f"File đầu ra: {self.output_file}")
+        self.add_to_report("")
+    
+    def analyze_original_dataset(self) -> Optional[Dict]:
+        """Phân tích dataset gốc"""
+        if not os.path.exists(self.input_file):
+            return None
+        
+        try:
+            # Đọc mẫu dữ liệu để phân tích
+            sample_df = pd.read_csv(self.input_file, nrows=10000, low_memory=False)
+            total_rows = sum(1 for _ in open(self.input_file, encoding='utf-8')) - 1
+            
+            file_info = get_file_info(self.input_file)
+            
+            analysis = {
+                'total_rows': total_rows,
+                'total_columns': len(sample_df.columns),
+                'file_size': file_info,
+                'column_names': list(sample_df.columns),
+                'data_types': sample_df.dtypes.value_counts().to_dict(),
+                'missing_values': sample_df.isnull().sum().sum(),
+                'missing_percentage': (sample_df.isnull().sum().sum() / (len(sample_df) * len(sample_df.columns))) * 100,
+                'duplicates': sample_df.duplicated().sum(),
+                'memory_usage': sample_df.memory_usage(deep=True).sum() / (1024 * 1024)  # MB
+            }
+            
+            return analysis
+            
+        except Exception as e:
+            self.add_to_report(f"❌ Lỗi phân tích dataset gốc: {e}")
+            return None
+    
+    def analyze_processed_dataset(self) -> Optional[Dict]:
+        """Phân tích dataset đã xử lý"""
+        if not os.path.exists(self.output_file):
+            return None
+        
+        try:
+            # Đọc mẫu dữ liệu để phân tích
+            sample_df = pd.read_csv(self.output_file, nrows=10000, low_memory=False)
+            total_rows = sum(1 for _ in open(self.output_file, encoding='utf-8')) - 1
+            
+            file_info = get_file_info(self.output_file)
+            
+            analysis = {
+                'total_rows': total_rows,
+                'total_columns': len(sample_df.columns),
+                'file_size': file_info,
+                'column_names': list(sample_df.columns),
+                'data_types': sample_df.dtypes.value_counts().to_dict(),
+                'missing_values': sample_df.isnull().sum().sum(),
+                'missing_percentage': (sample_df.isnull().sum().sum() / (len(sample_df) * len(sample_df.columns))) * 100,
+                'duplicates': sample_df.duplicated().sum(),
+                'memory_usage': sample_df.memory_usage(deep=True).sum() / (1024 * 1024)  # MB
+            }
+            
+            return analysis
+            
+        except Exception as e:
+            self.add_to_report(f"❌ Lỗi phân tích dataset đã xử lý: {e}")
+            return None
+    
+    def generate_comparison_report(self, original_analysis: Dict, processed_analysis: Dict, processing_stats: Dict):
+        """Tạo báo cáo so sánh chi tiết"""
+        
+        self.add_to_report("🔍 THÔNG TIN TỔNG QUAN")
+        self.add_to_report("-" * 50)
+        
+        # Thông tin cơ bản
+        self.add_to_report(f"Dataset gốc:")
+        self.add_to_report(f"  - Số dòng: {original_analysis['total_rows']:,}")
+        self.add_to_report(f"  - Số cột: {original_analysis['total_columns']}")
+        self.add_to_report(f"  - Kích thước file: {original_analysis['file_size']['formatted']}")
+        self.add_to_report(f"  - Bộ nhớ: {original_analysis['memory_usage']:.1f} MB")
+        
+        self.add_to_report(f"\nDataset đã xử lý:")
+        self.add_to_report(f"  - Số dòng: {processed_analysis['total_rows']:,}")
+        self.add_to_report(f"  - Số cột: {processed_analysis['total_columns']}")
+        self.add_to_report(f"  - Kích thước file: {processed_analysis['file_size']['formatted']}")
+        self.add_to_report(f"  - Bộ nhớ: {processed_analysis['memory_usage']:.1f} MB")
+        
+        # Thống kê thay đổi
+        self.add_to_report(f"\n📊 THAY ĐỔI SAU TIỀN XỪLÝ")
+        self.add_to_report("-" * 50)
+        
+        # Thay đổi số dòng
+        row_change = processed_analysis['total_rows'] - original_analysis['total_rows']
+        row_change_pct = (row_change / original_analysis['total_rows']) * 100
+        self.add_to_report(f"Số dòng: {row_change:+,} ({row_change_pct:+.1f}%)")
+        
+        # Thay đổi số cột
+        col_change = processed_analysis['total_columns'] - original_analysis['total_columns']
+        self.add_to_report(f"Số cột: {col_change:+} cột")
+        
+        # Thay đổi kích thước file
+        size_change_mb = processed_analysis['file_size']['size_mb'] - original_analysis['file_size']['size_mb']
+        size_change_pct = (size_change_mb / original_analysis['file_size']['size_mb']) * 100
+        self.add_to_report(f"Kích thước file: {size_change_mb:+.1f} MB ({size_change_pct:+.1f}%)")
+        
+        # Thay đổi bộ nhớ
+        memory_change = processed_analysis['memory_usage'] - original_analysis['memory_usage']
+        memory_change_pct = (memory_change / original_analysis['memory_usage']) * 100
+        self.add_to_report(f"Bộ nhớ: {memory_change:+.1f} MB ({memory_change_pct:+.1f}%)")
+        
+        # Chi tiết các pha xử lý
+        self.add_to_report(f"\n🔄 CHI TIẾT QUÁ TRÌNH XỪ LÝ")
+        self.add_to_report("-" * 50)
+        self.add_to_report(f"Tổng số khối đã xử lý: {processing_stats['chunks_processed']}")
+        self.add_to_report(f"Cột đã xóa: {processing_stats['columns_deleted']}")
+        self.add_to_report(f"Đặc trưng thời gian thêm: {processing_stats['time_features_added']}")
+        
+        # Cột đã xóa
+        original_cols = set(original_analysis['column_names'])
+        processed_cols = set(processed_analysis['column_names'])
+        deleted_cols = original_cols - processed_cols
+        added_cols = processed_cols - original_cols
+        
+        if deleted_cols:
+            self.add_to_report(f"\nCột đã xóa ({len(deleted_cols)}):") 
+            for col in sorted(deleted_cols):
+                self.add_to_report(f"  - {col}")
+        
+        if added_cols:
+            self.add_to_report(f"\nCột đã thêm ({len(added_cols)}):") 
+            for col in sorted(added_cols):
+                self.add_to_report(f"  + {col}")
+    
+    def generate_data_types_comparison(self, original_analysis: Dict, processed_analysis: Dict):
+        """So sánh kiểu dữ liệu"""
+        self.add_to_report(f"\n🏷️ SO SÁNH KIỂU DỮ LIỆU")
+        self.add_to_report("-" * 50)
+        
+        # Kiểu dữ liệu gốc
+        self.add_to_report("Dataset gốc:")
+        for dtype, count in original_analysis['data_types'].items():
+            self.add_to_report(f"  {str(dtype):15s}: {count:3d} cột")
+        
+        # Kiểu dữ liệu sau xử lý
+        self.add_to_report("\nDataset đã xử lý:")
+        for dtype, count in processed_analysis['data_types'].items():
+            self.add_to_report(f"  {str(dtype):15s}: {count:3d} cột")
+    
+    def generate_data_quality_comparison(self, original_analysis: Dict, processed_analysis: Dict):
+        """So sánh chất lượng dữ liệu"""
+        self.add_to_report(f"\n🔍 SO SÁNH CHẤT LƯỢNG DỮ LIỆU")
+        self.add_to_report("-" * 50)
+        
+        # Giá trị thiếu
+        self.add_to_report("Giá trị thiếu:")
+        self.add_to_report(f"  Gốc: {original_analysis['missing_values']:,} ({original_analysis['missing_percentage']:.2f}%)")
+        self.add_to_report(f"  Đã xử lý: {processed_analysis['missing_values']:,} ({processed_analysis['missing_percentage']:.2f}%)")
+        
+        # Bản sao
+        self.add_to_report(f"\nBản sao (trong mẫu):")
+        self.add_to_report(f"  Gốc: {original_analysis['duplicates']:,}")
+        self.add_to_report(f"  Đã xử lý: {processed_analysis['duplicates']:,}")
+    
+    def generate_processing_phases_detail(self):
+        """Chi tiết các pha xử lý"""
+        self.add_to_report(f"\n🔄 CHI TIẾT CÁC PHA TIỀN XỪLÝ")
+        self.add_to_report("-" * 50)
+        
+        phases = [
+            ("Pha 1", "Xóa cột không cần thiết", "Loại bỏ các cột ID, Description, End_Time, v.v."),
+            ("Pha 2", "Lọc dữ liệu theo ngày", "Chỉ giữ lại dữ liệu từ 2018 trở lên"),
+            ("Pha 3", "Tạo đặc trưng thời gian", "Thêm các cột YEAR, MONTH, DAY, HOUR, v.v."),
+            ("Pha 4", "Chuyển đổi kiểu dữ liệu SQL", "Tối ưu hóa kiểu dữ liệu cho SQL Server"),
+            ("Pha 5", "Chuẩn hóa tên cột", "Chuyển tên cột thành chữ hoa và chuẩn hóa"),
+            ("Pha 6", "Xác thực và làm sạch", "Loại bỏ bản sao và dữ liệu không hợp lệ")
+        ]
+        
+        for phase_num, phase_name, description in phases:
+            self.add_to_report(f"{phase_num}: {phase_name}")
+            self.add_to_report(f"   {description}")
+            self.add_to_report("")
+    
+    def generate_full_report(self, processing_stats: Dict) -> bool:
+        """Tạo báo cáo đầy đủ"""
+        # Header
+        self.generate_header()
+        
+        # Phân tích dataset gốc và đã xử lý
+        original_analysis = self.analyze_original_dataset()
+        processed_analysis = self.analyze_processed_dataset()
+        
+        if not original_analysis or not processed_analysis:
+            self.add_to_report("❌ Không thể phân tích được các dataset")
+            return self.save_report()
+        
+        # So sánh chi tiết
+        self.generate_comparison_report(original_analysis, processed_analysis, processing_stats)
+        
+        # So sánh kiểu dữ liệu
+        self.generate_data_types_comparison(original_analysis, processed_analysis)
+        
+        # So sánh chất lượng
+        self.generate_data_quality_comparison(original_analysis, processed_analysis)
+        
+        # Chi tiết các pha xử lý
+        self.generate_processing_phases_detail()
+        
+        # Kết luận
+        self.add_to_report("🎆 KẾT QUẢ")
+        self.add_to_report("-" * 50)
+        self.add_to_report("✅ Tiền xử lý hoàn thành thành công!")
+        self.add_to_report(f"Dataset đã được tối ưu hóa cho SQL Server")
+        self.add_to_report(f"Sẵn sàng cho việc import vào cơ sở dữ liệu")
+        
+        return self.save_report()
+
+# ==========================================
 # Các Pha Tiền Xử Lý Thuần Túy
 # ==========================================
 
@@ -114,8 +608,6 @@ def phase_standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
             df = df.rename(columns={old_name: new_name})
     
     return df
-
-
 
 def phase_validate_clean(df: pd.DataFrame) -> pd.DataFrame:
     """Pha 6: Xác thực và làm sạch dữ liệu"""
@@ -332,7 +824,7 @@ def compare_datasets_detailed(original_file: str, processed_file: str, processin
     print(f"  Khối đã xử lý: {processing_stats['chunks_processed']}")
 
 def main(input_file: str = "../US_Accidents_March23.csv",
-         output_file: str = "../US_Accidents_March23-final.csv",
+         output_file: str = "../US_Accidents_March23-preprocessed.csv",
          chunk_size: int = 2600000,
          date_cutoff: str = "2018-01-01",
          columns_to_delete: List[str] = None) -> bool:
@@ -344,6 +836,9 @@ def main(input_file: str = "../US_Accidents_March23.csv",
     print("🚀 HỆ THỐNG TIỀN XỬ LÝ DỮ LIỆU CUỐI CÙNG")
     print(f"⏰ Bắt đầu: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("="*70)
+    
+    # Tạo reporter
+    reporter = PreprocessingReporter(input_file, output_file)
     
     # Cấu hình
     print("⚙️ CẤU HÌNH:")
@@ -381,18 +876,16 @@ def main(input_file: str = "../US_Accidents_March23.csv",
         # So sánh chi tiết
         compare_datasets_detailed(input_file, output_file, processing_stats)
         
-        # Tạo báo cáo chuyển đổi kiểu dữ liệu
-        print(f"\n📋 TẠO BÁO CÁO CHUYỂN ĐỔI KIỂU DỮ LIỆU...")
-        try:
-            from type_conversion import generate_type_conversion_report
-            generate_type_conversion_report(output_file, processed_sample)
-        except ImportError:
-            print("⚠️ Không tìm thấy type_conversion.py - bỏ qua báo cáo chuyển đổi")
+        # Tạo báo cáo tiền xử lý
+        print(f"\n📄 TẠO BÁO CÁO TIỀN XỬ LÝ...")
+        reporter.generate_full_report(processing_stats)
         
         print(f"\n" + "="*70)
         print("✅ TIỀN XỬ LÝ HOÀN THÀNH!")
         print(f"📁 Kết quả: {output_file}")
         print(f"⏰ Hoàn thành: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"💡 Để phân tích chi tiết và tạo báo cáo SQL type conversion:")
+        print(f"   python analyze_dataset.py \"{output_file}\"")
         
         return True
         
