@@ -1,4 +1,26 @@
 -- ============================================
+-- Create Database US_Accidents_DW
+-- ============================================
+CREATE DATABASE US_Accidents_DW
+ON PRIMARY 
+(
+    NAME = US_Accidents_DW_Data,
+    FILENAME = 'D:\Projects\IS217_Q13_23521367_23520982\database\US_Accidents_DW_Data.mdf',
+    SIZE = 200MB,        -- Initial size
+    MAXSIZE = UNLIMITED, -- Allow growth as needed
+    FILEGROWTH = 100MB   -- Increase gradually by block
+)
+LOG ON
+(
+    NAME = US_Accidents_DW_Log,
+    FILENAME = 'D:\Projects\IS217_Q13_23521367_23520982\database\US_Accidents_DW_Log.ldf',
+    SIZE = 50MB,
+    MAXSIZE = UNLIMITED,
+    FILEGROWTH = 50MB
+);
+GO
+
+-- ============================================
 -- Star Schema DDL
 -- Database context
 -- ============================================

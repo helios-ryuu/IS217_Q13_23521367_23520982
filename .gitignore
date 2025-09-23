@@ -1,3 +1,5 @@
 *.csv
 .vs/
 __pycache__/
+*.mdf
+*.ldf
