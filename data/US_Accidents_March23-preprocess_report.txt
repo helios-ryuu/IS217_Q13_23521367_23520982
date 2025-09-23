@@ -1,8 +1,74 @@
-📄 BÁO CÁO QUÁ TRÌNH TIỀN XỪLÝ DỮ LIỆU
 ================================================================================
-Ngày tạo: 2025-09-22 10:20:23
+🔄 BÁO CÁO TIỀN XỬ LÝ DỮ LIỆU
+================================================================================
+📅 Ngày tạo: 2025-09-23 12:48:24
+
+⚙️ THÔNG TIN CẤU HÌNH
+--------------------------------------------------
 File đầu vào: ../US_Accidents_March23.csv
 File đầu ra: ../US_Accidents_March23-preprocessed.csv
+Kích thước khối: 2,600,000 dòng
+Ngày cắt: 2018-01-01
+Cột xóa: 7 cột
+
+📝 CHI TIẾT QUÁ TRÌNH XỬ LÝ
+--------------------------------------------------
+📊 Tổng 7,728,394 dòng, 3 khối
+📝 Tạo file đầu ra với 46 cột
+✅ Hoàn thành xử lý tất cả khối
+
+🔄 SO SÁNH CHI TIẾT BỘ DỮ LIỆU
+======================================================================
+📁 FILE:
+  Gốc: 2.85 GB
+  Xử lý: 1.12 GB
+  Giảm dung lượng: 60.8%
+📏 DỮ LIỆU:
+  Dòng đầu vào: 7,728,394
+  Dòng đầu ra: 5,857,117
+  Giảm dòng: 24.2%
+  Cột đã xóa: 7
+  Đặc trưng thời gian thêm: 7
+  Khối đã xử lý: 3
+
+📊 PHÂN TÍCH DỮ LIỆU GỐC
+--------------------------------------------------
+📁 File: US_Accidents_March23.csv
+💾 Kích thước: 2.85 GB
+📏 Tổng dòng: 7,728,394
+📐 Tổng cột: 46
+
+Kiểu dữ liệu:
+  object: 20 cột
+  bool: 13 cột
+  float64: 12 cột
+  int64: 1 cột
+
+Giá trị thiếu:
+  End_Lat: 50,000 (100.0%)
+  End_Lng: 50,000 (100.0%)
+  Zipcode: 7 (0.01%)
+  Timezone: 7 (0.01%)
+  Airport_Code: 7 (0.01%)
+
+📊 PHÂN TÍCH DỮ LIỆU ĐÃ XỬ LÝ
+--------------------------------------------------
+📁 File: US_Accidents_March23-preprocessed.csv
+💾 Kích thước: 1.12 GB
+📏 Tổng dòng: 5,857,117
+📐 Tổng cột: 46
+
+Kiểu dữ liệu:
+  int64: 22 cột
+  object: 14 cột
+  float64: 10 cột
+
+Giá trị thiếu:
+  STREET: 519 (1.04%)
+  ZIPCODE: 4 (0.01%)
+  AIRPORT_CODE: 143 (0.29%)
+  TIMEZONE: 45 (0.09%)
+  TEMPERATURE: 1,174 (2.35%)
 
 🔍 THÔNG TIN TỔNG QUAN
 --------------------------------------------------
@@ -13,22 +79,22 @@ Dataset gốc:
   - Bộ nhớ: 12.5 MB
 
 Dataset đã xử lý:
-  - Số dòng: 5,495,185
-  - Số cột: 47
-  - Kích thước file: 1.06 GB
-  - Bộ nhớ: 10.2 MB
+  - Số dòng: 5,857,117
+  - Số cột: 46
+  - Kích thước file: 1.12 GB
+  - Bộ nhớ: 9.7 MB
 
-📊 THAY ĐỔI SAU TIỀN XỪLÝ
+📊 THAY ĐỔI SAU TIỀN XỬ LÝ
 --------------------------------------------------
-Số dòng: -2,233,209 (-28.9%)
-Số cột: +1 cột
-Kích thước file: -1829.5 MB (-62.7%)
-Bộ nhớ: -2.3 MB (-18.2%)
+Số dòng: -1,871,277 (-24.2%)
+Số cột: +0 cột
+Kích thước file: -1773.8 MB (-60.8%)
+Bộ nhớ: -2.8 MB (-22.1%)
 
-🔄 CHI TIẾT QUÁ TRÌNH XỪ LÝ
+🔄 CHI TIẾT QUÁ TRÌNH XỬ LÝ
 --------------------------------------------------
 Tổng số khối đã xử lý: 3
-Cột đã xóa: 6
+Cột đã xóa: 7
 Đặc trưng thời gian thêm: 7
 
 Cột đã xóa (46):
@@ -79,82 +145,58 @@ Cột đã xóa (46):
   - Wind_Speed(mph)
   - Zipcode
 
-Cột đã thêm (47):
-  + AIRPORT_CODE
-  + AMENITY
-  + ASTRONOMICAL_TWILIGHT
-  + BUMP
-  + CITY
-  + CIVIL_TWILIGHT
-  + COUNTRY
-  + COUNTY
-  + CROSSING
-  + DAY
-  + DISTANCE
-  + GIVE_WAY
-  + HOUR
-  + HUMIDITY
-  + IS_WEEKEND
-  + JUNCTION
-  + LATITUDE
-  + LONGITUDE
-  + MINUTE
-  + MONTH
-  + NAUTICAL_TWILIGHT
-  + NO_EXIT
-  + PRECIPITATION
-  + PRESSURE
-  + QUARTER
-  + RAILWAY
-  + ROUNDABOUT
-  + SECOND
-  + SEVERITY
-  + SOURCE
-  + STATE
-  + STATION
-  + STOP
-  + STREET
-  + SUNRISE_SUNSET
-  + TEMPERATURE
-  + TIMEZONE
-  + TRAFFIC_CALMING
-  + TRAFFIC_SIGNAL
-  + TURNING_LOOP
-  + VISIBILITY
-  + WEATHER_CONDITION
-  + WIND_CHILL
-  + WIND_DIRECTION
-  + WIND_SPEED
-  + YEAR
-  + ZIPCODE
+Cột đã thêm (46):
+  - AIRPORT_CODE
+  - AMENITY
+  - ASTRONOMICAL_TWILIGHT
+  - BUMP
+  - CITY
+  - CIVIL_TWILIGHT
+  - COUNTY
+  - CROSSING
+  - DAY
+  - DISTANCE
+  - GIVE_WAY
+  - HOUR
+  - HUMIDITY
+  - IS_WEEKEND
+  - JUNCTION
+  - LATITUDE
+  - LONGITUDE
+  - MINUTE
+  - MONTH
+  - NAUTICAL_TWILIGHT
+  - NO_EXIT
+  - PRECIPITATION
+  - PRESSURE
+  - QUARTER
+  - RAILWAY
+  - ROUNDABOUT
+  - SECOND
+  - SEVERITY
+  - SOURCE
+  - STATE
+  - STATION
+  - STOP
+  - STREET
+  - SUNRISE_SUNSET
+  - TEMPERATURE
+  - TIMEZONE
+  - TRAFFIC_CALMING
+  - TRAFFIC_SIGNAL
+  - TURNING_LOOP
+  - VISIBILITY
+  - WEATHER_CONDITION
+  - WIND_CHILL
+  - WIND_DIRECTION
+  - WIND_SPEED
+  - YEAR
+  - ZIPCODE
 
-🏷️ SO SÁNH KIỂU DỮ LIỆU
---------------------------------------------------
-Dataset gốc:
-  object         :  20 cột
-  bool           :  13 cột
-  float64        :  12 cột
-  int64          :   1 cột
-
-Dataset đã xử lý:
-  int64          :  22 cột
-  object         :  15 cột
-  float64        :  10 cột
-
-🔍 SO SÁNH CHẤT LƯỢNG DỮ LIỆU
---------------------------------------------------
-Giá trị thiếu:
-  Gốc: 39,707 (8.63%)
-  Đã xử lý: 2,540 (0.54%)
-
-Bản sao (trong mẫu):
-  Gốc: 0
-  Đã xử lý: 0
-
-🔄 CHI TIẾT CÁC PHA TIỀN XỪLÝ
+🔄 CHI TIẾT CÁC PHA TIỀN XỬ LÝ
 --------------------------------------------------
 Pha 1: Xóa cột không cần thiết
-   Loại bỏ các cột ID, Description, End_Time, v.v.
+   Loại bỏ các cột ID, Description, End_Time, Country, v.v.
 
 Pha 2: Lọc dữ liệu theo ngày
    Chỉ giữ lại dữ liệu từ 2018 trở lên
@@ -168,8 +210,8 @@ Pha 4: Chuyển đổi kiểu dữ liệu SQL
 Pha 5: Chuẩn hóa tên cột
    Chuyển tên cột thành chữ hoa và chuẩn hóa
 
-Pha 6: Xác thực và làm sạch
-   Loại bỏ bản sao và dữ liệu không hợp lệ
+Pha 6: Sắp xếp thứ tự cột
+   Sắp xếp cột theo thứ tự DDL SQL Server
 
 🎆 KẾT QUẢ
 --------------------------------------------------
