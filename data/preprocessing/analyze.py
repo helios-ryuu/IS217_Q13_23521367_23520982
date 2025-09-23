@@ -31,6 +31,15 @@ def get_sql_server_type(pandas_dtype: str, column_name: str, max_length: int = 0
         else:
             return 'NVARCHAR(100)'
     
+    # Các cột Boolean (BIT) - bao gồm cả IS_WEEKEND và environment columns
+    boolean_columns = [
+        'IS_WEEKEND', 'AMENITY', 'BUMP', 'CROSSING', 'GIVE_WAY', 'JUNCTION', 
+        'NO_EXIT', 'RAILWAY', 'ROUNDABOUT', 'STATION', 'STOP', 
+        'TRAFFIC_CALMING', 'TRAFFIC_SIGNAL', 'TURNING_LOOP'
+    ]
+    if column_name.upper() in boolean_columns:
+        return 'BIT'
+    
     # Kiểu số
     if pandas_dtype in ['int8']:
         return 'TINYINT'

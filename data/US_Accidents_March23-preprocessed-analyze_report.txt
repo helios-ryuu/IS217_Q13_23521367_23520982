@@ -1,20 +1,21 @@
 🚀 STARTING COMPREHENSIVE DATASET ANALYSIS
 ================================================================================
 📁 File: ../US_Accidents_March23-preprocessed.csv
-⏰ Started at: 2025-09-23 13:03:09
+⏰ Started at: 2025-09-23 13:33:58
 🔄 Loading dataset from: ../US_Accidents_March23-preprocessed.csv
 ✅ Successfully loaded 5,857,117 rows and 46 columns
 
 📊 BASIC DATASET INFORMATION
 ============================================================
 📈 Dataset Shape: 5,857,117 rows × 46 columns
-💾 Memory Usage: 5709.88 MB
-📅 Analysis Date: 2025-09-23 13:03:32
+💾 Memory Usage: 5162.47 MB
+📅 Analysis Date: 2025-09-23 13:34:23
 
 🏷️ DATA TYPES:
-  int64          :  22 columns
+  bool           :  14 columns
   object         :  14 columns
   float64        :  10 columns
+  int64          :   8 columns
 
 ❓ MISSING VALUES OVERVIEW:
   Total missing values: 3,373,164 (1.25%)
@@ -52,7 +53,7 @@
 
 🔢 NUMERIC COLUMNS ANALYSIS
 ============================================================
-📊 Found 32 numeric columns
+📊 Found 18 numeric columns
 
 📈 NUMERIC STATISTICS:
   Column                            Mean          Std          Min          Max
@@ -66,7 +67,6 @@
   HOUR                             12.24         5.52         0.00        23.00
   MINUTE                           29.76        17.26         0.00        59.00
   SECOND                           22.41        19.13         0.00        59.00
-  IS_WEEKEND                        0.16         0.37         0.00         1.00
   LATITUDE                         36.20         5.06        24.55        49.00
   LONGITUDE                       -94.64        17.32      -124.55       -67.40
   TEMPERATURE                      61.14        19.12       -89.00       207.00
@@ -76,19 +76,6 @@
   VISIBILITY                        9.06         2.72         0.00       140.00
   WIND_SPEED                        7.52         5.42         0.00      1087.00
   PRECIPITATION                     0.01         0.08         0.00        36.47
-  AMENITY                           0.01         0.11         0.00         1.00
-  BUMP                              0.00         0.02         0.00         1.00
-  CROSSING                          0.11         0.32         0.00         1.00
-  GIVE_WAY                          0.00         0.07         0.00         1.00
-  JUNCTION                          0.07         0.26         0.00         1.00
-  NO_EXIT                           0.00         0.05         0.00         1.00
-  RAILWAY                           0.01         0.09         0.00         1.00
-  ROUNDABOUT                        0.00         0.01         0.00         1.00
-  STATION                           0.03         0.16         0.00         1.00
-  STOP                              0.03         0.16         0.00         1.00
-  TRAFFIC_CALMING                   0.00         0.03         0.00         1.00
-  TRAFFIC_SIGNAL                    0.15         0.35         0.00         1.00
-  TURNING_LOOP                      0.00         0.00         0.00         0.00
 
 🏷️ CATEGORICAL COLUMNS ANALYSIS
 ============================================================
@@ -128,7 +115,7 @@
   HOUR                      int64           INT                   0.0%   44.69
   MINUTE                    int64           INT                   0.0%   44.69
   SECOND                    int64           INT                   0.0%   44.69
-  IS_WEEKEND                int64           INT                   0.0%   44.69
+  IS_WEEKEND                bool            BIT                   0.0%    5.59
   STATE                     object          NVARCHAR(100)         0.0%  284.88
   COUNTY                    object          NVARCHAR(100)         0.0%  318.75
   CITY                      object          NVARCHAR(100)         0.0%  322.77
@@ -151,24 +138,25 @@
   CIVIL_TWILIGHT            object          NVARCHAR(100)         0.3%  293.10
   NAUTICAL_TWILIGHT         object          NVARCHAR(100)         0.3%  292.55
   ASTRONOMICAL_TWILIGHT     object          NVARCHAR(100)         0.3%  292.10
-  AMENITY                   int64           INT                   0.0%   44.69
-  BUMP                      int64           INT                   0.0%   44.69
-  CROSSING                  int64           INT                   0.0%   44.69
-  GIVE_WAY                  int64           INT                   0.0%   44.69
-  JUNCTION                  int64           INT                   0.0%   44.69
-  NO_EXIT                   int64           INT                   0.0%   44.69
-  RAILWAY                   int64           INT                   0.0%   44.69
-  ROUNDABOUT                int64           INT                   0.0%   44.69
-  STATION                   int64           INT                   0.0%   44.69
-  STOP                      int64           INT                   0.0%   44.69
-  TRAFFIC_CALMING           int64           INT                   0.0%   44.69
-  TRAFFIC_SIGNAL            int64           INT                   0.0%   44.69
-  TURNING_LOOP              int64           INT                   0.0%   44.69
+  AMENITY                   bool            BIT                   0.0%    5.59
+  BUMP                      bool            BIT                   0.0%    5.59
+  CROSSING                  bool            BIT                   0.0%    5.59
+  GIVE_WAY                  bool            BIT                   0.0%    5.59
+  JUNCTION                  bool            BIT                   0.0%    5.59
+  NO_EXIT                   bool            BIT                   0.0%    5.59
+  RAILWAY                   bool            BIT                   0.0%    5.59
+  ROUNDABOUT                bool            BIT                   0.0%    5.59
+  STATION                   bool            BIT                   0.0%    5.59
+  STOP                      bool            BIT                   0.0%    5.59
+  TRAFFIC_CALMING           bool            BIT                   0.0%    5.59
+  TRAFFIC_SIGNAL            bool            BIT                   0.0%    5.59
+  TURNING_LOOP              bool            BIT                   0.0%    5.59
 
 📊 SQL SERVER TYPE DISTRIBUTION:
+  BIT                 :  14 columns
   DECIMAL(8,4)        :   8 columns
   DECIMAL(9,6)        :   2 columns
-  INT                 :  22 columns
+  INT                 :   8 columns
   NVARCHAR(100)       :  14 columns
 
 💾 SQL SERVER CREATE TABLE SCRIPT:
@@ -184,7 +172,7 @@ CREATE TABLE US_Accidents (
     [HOUR] INT NOT NULL,
     [MINUTE] INT NOT NULL,
     [SECOND] INT NOT NULL,
-    [IS_WEEKEND] INT NOT NULL,
+    [IS_WEEKEND] BIT NOT NULL,
     [STATE] NVARCHAR(100) NOT NULL,
     [COUNTY] NVARCHAR(100) NOT NULL,
     [CITY] NVARCHAR(100) NULL,
@@ -196,7 +184,7 @@ CREATE TABLE US_Accidents (
   ... (28 more lines) ...
 
 💡 OPTIMIZATION RECOMMENDATIONS:
-  💾 Total estimated memory: 5709.9 MB
+  💾 Total estimated memory: 5162.5 MB
 
 🔍 DATA QUALITY ASSESSMENT
 ============================================================
@@ -206,7 +194,7 @@ CREATE TABLE US_Accidents (
 📋 ANALYSIS SUMMARY
 ============================================================
 📊 Dataset: 5,857,117 rows × 46 columns
-💾 Memory: 5709.9 MB
+💾 Memory: 5162.5 MB
 ❓ Missing data: 1.25%
 🏆 Quality score: 98.7/100 (Excellent)
-🔄 SQL Server mapping: 4 different types
+🔄 SQL Server mapping: 5 different types
