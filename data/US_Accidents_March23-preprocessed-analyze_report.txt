@@ -1,0 +1,212 @@
+🚀 STARTING COMPREHENSIVE DATASET ANALYSIS
+================================================================================
+📁 File: ../US_Accidents_March23-preprocessed.csv
+⏰ Started at: 2025-09-23 13:03:09
+🔄 Loading dataset from: ../US_Accidents_March23-preprocessed.csv
+✅ Successfully loaded 5,857,117 rows and 46 columns
+
+📊 BASIC DATASET INFORMATION
+============================================================
+📈 Dataset Shape: 5,857,117 rows × 46 columns
+💾 Memory Usage: 5709.88 MB
+📅 Analysis Date: 2025-09-23 13:03:32
+
+🏷️ DATA TYPES:
+  int64          :  22 columns
+  object         :  14 columns
+  float64        :  10 columns
+
+❓ MISSING VALUES OVERVIEW:
+  Total missing values: 3,373,164 (1.25%)
+  Columns with missing data: 18
+
+❓ MISSING VALUES DETAILED ANALYSIS
+============================================================
+📋 TOP COLUMNS WITH MISSING VALUES:
+  Column                              Missing      Percentage
+  ------------------------------------------------------------
+  PRECIPITATION                     1,167,638          19.94%
+  WIND_CHILL                          995,979          17.00%
+  WIND_SPEED                          337,266           5.76%
+  WIND_DIRECTION                      140,766           2.40%
+  HUMIDITY                            133,348           2.28%
+  VISIBILITY                          132,000           2.25%
+  WEATHER_CONDITION                   129,368           2.21%
+  TEMPERATURE                         125,258           2.14%
+  PRESSURE                            107,465           1.83%
+  AIRPORT_CODE                         17,891           0.31%
+  CIVIL_TWILIGHT                       17,493           0.30%
+  SUNRISE_SUNSET                       17,493           0.30%
+  ASTRONOMICAL_TWILIGHT                17,493           0.30%
+  NAUTICAL_TWILIGHT                    17,493           0.30%
+  STREET                                8,470           0.14%
+  TIMEZONE                              6,168           0.11%
+  ZIPCODE                               1,403           0.02%
+  CITY                                    172           0.00%
+
+📊 MISSING DATA CATEGORIES:
+  Low missing (≤25%):      18 columns
+  Medium missing (25-50%):  0 columns
+  High missing (50-75%):    0 columns
+  Very high missing (>75%): 0 columns
+
+🔢 NUMERIC COLUMNS ANALYSIS
+============================================================
+📊 Found 32 numeric columns
+
+📈 NUMERIC STATISTICS:
+  Column                            Mean          Std          Min          Max
+  ---------------------------------------------------------------------------
+  SEVERITY                          2.20         0.48         1.00         4.00
+  DISTANCE                          0.56         1.81         0.00       441.75
+  YEAR                           2020.29         1.43      2018.00      2023.00
+  QUARTER                           2.52         1.17         1.00         4.00
+  MONTH                             6.57         3.66         1.00        12.00
+  DAY                              15.75         8.68         1.00        31.00
+  HOUR                             12.24         5.52         0.00        23.00
+  MINUTE                           29.76        17.26         0.00        59.00
+  SECOND                           22.41        19.13         0.00        59.00
+  IS_WEEKEND                        0.16         0.37         0.00         1.00
+  LATITUDE                         36.20         5.06        24.55        49.00
+  LONGITUDE                       -94.64        17.32      -124.55       -67.40
+  TEMPERATURE                      61.14        19.12       -89.00       207.00
+  WIND_CHILL                       58.87        21.99       -89.00       207.00
+  HUMIDITY                         65.09        22.94         1.00       100.00
+  PRESSURE                         29.47         1.05         0.00        58.63
+  VISIBILITY                        9.06         2.72         0.00       140.00
+  WIND_SPEED                        7.52         5.42         0.00      1087.00
+  PRECIPITATION                     0.01         0.08         0.00        36.47
+  AMENITY                           0.01         0.11         0.00         1.00
+  BUMP                              0.00         0.02         0.00         1.00
+  CROSSING                          0.11         0.32         0.00         1.00
+  GIVE_WAY                          0.00         0.07         0.00         1.00
+  JUNCTION                          0.07         0.26         0.00         1.00
+  NO_EXIT                           0.00         0.05         0.00         1.00
+  RAILWAY                           0.01         0.09         0.00         1.00
+  ROUNDABOUT                        0.00         0.01         0.00         1.00
+  STATION                           0.03         0.16         0.00         1.00
+  STOP                              0.03         0.16         0.00         1.00
+  TRAFFIC_CALMING                   0.00         0.03         0.00         1.00
+  TRAFFIC_SIGNAL                    0.15         0.35         0.00         1.00
+  TURNING_LOOP                      0.00         0.00         0.00         0.00
+
+🏷️ CATEGORICAL COLUMNS ANALYSIS
+============================================================
+📊 Found 14 categorical columns
+
+📝 CATEGORICAL STATISTICS:
+  Column                          Unique  Cardinality Most Frequent
+  -----------------------------------------------------------------
+  SOURCE                               3       0.000      Source1
+  STATE                               49       0.000           CA
+  COUNTY                           1,836       0.000  Los Angeles
+  CITY                            13,206       0.002        Miami
+  STREET                         298,044       0.051       I-95 S
+  ZIPCODE                        693,546       0.118        91761
+  AIRPORT_CODE                     2,026       0.000         KRDU
+  TIMEZONE                             4       0.000   US/Eastern
+  WIND_DIRECTION                      24       0.000         CALM
+  WEATHER_CONDITION                  139       0.000         Fair
+  SUNRISE_SUNSET                       2       0.000          Day
+  CIVIL_TWILIGHT                       2       0.000          Day
+  NAUTICAL_TWILIGHT                    2       0.000          Day
+  ASTRONOMICAL_TWILIGHT                2       0.000          Day
+
+🔄 SQL SERVER TYPE CONVERSION ANALYSIS
+============================================================
+
+📋 TYPE CONVERSION TABLE:
+  Column                    Python Type     SQL Type            Null % Memory MB
+  --------------------------------------------------------------------------------
+  SEVERITY                  int64           INT                   0.0%   44.69
+  DISTANCE                  float64         DECIMAL(8,4)          0.0%   44.69
+  SOURCE                    object          NVARCHAR(100)         0.0%  312.80
+  YEAR                      int64           INT                   0.0%   44.69
+  QUARTER                   int64           INT                   0.0%   44.69
+  MONTH                     int64           INT                   0.0%   44.69
+  DAY                       int64           INT                   0.0%   44.69
+  HOUR                      int64           INT                   0.0%   44.69
+  MINUTE                    int64           INT                   0.0%   44.69
+  SECOND                    int64           INT                   0.0%   44.69
+  IS_WEEKEND                int64           INT                   0.0%   44.69
+  STATE                     object          NVARCHAR(100)         0.0%  284.88
+  COUNTY                    object          NVARCHAR(100)         0.0%  318.75
+  CITY                      object          NVARCHAR(100)         0.0%  322.77
+  STREET                    object          NVARCHAR(100)         0.1%  335.17
+  ZIPCODE                   object          NVARCHAR(100)         0.0%  309.94
+  AIRPORT_CODE              object          NVARCHAR(100)         0.3%  295.69
+  TIMEZONE                  object          NVARCHAR(100)         0.1%  329.74
+  LATITUDE                  float64         DECIMAL(9,6)          0.0%   44.69
+  LONGITUDE                 float64         DECIMAL(9,6)          0.0%   44.69
+  TEMPERATURE               float64         DECIMAL(8,4)          2.1%   44.69
+  WIND_CHILL                float64         DECIMAL(8,4)         17.0%   44.69
+  HUMIDITY                  float64         DECIMAL(8,4)          2.3%   44.69
+  PRESSURE                  float64         DECIMAL(8,4)          1.8%   44.69
+  VISIBILITY                float64         DECIMAL(8,4)          2.3%   44.69
+  WIND_DIRECTION            object          NVARCHAR(100)         2.4%  286.24
+  WIND_SPEED                float64         DECIMAL(8,4)          5.8%   44.69
+  PRECIPITATION             float64         DECIMAL(8,4)         19.9%   44.69
+  WEATHER_CONDITION         object          NVARCHAR(100)         2.2%  312.56
+  SUNRISE_SUNSET            object          NVARCHAR(100)         0.3%  293.63
+  CIVIL_TWILIGHT            object          NVARCHAR(100)         0.3%  293.10
+  NAUTICAL_TWILIGHT         object          NVARCHAR(100)         0.3%  292.55
+  ASTRONOMICAL_TWILIGHT     object          NVARCHAR(100)         0.3%  292.10
+  AMENITY                   int64           INT                   0.0%   44.69
+  BUMP                      int64           INT                   0.0%   44.69
+  CROSSING                  int64           INT                   0.0%   44.69
+  GIVE_WAY                  int64           INT                   0.0%   44.69
+  JUNCTION                  int64           INT                   0.0%   44.69
+  NO_EXIT                   int64           INT                   0.0%   44.69
+  RAILWAY                   int64           INT                   0.0%   44.69
+  ROUNDABOUT                int64           INT                   0.0%   44.69
+  STATION                   int64           INT                   0.0%   44.69
+  STOP                      int64           INT                   0.0%   44.69
+  TRAFFIC_CALMING           int64           INT                   0.0%   44.69
+  TRAFFIC_SIGNAL            int64           INT                   0.0%   44.69
+  TURNING_LOOP              int64           INT                   0.0%   44.69
+
+📊 SQL SERVER TYPE DISTRIBUTION:
+  DECIMAL(8,4)        :   8 columns
+  DECIMAL(9,6)        :   2 columns
+  INT                 :  22 columns
+  NVARCHAR(100)       :  14 columns
+
+💾 SQL SERVER CREATE TABLE SCRIPT:
+------------------------------------------------------------
+CREATE TABLE US_Accidents (
+    [SEVERITY] INT NOT NULL,
+    [DISTANCE] DECIMAL(8,4) NOT NULL,
+    [SOURCE] NVARCHAR(100) NOT NULL,
+    [YEAR] INT NOT NULL,
+    [QUARTER] INT NOT NULL,
+    [MONTH] INT NOT NULL,
+    [DAY] INT NOT NULL,
+    [HOUR] INT NOT NULL,
+    [MINUTE] INT NOT NULL,
+    [SECOND] INT NOT NULL,
+    [IS_WEEKEND] INT NOT NULL,
+    [STATE] NVARCHAR(100) NOT NULL,
+    [COUNTY] NVARCHAR(100) NOT NULL,
+    [CITY] NVARCHAR(100) NULL,
+    [STREET] NVARCHAR(100) NULL,
+    [ZIPCODE] NVARCHAR(100) NULL,
+    [AIRPORT_CODE] NVARCHAR(100) NULL,
+    [TIMEZONE] NVARCHAR(100) NULL,
+    [LATITUDE] DECIMAL(9,6) NOT NULL,
+  ... (28 more lines) ...
+
+💡 OPTIMIZATION RECOMMENDATIONS:
+  💾 Total estimated memory: 5709.9 MB
+
+🔍 DATA QUALITY ASSESSMENT
+============================================================
+📊 OVERALL QUALITY SCORE: 98.7/100
+🌟 Quality Level: Excellent
+
+📋 ANALYSIS SUMMARY
+============================================================
+📊 Dataset: 5,857,117 rows × 46 columns
+💾 Memory: 5709.9 MB
+❓ Missing data: 1.25%
+🏆 Quality score: 98.7/100 (Excellent)
+🔄 SQL Server mapping: 4 different types
