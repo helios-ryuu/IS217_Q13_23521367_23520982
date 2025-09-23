@@ -538,6 +538,7 @@ def phase_create_time_features(df: pd.DataFrame, time_column: str = 'Start_Time'
     if time_column not in df.columns:
         return df
     
+    # Chuyển đổi sang datetime nếu cần
     df[time_column] = pd.to_datetime(df[time_column], errors='coerce')
     
     # Tạo đặc trưng thời gian cơ bản
@@ -550,6 +551,7 @@ def phase_create_time_features(df: pd.DataFrame, time_column: str = 'Start_Time'
     df['SECOND'] = df[time_column].dt.second.astype('int8')
     df['IS_WEEKEND'] = df[time_column].dt.dayofweek.isin([5, 6]).astype('bool')
     
+    # Loại bỏ cột thời gian gốc để tránh dư thừa
     return df.drop(columns=[time_column])
 
 def phase_sql_data_types(df: pd.DataFrame) -> pd.DataFrame:
@@ -593,12 +595,20 @@ def phase_standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Pha 5: Chuẩn hóa tên cột"""
     column_mapping = {}
     for col in df.columns:
+        # Chuyển tên cột thành chữ hoa và chuẩn hóa
         new_col = col.upper()
+
+        # Loại bỏ ký tự đặc biệt và thay thế khoảng trắng
         new_col = re.sub(r'\([^)]*\)', '', new_col)
+
+        # Thay thế khoảng trắng bằng dấu gạch dưới
         new_col = re.sub(r'\s+', '_', new_col.strip())
+
+        # Loại bỏ các ký tự không phải chữ cái, số, hoặc dấu gạch dưới
         new_col = re.sub(r'_+', '_', new_col).strip('_')
         column_mapping[col] = new_col
     
+    # Đổi tên cột
     df = df.rename(columns=column_mapping)
     
     # Đổi tên tọa độ cụ thể
@@ -612,6 +622,7 @@ def phase_standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
 def phase_validate_clean(df: pd.DataFrame) -> pd.DataFrame:
     """Pha 6: Xác thực và làm sạch dữ liệu"""
     
+    # Hàm tìm cột theo mẫu
     def find_column(patterns: List[str]) -> Optional[str]:
         for pattern in patterns:
             for col in df.columns:
@@ -623,24 +634,6 @@ def phase_validate_clean(df: pd.DataFrame) -> pd.DataFrame:
     severity_col = find_column(['SEVERITY'])
     if severity_col and severity_col in df.columns:
         df = df[df[severity_col].isin([1, 2, 3, 4])]
-    
-    # Xác thực và loại bỏ bản sao
-    lat_col = find_column(['LATITUDE', 'START_LAT'])
-    lng_col = find_column(['LONGITUDE', 'START_LNG'])
-    
-    if lat_col and lng_col and lat_col in df.columns and lng_col in df.columns:
-        time_cols = [find_column([col]) for col in ['YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE']]
-        time_cols = [col for col in time_cols if col and col in df.columns]
-        
-        if len(time_cols) >= 4:
-            # Làm tròn tọa độ để phát hiện bản sao
-            df_temp = df.copy()
-            df_temp[f'{lat_col}_rounded'] = df_temp[lat_col].round(4)
-            df_temp[f'{lng_col}_rounded'] = df_temp[lng_col].round(4)
-            
-            duplicate_cols = [f'{lat_col}_rounded', f'{lng_col}_rounded'] + time_cols
-            duplicate_mask = df_temp.duplicated(subset=duplicate_cols, keep='first')
-            df = df[~duplicate_mask]
     
     return df
 
