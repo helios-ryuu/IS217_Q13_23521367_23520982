@@ -1,7 +1,7 @@
 ================================================================================
 🔄 BÁO CÁO TIỀN XỬ LÝ DỮ LIỆU
 ================================================================================
-📅 Ngày tạo: 2025-09-23 13:33:23
+📅 Ngày tạo: 2025-09-25 15:20:46
 
 ⚙️ THÔNG TIN CẤU HÌNH
 --------------------------------------------------
@@ -14,6 +14,7 @@ Cột xóa: 7 cột
 📝 CHI TIẾT QUÁ TRÌNH XỬ LÝ
 --------------------------------------------------
 📊 Tổng 7,728,394 dòng, 3 khối
+ℹ️ Pha 4: Không có giá trị trống/null nào cần thay thế
 📝 Tạo file đầu ra với 46 cột
 ✅ Hoàn thành xử lý tất cả khối
 
@@ -28,7 +29,8 @@ Cột xóa: 7 cột
   Dòng đầu ra: 5,857,117
   Giảm dòng: 24.2%
   Cột đã xóa: 7
-  Đặc trưng thời gian thêm: 7
+  Xử lý NULL/empty: Không có giá trị nào cần thay thế
+  Đặc trưng thời gian thêm: 8
   Khối đã xử lý: 3
 
 📊 PHÂN TÍCH DỮ LIỆU GỐC
@@ -96,7 +98,8 @@ Bộ nhớ: -3.7 MB (-29.6%)
 --------------------------------------------------
 Tổng số khối đã xử lý: 3
 Cột đã xóa: 7
-Đặc trưng thời gian thêm: 7
+Xử lý NULL/empty: Không có giá trị nào cần thay thế
+Đặc trưng thời gian thêm: 8
 
 Cột đã xóa (46):
   - Airport_Code
@@ -202,16 +205,22 @@ Pha 1: Xóa cột không cần thiết
 Pha 2: Lọc dữ liệu theo ngày
    Chỉ giữ lại dữ liệu từ 2018 trở lên
 
-Pha 3: Tạo đặc trưng thời gian
+Pha 3: Loại bỏ dữ liệu rỗng
+   Lọc các record không có thông tin cần thiết
+
+Pha 4: Xử lý giá trị NULL và empty strings
+   Thay thế NULL/empty/whitespace bằng 'Unknown' cho các cột phân cấp
+
+Pha 5: Tạo đặc trưng thời gian
    Thêm các cột YEAR, MONTH, DAY, HOUR, v.v.
 
-Pha 4: Chuyển đổi kiểu dữ liệu SQL
+Pha 6: Chuyển đổi kiểu dữ liệu SQL
    Tối ưu hóa kiểu dữ liệu cho SQL Server
 
-Pha 5: Chuẩn hóa tên cột
+Pha 7: Chuẩn hóa tên cột
    Chuyển tên cột thành chữ hoa và chuẩn hóa
 
-Pha 6: Sắp xếp thứ tự cột
+Pha 8: Sắp xếp thứ tự cột
    Sắp xếp cột theo thứ tự DDL SQL Server
 
 🎆 KẾT QUẢ

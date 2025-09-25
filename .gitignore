@@ -3,3 +3,12 @@
 __pycache__/
 *.mdf
 *.ldf
+bin/
+obj/
+*.pyc
+*.user
+*.suo
+*.cache
+*.log
+*.dbmdl
+*.bak

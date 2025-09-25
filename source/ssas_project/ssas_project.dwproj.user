@@ -3,7 +3,19 @@
     <Configuration>
       <Name>Development</Name>
       <Options>
-        <TargetServer>localhost</TargetServer>
+        <UserIDs>
+          <ConfigurationSetting>
+            <Id>US Accidents DW</Id>
+            <Name>US Accidents DW</Name>
+          </ConfigurationSetting>
+        </UserIDs>
+        <UserPasswords>
+          <ConfigurationSetting>
+            <Id>US Accidents DW</Id>
+            <Name>US Accidents DW</Name>
+          </ConfigurationSetting>
+        </UserPasswords>
+        <TargetServer>HELIOS\MSSQLDEV2025</TargetServer>
         <TargetDatabase>ssas_project</TargetDatabase>
         <StartObject>
           <ObjectId></ObjectId>

@@ -24,3 +24,10 @@ GO
 -- FACT_ACCIDENT
 SELECT * FROM [dbo].[FACT_ACCIDENT];
 GO
+
+USE US_Accidents;
+GO
+
+-- ACCIDENTS (Staging table)
+SELECT * FROM [dbo].[ACCIDENTS];
+GO

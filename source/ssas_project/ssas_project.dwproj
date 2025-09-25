@@ -6,10 +6,71 @@
     <Name>ssas_project.database</Name>
     <FullPath>ssas_project.database</FullPath>
   </Database>
+  <Cubes>
+    <ProjectItem>
+      <Name>US Accidents DW.cube</Name>
+      <FullPath>US Accidents DW.cube</FullPath>
+      <Dependencies>
+        <ProjectItem>
+          <Name>US Accidents DW.partitions</Name>
+          <FullPath>US Accidents DW.partitions</FullPath>
+        </ProjectItem>
+      </Dependencies>
+    </ProjectItem>
+  </Cubes>
+  <Dimensions>
+    <ProjectItem>
+      <Name>DIM SOURCE.dim</Name>
+      <FullPath>DIM SOURCE.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>DIM TIME.dim</Name>
+      <FullPath>DIM TIME.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>DIM LOCATION.dim</Name>
+      <FullPath>DIM LOCATION.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>DIM WEATHER.dim</Name>
+      <FullPath>DIM WEATHER.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>DIM ENVIRONMENT.dim</Name>
+      <FullPath>DIM ENVIRONMENT.dim</FullPath>
+    </ProjectItem>
+  </Dimensions>
+  <DataSources>
+    <ProjectItem>
+      <Name>US Accidents DW.ds</Name>
+      <FullPath>US Accidents DW.ds</FullPath>
+    </ProjectItem>
+  </DataSources>
+  <DataSourceViews>
+    <ProjectItem>
+      <Name>US Accidents DW.dsv</Name>
+      <FullPath>US Accidents DW.dsv</FullPath>
+    </ProjectItem>
+  </DataSourceViews>
   <Configurations>
     <Configuration>
       <Name>Development</Name>
-      <Options />
+      <Options>
+        <ConnectionMappings>
+          <ConfigurationSetting>
+            <Id>US Accidents DW</Id>
+            <Name>US Accidents DW</Name>
+            <Value xsi:type="xsd:string">Provider=MSOLEDBSQL.1;Data Source=HELIOS\MSSQLDEV2025;Integrated Security=SSPI;Initial Catalog=US_Accidents_DW</Value>
+          </ConfigurationSetting>
+        </ConnectionMappings>
+        <ConnectionSecurityMappings>
+          <ConfigurationSetting>
+            <Id>US Accidents DW</Id>
+            <Name>US Accidents DW</Name>
+            <Value xsi:type="xsd:int">0</Value>
+          </ConfigurationSetting>
+        </ConnectionSecurityMappings>
+      </Options>
     </Configuration>
   </Configurations>
 </Project>

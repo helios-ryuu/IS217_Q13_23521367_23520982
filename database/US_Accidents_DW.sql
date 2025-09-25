@@ -34,13 +34,12 @@ GO
 -- ============================================
 -- DROP TABLES
 -- ============================================
-IF OBJECT_ID('dbo.[FACT_ACCIDENT]', 'U') IS NOT NULL DROP TABLE [dbo].[FACT_ACCIDENT];
-IF OBJECT_ID('dbo.[DIM_SOURCE]', 'U') IS NOT NULL DROP TABLE [dbo].[DIM_SOURCE];
-IF OBJECT_ID('dbo.[DIM_TIME]', 'U') IS NOT NULL DROP TABLE [dbo].[DIM_TIME];
-IF OBJECT_ID('dbo.[DIM_LOCATION]', 'U') IS NOT NULL DROP TABLE [dbo].[DIM_LOCATION];
-IF OBJECT_ID('dbo.[DIM_WEATHER]', 'U') IS NOT NULL DROP TABLE [dbo].[DIM_WEATHER];
-IF OBJECT_ID('dbo.[DIM_ENVIRONMENT]', 'U') IS NOT NULL DROP TABLE [dbo].[DIM_ENVIRONMENT];
-GO
+DROP TABLE IF EXISTS [dbo].[FACT_ACCIDENT];
+DROP TABLE IF EXISTS [dbo].[DIM_SOURCE];
+DROP TABLE IF EXISTS [dbo].[DIM_TIME];
+DROP TABLE IF EXISTS [dbo].[DIM_LOCATION];
+DROP TABLE IF EXISTS [dbo].[DIM_WEATHER];
+DROP TABLE IF EXISTS [dbo].[DIM_ENVIRONMENT];
 
 -- ============================================
 -- DIM_SOURCE
@@ -49,7 +48,6 @@ CREATE TABLE [dbo].[DIM_SOURCE] (
     [SOURCE_ID] INT IDENTITY(1,1) PRIMARY KEY,
     [SOURCE] NVARCHAR(100) NOT NULL
 );
-GO
 
 -- ============================================
 -- DIM_TIME
@@ -65,7 +63,6 @@ CREATE TABLE [dbo].[DIM_TIME] (
     [SECOND] INT NOT NULL,
     [IS_WEEKEND] BIT NOT NULL
 );
-GO
 
 -- ============================================
 -- DIM_LOCATION
@@ -82,7 +79,6 @@ CREATE TABLE [dbo].[DIM_LOCATION] (
     [LATITUDE]      DECIMAL(9,6) NOT NULL,
     [LONGITUDE]     DECIMAL(9,6) NOT NULL
 );
-GO
 
 -- ============================================
 -- DIM_WEATHER
@@ -103,7 +99,6 @@ CREATE TABLE [dbo].[DIM_WEATHER] (
     [NAUTICAL_TWILIGHT] NVARCHAR(100) NULL,
     [ASTRONOMICAL_TWILIGHT] NVARCHAR(100) NULL
 );
-GO
 
 -- ============================================
 -- DIM_ENVIRONMENT
@@ -124,7 +119,6 @@ CREATE TABLE [dbo].[DIM_ENVIRONMENT] (
     [TRAFFIC_SIGNAL] BIT NOT NULL,
     [TURNING_LOOP] BIT NOT NULL
 );
-GO
 
 -- ============================================
 -- FACT_ACCIDENT 
@@ -139,7 +133,6 @@ CREATE TABLE [dbo].[FACT_ACCIDENT] (
     [SEVERITY]        INT NOT NULL,        
     [DISTANCE]        DECIMAL(8,4) NOT NULL
 );
-GO
 
 -- ============================================
 -- CHECK
@@ -149,7 +142,6 @@ ADD CONSTRAINT [CK_FACT_SEVERITY] CHECK ([SEVERITY] BETWEEN 1 AND 4);
 
 ALTER TABLE [dbo].[FACT_ACCIDENT]
 ADD CONSTRAINT [CK_FACT_DISTANCE] CHECK ([DISTANCE] >= 0);
-GO
 
 -- ============================================
 -- FOREIGN KEY CONSTRAINTS
@@ -168,4 +160,3 @@ ADD CONSTRAINT [FK_FACT_WEATHER] FOREIGN KEY ([WEATHER_ID]) REFERENCES [dbo].[DI
 
 ALTER TABLE [dbo].[FACT_ACCIDENT]
 ADD CONSTRAINT [FK_FACT_ENVIRONMENT] FOREIGN KEY ([ENVIRONMENT_ID]) REFERENCES [dbo].[DIM_ENVIRONMENT]([ENVIRONMENT_ID]);
-GO

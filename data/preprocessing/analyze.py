@@ -24,12 +24,20 @@ def get_sql_server_type(pandas_dtype: str, column_name: str, max_length: int = 0
     if any(coord in column_name.upper() for coord in ['LATITUDE', 'LONGITUDE', 'LAT', 'LNG']):
         return 'DECIMAL(9,6)'
     
-    # Cột đường phố - chỉ cột có tên chính xác là "Street" (không phân biệt chữ hoa thường)
-    if column_name.upper() == 'STREET':
-        if max_length > 100:
+    # Cột đường phố và các cột chuỗi khác - sử dụng max_length để xác định kích thước
+    if pandas_dtype in ['object', 'string']:
+        if max_length <= 50:
+            return 'NVARCHAR(50)'
+        elif max_length <= 100:
+            return 'NVARCHAR(100)'
+        elif max_length <= 255:
+            return 'NVARCHAR(255)'
+        elif max_length <= 1000:
+            return 'NVARCHAR(1000)'
+        elif max_length <= 4000:
             return 'NVARCHAR(4000)'
         else:
-            return 'NVARCHAR(100)'
+            return 'NVARCHAR(MAX)'
     
     # Các cột Boolean (BIT) - bao gồm cả IS_WEEKEND và environment columns
     boolean_columns = [
@@ -52,11 +60,14 @@ def get_sql_server_type(pandas_dtype: str, column_name: str, max_length: int = 0
     elif pandas_dtype in ['float32', 'float64']:
         return 'DECIMAL(8,4)'
     
-    # Kiểu chuỗi - nvarchar(100) cho tất cả trừ STREET
-    elif pandas_dtype in ['object', 'string']:
-        return 'NVARCHAR(100)'
+    # Kiểu category
     elif pandas_dtype == 'category':
-        return 'NVARCHAR(100)'
+        if max_length <= 50:
+            return 'NVARCHAR(50)'
+        elif max_length <= 100:
+            return 'NVARCHAR(100)'
+        else:
+            return 'NVARCHAR(255)'
     
     # Kiểu thời gian
     elif 'datetime' in pandas_dtype:
@@ -67,6 +78,39 @@ def get_sql_server_type(pandas_dtype: str, column_name: str, max_length: int = 0
     # Mặc định
     else:
         return 'NVARCHAR(100)'
+
+def get_ssis_data_type(sql_type: str) -> str:
+    """Chuyển đổi kiểu SQL Server sang SSIS Data Type"""
+    
+    # Mapping SQL Server types to SSIS data types
+    ssis_mapping = {
+        'BIT': 'DT_BOOL',
+        'TINYINT': 'DT_UI1', 
+        'SMALLINT': 'DT_I2',
+        'INT': 'DT_I4',
+        'BIGINT': 'DT_I8',
+        'DECIMAL(8,4)': 'DT_NUMERIC(8,4)',
+        'DECIMAL(9,6)': 'DT_NUMERIC(9,6)', 
+        'FLOAT': 'DT_R8',
+        'REAL': 'DT_R4',
+        'NVARCHAR(50)': 'DT_WSTR(50)',
+        'NVARCHAR(100)': 'DT_WSTR(100)',
+        'NVARCHAR(255)': 'DT_WSTR(255)',
+        'NVARCHAR(1000)': 'DT_WSTR(1000)',
+        'NVARCHAR(4000)': 'DT_WSTR(4000)',
+        'NVARCHAR(MAX)': 'DT_NTEXT',
+        'VARCHAR(100)': 'DT_STR(100)',
+        'NTEXT': 'DT_NTEXT',
+        'TEXT': 'DT_TEXT',
+        'DATETIME': 'DT_DBTIMESTAMP',
+        'DATETIME2': 'DT_DBTIMESTAMP2',
+        'DATE': 'DT_DBDATE',
+        'TIME': 'DT_DBTIME',
+        'UNIQUEIDENTIFIER': 'DT_GUID'
+    }
+    
+    # Return mapped SSIS type or default
+    return ssis_mapping.get(sql_type, 'DT_WSTR(255)')
 
 def analyze_column_characteristics(df: pd.DataFrame, column: str) -> Dict:
     """Phân tích đặc điểm cột"""
@@ -226,12 +270,47 @@ class DatasetAnalyzer:
         missing_df = missing_df[missing_df['Missing_Count'] > 0]
         
         if len(missing_df) > 0:
-            self.print_and_save(f"📋 TOP COLUMNS WITH MISSING VALUES:")
-            self.print_and_save("  {:30s} {:>12s} {:>15s}".format("Column", "Missing", "Percentage"))
-            self.print_and_save("  " + "-" * 60)
+            self.print_and_save(f"📋 COLUMNS WITH NULL VALUES ({len(missing_df)} columns):")
+            self.print_and_save("  {:30s} {:>12s} {:>15s} {:>15s}".format("Column", "Missing", "Percentage", "Data Type"))
+            self.print_and_save("  " + "-" * 75)
             
-            for _, row in missing_df.head(20).iterrows():
-                self.print_and_save(f"  {row['Column']:30s} {row['Missing_Count']:>12,} {row['Missing_Percentage']:>14.2f}%")
+            # Hiển thị tất cả các cột có null values
+            for _, row in missing_df.iterrows():
+                col_dtype = str(self.df[row['Column']].dtype)
+                self.print_and_save(f"  {row['Column']:30s} {row['Missing_Count']:>12,} {row['Missing_Percentage']:>14.2f}% {col_dtype:>15s}")
+            
+            self.print_and_save(f"\n📋 COLUMNS WITHOUT NULL VALUES ({len(self.df.columns) - len(missing_df)} columns):")
+            no_null_cols = [col for col in self.df.columns if col not in missing_df['Column'].values]
+            self.print_and_save("  {:30s} {:>15s}".format("Column", "Data Type"))
+            self.print_and_save("  " + "-" * 50)
+            
+            for col in no_null_cols:
+                col_dtype = str(self.df[col].dtype)
+                self.print_and_save(f"  {col:30s} {col_dtype:>15s}")
+        else:
+            self.print_and_save("ℹ️  No missing values found in any columns")
+        
+        # Phân tích theo kiểu dữ liệu
+        if len(missing_df) > 0:
+            self.print_and_save(f"\n📊 NULL VALUES BY DATA TYPE:")
+            null_by_dtype = {}
+            for _, row in missing_df.iterrows():
+                col_dtype = str(self.df[row['Column']].dtype)
+                if col_dtype not in null_by_dtype:
+                    null_by_dtype[col_dtype] = []
+                null_by_dtype[col_dtype].append({
+                    'column': row['Column'],
+                    'count': row['Missing_Count'],
+                    'percentage': row['Missing_Percentage']
+                })
+            
+            for dtype, cols in null_by_dtype.items():
+                total_null_in_dtype = sum(col['count'] for col in cols)
+                self.print_and_save(f"  {dtype:15s}: {len(cols):2d} columns, {total_null_in_dtype:>10,} total nulls")
+                for col in cols[:3]:  # Hiển thị top 3 cột
+                    self.print_and_save(f"    - {col['column']:25s}: {col['count']:>8,} ({col['percentage']:5.2f}%)")
+                if len(cols) > 3:
+                    self.print_and_save(f"    ... and {len(cols)-3} more columns")
         
         # Categorize columns by missing percentage
         categories = {
@@ -294,6 +373,84 @@ class DatasetAnalyzer:
         self.analysis_results['numeric_analysis'] = {
             'numeric_columns_count': len(numeric_cols),
             'statistics': numeric_stats
+        }
+
+    def analyze_string_lengths(self):
+        """Phân tích độ dài chuỗi chi tiết"""
+        self.print_and_save(f"\n📏 STRING LENGTH ANALYSIS")
+        self.print_and_save("="*60)
+        
+        string_cols = self.df.select_dtypes(include=['object']).columns
+        
+        if len(string_cols) == 0:
+            self.print_and_save("  ℹ️  No string columns found")
+            return
+        
+        self.print_and_save(f"📊 Found {len(string_cols)} string columns")
+        
+        self.print_and_save(f"\n📈 STRING LENGTH STATISTICS:")
+        self.print_and_save("  {:25s} {:>8s} {:>8s} {:>8s} {:>8s} {:>12s}".format(
+            "Column", "Min", "Max", "Avg", "Median", "Recommended"))
+        self.print_and_save("  " + "-" * 75)
+        
+        string_stats = []
+        
+        for col in string_cols:
+            if self.df[col].notna().sum() > 0:
+                string_lengths = self.df[col].dropna().astype(str).str.len()
+                
+                min_len = string_lengths.min()
+                max_len = string_lengths.max()
+                avg_len = string_lengths.mean()
+                median_len = string_lengths.median()
+                
+                # Recommend SQL Server type based on max length
+                if max_len <= 50:
+                    recommended = "NVARCHAR(50)"
+                elif max_len <= 100:
+                    recommended = "NVARCHAR(100)"
+                elif max_len <= 255:
+                    recommended = "NVARCHAR(255)"
+                elif max_len <= 1000:
+                    recommended = "NVARCHAR(1000)"
+                elif max_len <= 4000:
+                    recommended = "NVARCHAR(4000)"
+                else:
+                    recommended = "NVARCHAR(MAX)"
+                
+                stats = {
+                    'column': col,
+                    'min_length': min_len,
+                    'max_length': max_len,
+                    'avg_length': avg_len,
+                    'median_length': median_len,
+                    'recommended_type': recommended
+                }
+                string_stats.append(stats)
+                
+                self.print_and_save(f"  {col:25s} {min_len:>8.0f} {max_len:>8.0f} {avg_len:>8.1f} {median_len:>8.1f} {recommended:>12s}")
+        
+        # Phân loại theo độ dài
+        short_cols = [s for s in string_stats if s['max_length'] <= 50]
+        medium_cols = [s for s in string_stats if 50 < s['max_length'] <= 255]
+        long_cols = [s for s in string_stats if 255 < s['max_length'] <= 4000]
+        very_long_cols = [s for s in string_stats if s['max_length'] > 4000]
+        
+        self.print_and_save(f"\n📊 STRING LENGTH CATEGORIES:")
+        self.print_and_save(f"  Short strings (≤50 chars):     {len(short_cols)} columns")
+        self.print_and_save(f"  Medium strings (51-255 chars): {len(medium_cols)} columns")
+        self.print_and_save(f"  Long strings (256-4000 chars): {len(long_cols)} columns")
+        self.print_and_save(f"  Very long strings (>4000):     {len(very_long_cols)} columns")
+        
+        self.analysis_results['string_length_analysis'] = {
+            'string_columns_count': len(string_cols),
+            'statistics': string_stats,
+            'categories': {
+                'short': len(short_cols),
+                'medium': len(medium_cols),
+                'long': len(long_cols),
+                'very_long': len(very_long_cols)
+            }
         }
 
     def analyze_categorical_columns(self):
@@ -415,14 +572,20 @@ class DatasetAnalyzer:
             quality = self.analysis_results['data_quality']
             self.print_and_save(f"🏆 Quality score: {quality['quality_score']:.1f}/100 ({quality['quality_level']})")
         
+        # String length analysis
+        if 'string_length_analysis' in self.analysis_results:
+            string_stats = self.analysis_results['string_length_analysis']
+            self.print_and_save(f"📏 String columns: {string_stats['string_columns_count']} (optimized sizing)")
+        
         # Type conversion
         if 'type_conversion' in self.analysis_results:
             type_conv = self.analysis_results['type_conversion']
             self.print_and_save(f"🔄 SQL Server mapping: {len(type_conv['sql_type_counts'])} different types")
+            self.print_and_save(f"📦 SSIS mapping: {len(type_conv['ssis_type_counts'])} different types")
 
     def analyze_type_conversion(self):
-        """Analyze type conversion for SQL Server"""
-        self.print_and_save(f"\n🔄 SQL SERVER TYPE CONVERSION ANALYSIS")
+        """Analyze type conversion for SQL Server and SSIS"""
+        self.print_and_save(f"\n🔄 SQL SERVER & SSIS TYPE CONVERSION ANALYSIS")
         self.print_and_save("="*60)
         
         # Tạo bảng chuyển đổi kiểu dữ liệu
@@ -431,11 +594,13 @@ class DatasetAnalyzer:
         for column in self.df.columns:
             char = analyze_column_characteristics(self.df, column)
             sql_type = get_sql_server_type(char['dtype'], column, char['max_length'])
+            ssis_type = get_ssis_data_type(sql_type)
             
             conversion_data.append({
                 'column': column,
                 'python_type': char['dtype'],
                 'sql_type': sql_type,
+                'ssis_type': ssis_type,
                 'non_null_count': char['non_null_count'],
                 'null_count': char['null_count'],
                 'null_percentage': char['null_percentage'],
@@ -448,40 +613,62 @@ class DatasetAnalyzer:
         
         # Hiển thị bảng chuyển đổi
         self.print_and_save(f"\n📋 TYPE CONVERSION TABLE:")
-        self.print_and_save("  {:25s} {:15s} {:15s} {:>10s} {:>8s}".format(
-            "Column", "Python Type", "SQL Type", "Null %", "Memory MB"))
-        self.print_and_save("  " + "-" * 80)
+        self.print_and_save("  {:25s} {:15s} {:18s} {:20s} {:>8s} {:>8s}".format(
+            "Column", "Python Type", "SQL Type", "SSIS Type", "Null %", "Memory MB"))
+        self.print_and_save("  " + "-" * 100)
         
         for data in conversion_data:
-            self.print_and_save(f"  {data['column']:25s} {data['python_type']:15s} {data['sql_type']:15s} {data['null_percentage']:>9.1f}% {data['memory_usage_mb']:>7.2f}")
+            self.print_and_save(f"  {data['column']:25s} {data['python_type']:15s} {data['sql_type']:18s} {data['ssis_type']:20s} {data['null_percentage']:>7.1f}% {data['memory_usage_mb']:>7.2f}")
         
         # Thống kê SQL Server types
         sql_type_counts = {}
+        ssis_type_counts = {}
         for data in conversion_data:
             sql_type = data['sql_type']
+            ssis_type = data['ssis_type']
             sql_type_counts[sql_type] = sql_type_counts.get(sql_type, 0) + 1
+            ssis_type_counts[ssis_type] = ssis_type_counts.get(ssis_type, 0) + 1
         
         self.print_and_save(f"\n📊 SQL SERVER TYPE DISTRIBUTION:")
         for sql_type, count in sorted(sql_type_counts.items()):
             self.print_and_save(f"  {sql_type:20s}: {count:3d} columns")
+            
+        self.print_and_save(f"\n📊 SSIS DATA TYPE DISTRIBUTION:")
+        for ssis_type, count in sorted(ssis_type_counts.items()):
+            self.print_and_save(f"  {ssis_type:20s}: {count:3d} columns")
         
-        # Tạo CREATE TABLE script
-        self.print_and_save(f"\n💾 SQL SERVER CREATE TABLE SCRIPT:")
+        # SSIS Package Configuration Guide
+        self.print_and_save(f"\n📦 SSIS PACKAGE CONFIGURATION GUIDE:")
         self.print_and_save("-" * 60)
-        create_table_sql = create_sql_create_table(self.df)
+        self.print_and_save("🔧 Data Source Configuration:")
+        self.print_and_save("  - Use OLE DB Source for SQL Server")
+        self.print_and_save("  - Configure Connection Manager with proper data types")
+        self.print_and_save("  - Enable FastLoad for bulk operations")
         
-        # Hiển thị script (giới hạn dòng để không quá dài)
-        sql_lines = create_table_sql.split('\n')
-        for i, line in enumerate(sql_lines):
-            if i < 20:  # Hiển thị 20 dòng đầu
-                self.print_and_save(line)
-            elif i == 20 and len(sql_lines) > 25:
-                self.print_and_save(f"  ... ({len(sql_lines) - 20} more lines) ...")
-                break
+        self.print_and_save(f"\n🎯 Data Flow Task Recommendations:")
+        bool_cols = [d for d in conversion_data if d['ssis_type'] == 'DT_BOOL']
+        numeric_cols = [d for d in conversion_data if 'DT_NUMERIC' in d['ssis_type'] or d['ssis_type'] in ['DT_I4', 'DT_I2', 'DT_UI1']]
+        string_cols = [d for d in conversion_data if 'DT_WSTR' in d['ssis_type']]
         
-        if len(sql_lines) <= 25:  # Hiển thị hết nếu không quá dài
-            for line in sql_lines[20:]:
-                self.print_and_save(line)
+        if bool_cols:
+            self.print_and_save(f"  - Boolean columns ({len(bool_cols)}): Use Data Conversion for proper handling")
+        if numeric_cols:
+            self.print_and_save(f"  - Numeric columns ({len(numeric_cols)}): Validate precision/scale in Derived Column")
+        if string_cols:
+            self.print_and_save(f"  - String columns ({len(string_cols)}): Optimized lengths based on actual data")
+            
+        # String length optimization recommendations
+        if 'string_length_analysis' in self.analysis_results:
+            string_categories = self.analysis_results['string_length_analysis']['categories']
+            self.print_and_save(f"\n📏 String Length Optimization:")
+            if string_categories['short'] > 0:
+                self.print_and_save(f"  - {string_categories['short']} short columns (≤50 chars): Memory efficient")
+            if string_categories['medium'] > 0:
+                self.print_and_save(f"  - {string_categories['medium']} medium columns (51-255 chars): Standard size")
+            if string_categories['long'] > 0:
+                self.print_and_save(f"  - {string_categories['long']} long columns (256-4000 chars): Consider indexing")
+            if string_categories['very_long'] > 0:
+                self.print_and_save(f"  - {string_categories['very_long']} very long columns (>4000): Use NVARCHAR(MAX)")
         
         # Khuyến nghị tối ưu hóa
         self.print_and_save(f"\n💡 OPTIMIZATION RECOMMENDATIONS:")
@@ -491,22 +678,35 @@ class DatasetAnalyzer:
         if high_null_cols:
             self.print_and_save(f"  🔍 {len(high_null_cols)} columns have >50% null values")
         
-        # Cột chuỗi dài
-        long_string_cols = [data for data in conversion_data if data['sql_type'] == 'NVARCHAR(4000)']
-        if long_string_cols:
-            self.print_and_save(f"  📏 {len(long_string_cols)} columns with long strings (NVARCHAR(4000))")
+        # Cột chuỗi tối ưu hóa
+        if 'string_length_analysis' in self.analysis_results:
+            string_stats = self.analysis_results['string_length_analysis']['statistics']
+            over_sized_cols = [s for s in string_stats if s['max_length'] < 50 and 'NVARCHAR(100)' in s.get('current_type', '')]
+            if over_sized_cols:
+                self.print_and_save(f"  📏 {len(over_sized_cols)} columns can use smaller NVARCHAR sizes")
+                
+        # Cột chuỗi rất dài
+        very_long_cols = [data for data in conversion_data if 'NVARCHAR(MAX)' in data['sql_type']]
+        if very_long_cols:
+            self.print_and_save(f"  📏 {len(very_long_cols)} columns with very long strings (NVARCHAR(MAX))")
         
         # Tổng bộ nhớ
         total_memory = sum(data['memory_usage_mb'] for data in conversion_data)
         self.print_and_save(f"  💾 Total estimated memory: {total_memory:.1f} MB")
         
+        # Memory optimization từ string length analysis
+        if 'string_length_analysis' in self.analysis_results:
+            short_cols = self.analysis_results['string_length_analysis']['categories']['short']
+            if short_cols > 0:
+                self.print_and_save(f"  💰 {short_cols} columns optimized for memory with smaller NVARCHAR sizes")
+        
         # Lưu thông tin vào analysis_results
         self.analysis_results['type_conversion'] = {
             'conversion_table': conversion_data,
             'sql_type_counts': sql_type_counts,
-            'create_table_script': create_table_sql,
+            'ssis_type_counts': ssis_type_counts,
             'high_null_columns': len(high_null_cols),
-            'long_string_columns': len(long_string_cols),
+            'very_long_columns': len(very_long_cols),
             'total_memory_mb': total_memory
         }
 
@@ -527,6 +727,7 @@ class DatasetAnalyzer:
             self.analyze_missing_values()
             self.analyze_numeric_columns()
             self.analyze_categorical_columns()
+            self.analyze_string_lengths()
             self.analyze_type_conversion()
             self.analyze_data_quality()
             
