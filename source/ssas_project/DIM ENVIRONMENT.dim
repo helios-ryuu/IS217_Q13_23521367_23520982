@@ -1,4 +1,4 @@
-﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="a28c36a6-a352-4397-8aef-a1891b10a6ed" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="417a3b23-3512-4614-9315-e9b0f3d6ba33" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
   <ID>DIM ENVIRONMENT</ID>
   <Name>DIM ENVIRONMENT</Name>
   <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
@@ -6,32 +6,6 @@
   <Annotations>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
-      <Value>
-        <dds xmlns="">
-          <diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="MSDDS.Rectilinear" defaultlineroute="MSDDS.Rectilinear" version="7" nextobject="3" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-2877" scrolltop="-3956" gridx="150" gridy="150" marginx="5000" marginy="5000" zoom="100" x="9604" y="12912" backcolor="16119285" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="0" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}">
-            <font>
-              <ddsxmlobjectstreamwrapper binary="01000000900144420100065461686f6d61" />
-            </font>
-            <mouseicon>
-              <ddsxmlobjectstreamwrapper binary="6c74000000000000" />
-            </mouseicon>
-          </diagram>
-          <layoutmanager>
-            <ddsxmlobj />
-          </layoutmanager>
-          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge" tooltip="DIM_ENVIRONMENT" left="20" top="0" logicalid="2" controlid="1" masterid="0" hint1="0" hint2="0" width="3810" height="5000" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
-            <control>
-              <ddsxmlobjectstreaminitwrapper binary="000e0000e20e000088130000" />
-            </control>
-            <layoutobject>
-              <ddsxmlobj>
-                <property name="LogicalObject" value="dbo_DIM_ENVIRONMENT" vartype="8" />
-              </ddsxmlobj>
-            </layoutobject>
-            <shape groupshapeid="0" groupnode="0" />
-          </ddscontrol>
-        </dds>
-      </Value>
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
@@ -47,15 +21,15 @@
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
-      <Value>-2877</Value>
+      <Value>0</Value>
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
-      <Value>-3956</Value>
+      <Value>0</Value>
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
-      <Value>20</Value>
+      <Value>0</Value>
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
@@ -65,112 +39,84 @@
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
       <Value>100</Value>
     </Annotation>
-    <Annotation>
-      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ARDiagramLayout</Name>
-      <Value>
-        <DiagramLayout ZoomPercent="100" ViewPortX="0" ViewPortY="0" xmlns="">
-          <Shapes NodeWidth="149">
-            <Shape Id="ENVIRONMENT ID" Expanded="true">
-              <Attributes>
-                <Attribute Id="ENVIRONMENT ID" />
-                <Attribute Id="AMENITY" />
-                <Attribute Id="BUMP" />
-                <Attribute Id="CROSSING" />
-                <Attribute Id="GIVE WAY" />
-                <Attribute Id="JUNCTION" />
-                <Attribute Id="NO EXIT" />
-                <Attribute Id="RAILWAY" />
-                <Attribute Id="ROUNDABOUT" />
-                <Attribute Id="STATION" />
-                <Attribute Id="STOP" />
-                <Attribute Id="TRAFFIC CALMING" />
-                <Attribute Id="TRAFFIC SIGNAL" />
-                <Attribute Id="TURNING LOOP" />
-              </Attributes>
-              <Position x="20" y="20" />
-            </Shape>
-          </Shapes>
-        </DiagramLayout>
-      </Value>
-    </Annotation>
   </Annotations>
   <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
   <State>Unprocessed</State>
-  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="b92e664e-8d64-4a48-93bf-20835aa28c09">
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="c1194f65-9f9d-419c-b9a2-9d2644fc955d">
     <DataSourceViewID>US Accidents DW</DataSourceViewID>
   </Source>
   <UnknownMember>Visible</UnknownMember>
-  <ErrorConfiguration dwd:design-time-name="f5fff9f7-a1c5-4e98-96e1-89104e2f4359">
+  <ErrorConfiguration dwd:design-time-name="87035631-30db-48fe-8e78-4d706894e47f">
     <KeyNotFound>ReportAndStop</KeyNotFound>
     <KeyDuplicate>ReportAndStop</KeyDuplicate>
     <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
   </ErrorConfiguration>
   <CurrentStorageMode>Molap</CurrentStorageMode>
   <Attributes>
-    <Attribute dwd:design-time-name="dda4eeb1-21b7-4c46-b5e6-772f25e32ca0">
+    <Attribute dwd:design-time-name="a81df938-05b6-421a-80e2-56419ec73950">
       <ID>ENVIRONMENT ID</ID>
       <Name>ENVIRONMENT ID</Name>
       <Usage>Key</Usage>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="37d1db7a-e248-45ff-8d2c-c89e12bf898a">
+        <KeyColumn dwd:design-time-name="4096cdcd-de22-4bf9-ab3f-4330d8ff79f7">
           <DataType>Integer</DataType>
           <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="9d268768-c5d4-4d08-b492-66b4aba8a51c">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="f4c89df4-e5f9-4b0f-be28-e662dcce0468">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>ENVIRONMENT_ID</ColumnID>
           </Source>
         </KeyColumn>
       </KeyColumns>
       <AttributeRelationships>
-        <AttributeRelationship dwd:design-time-name="8001a99d-c2f9-4424-893d-ea8db8427494">
+        <AttributeRelationship dwd:design-time-name="50402665-7e3a-4a5c-9f46-f69f42943440">
           <AttributeID>AMENITY</AttributeID>
           <Name>AMENITY</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="06d034cb-9c96-47ce-b944-abb1c645c921">
+        <AttributeRelationship dwd:design-time-name="fc134e4d-8203-4c85-b4f8-2c8ccfc0916f">
           <AttributeID>BUMP</AttributeID>
           <Name>BUMP</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="54158ea1-e73e-4014-babd-ba7be6b8f99f">
+        <AttributeRelationship dwd:design-time-name="cbb863fc-b590-41bd-ae6d-f3ed8b2881ae">
           <AttributeID>CROSSING</AttributeID>
           <Name>CROSSING</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="2f710a34-0aa3-473a-9bf0-1c036cfb96f9">
+        <AttributeRelationship dwd:design-time-name="58dd1f22-7327-48f5-8124-faaeed3b12ce">
           <AttributeID>GIVE WAY</AttributeID>
           <Name>GIVE WAY</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="96afc0eb-3a1b-4b14-a465-1b54c87d66b5">
+        <AttributeRelationship dwd:design-time-name="e5e5d7c3-adc7-4c33-af19-d6e489d8f1d4">
           <AttributeID>JUNCTION</AttributeID>
           <Name>JUNCTION</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="0ef2fd61-8388-44a2-b135-ad62c7c624a8">
+        <AttributeRelationship dwd:design-time-name="49711b26-786c-4e65-8728-a7d0016a6ebf">
           <AttributeID>NO EXIT</AttributeID>
           <Name>NO EXIT</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="7786598c-0ef9-432b-a0ab-6b69b46e2536">
+        <AttributeRelationship dwd:design-time-name="dcde4fe4-7623-43f6-b612-9c8fbe5643b6">
           <AttributeID>RAILWAY</AttributeID>
           <Name>RAILWAY</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="7323741a-3347-487f-8c8c-8deb5a36e5d8">
+        <AttributeRelationship dwd:design-time-name="819e0945-8e66-4840-81b3-7fdbe23e8a12">
           <AttributeID>ROUNDABOUT</AttributeID>
           <Name>ROUNDABOUT</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="a1f488e0-692c-4642-ac3c-c33add998026">
+        <AttributeRelationship dwd:design-time-name="53a61fb9-74a7-4614-9a83-c7f4081645e6">
           <AttributeID>STATION</AttributeID>
           <Name>STATION</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="84d70780-0da7-43b1-902d-7e115a954e6d">
+        <AttributeRelationship dwd:design-time-name="8ab94dcd-6210-4aa7-b2b6-4446875a5228">
           <AttributeID>STOP</AttributeID>
           <Name>STOP</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="65bd5c31-2f1a-44c9-8ef9-8789f73ea6e1">
+        <AttributeRelationship dwd:design-time-name="7092c3a7-8e40-47ae-b7be-a0ab670111a5">
           <AttributeID>TRAFFIC CALMING</AttributeID>
           <Name>TRAFFIC CALMING</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="80f3eee9-cd30-4ce5-a5d9-3d9d0fdbcbb1">
+        <AttributeRelationship dwd:design-time-name="102513cd-ac4b-4fc7-9066-e94ca8fa79fe">
           <AttributeID>TRAFFIC SIGNAL</AttributeID>
           <Name>TRAFFIC SIGNAL</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="4bf57452-2de9-475d-a425-1fb4ecf29b54">
+        <AttributeRelationship dwd:design-time-name="fb6e4778-2298-4cf8-bee1-9150245a7f38">
           <AttributeID>TURNING LOOP</AttributeID>
           <Name>TURNING LOOP</Name>
         </AttributeRelationship>
@@ -179,14 +125,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="d77a0fe6-51f0-4647-8e79-5760434681d8">
+    <Attribute dwd:design-time-name="c17f6d5f-f237-4042-ac74-3bad1e9c1098">
       <ID>AMENITY</ID>
       <Name>AMENITY</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="4582badb-3315-45bd-b5c5-d72c8cc12b26">
+        <KeyColumn dwd:design-time-name="6f5a266a-6769-4a22-a0f5-5f9a69ad69da">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="2502e833-6b94-4afa-84c2-318d6d11f175">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="b3c3d120-0423-4a77-861b-da58f149da82">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>AMENITY</ColumnID>
           </Source>
@@ -196,14 +141,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="4fb5911b-02bc-4eb2-a594-9bdb5282a465">
+    <Attribute dwd:design-time-name="483f8dd1-5a88-417a-abcb-16ccb5a77a17">
       <ID>BUMP</ID>
       <Name>BUMP</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="d568d0d1-e82f-4e18-ae4a-afc98511185f">
+        <KeyColumn dwd:design-time-name="25578e59-0606-40b2-9fdd-e23aa9422281">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="9a7844de-9f92-48f2-8b62-07de7bb479be">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="a547a77e-d96f-4d69-9845-ae77b4dfa2d5">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>BUMP</ColumnID>
           </Source>
@@ -213,14 +157,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="0ffc5ae6-ac5a-4723-8695-f1c0cf258e39">
+    <Attribute dwd:design-time-name="03d34a5f-550e-40af-9888-63d948a3c0ca">
       <ID>CROSSING</ID>
       <Name>CROSSING</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="86a81caf-0920-4a56-908e-2c8888fb5b72">
+        <KeyColumn dwd:design-time-name="03456a19-e728-4c4c-a80d-d350212fea38">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="4384727e-9caa-4339-a4d5-3f1331664cbc">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="e30a5421-91de-4c61-84b2-4f77214be03c">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>CROSSING</ColumnID>
           </Source>
@@ -230,14 +173,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="9ce4ea97-8e63-472c-b1a3-6209a6f59b3f">
+    <Attribute dwd:design-time-name="420e231d-0a8f-4508-bf9a-0edba2bfbe4b">
       <ID>GIVE WAY</ID>
       <Name>GIVE WAY</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="f11ac738-bcc6-41ab-8f40-beda0a50af89">
+        <KeyColumn dwd:design-time-name="792b4f28-e9bb-4a83-9674-4b35fe14f39d">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="8334aec5-5e24-4f6c-8836-30af937efedf">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="7ca696d0-4309-4efb-bce4-97b9aa0a0e99">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>GIVE_WAY</ColumnID>
           </Source>
@@ -247,14 +189,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="1db05243-2560-41d8-831b-e0f4f7a22eb1">
+    <Attribute dwd:design-time-name="b5eaab4b-9b19-4012-9dc8-01f79387ea45">
       <ID>JUNCTION</ID>
       <Name>JUNCTION</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="c86bb4cb-147d-459e-9630-5a9efd2026c1">
+        <KeyColumn dwd:design-time-name="122c1246-e37c-40b1-91f6-25b5fd77e945">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="c33dd09c-a55b-4d43-a47a-e0a98f3359d1">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="d75de5d4-acbd-4ce8-96c8-38756e43e869">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>JUNCTION</ColumnID>
           </Source>
@@ -264,14 +205,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="a5aa29a9-0626-464d-b30a-20a111e20918">
+    <Attribute dwd:design-time-name="ae15a78f-bef3-42ff-b931-81f7dd625bcf">
       <ID>NO EXIT</ID>
       <Name>NO EXIT</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="865b0455-babe-47f9-ab82-caf327415e26">
+        <KeyColumn dwd:design-time-name="8a427d3f-7a2e-490a-bd6f-2ebbceb68ef4">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="b039c7d7-1ecf-41c4-9f08-03d53922904b">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="128d2363-ebaa-4a09-bd0a-f30b7badb2bd">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>NO_EXIT</ColumnID>
           </Source>
@@ -281,14 +221,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="c2c7022c-6d38-40f1-9738-1443e5921e2f">
+    <Attribute dwd:design-time-name="4f48e062-4000-47c0-9d32-7f528c10521e">
       <ID>RAILWAY</ID>
       <Name>RAILWAY</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="ba74c98b-f534-4ec5-a479-d627cf245c96">
+        <KeyColumn dwd:design-time-name="fdac5fcf-7cae-4b46-9c8a-0c160f966886">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="ec662bd9-be98-43a2-9f0a-17c7b74792eb">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="ba1837fa-20d4-456a-81aa-f386362cd326">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>RAILWAY</ColumnID>
           </Source>
@@ -298,14 +237,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="22c7d660-7d4a-4b8e-a6b7-0483d94f971f">
+    <Attribute dwd:design-time-name="93dc7ece-6e5b-4d95-befd-e15a4f0834a1">
       <ID>ROUNDABOUT</ID>
       <Name>ROUNDABOUT</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="8c6233e8-5fd3-49a6-b8c6-b6fe8db7c17b">
+        <KeyColumn dwd:design-time-name="aa99c8e2-5194-40cf-870d-bb196741ef00">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="d5e352d9-cfcc-42fe-9bca-e6fb6e1d54b1">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="c2e429e6-b3b0-4ba4-9476-567ca88ea51f">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>ROUNDABOUT</ColumnID>
           </Source>
@@ -315,14 +253,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="e75baac5-0a9d-42c8-879a-855855a352ef">
+    <Attribute dwd:design-time-name="df515562-823e-4a02-858a-bd0c62f64f61">
       <ID>STATION</ID>
       <Name>STATION</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="d8f1a49b-2cf2-4628-ae0d-4ea71b32fd12">
+        <KeyColumn dwd:design-time-name="8b68f76c-45a7-420f-8a0c-9d52a8c36494">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="b7ae0a18-ec0f-4ca7-b72e-c60d850df59f">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="98f5d6ee-ec72-4b3e-844d-169a0394d7b1">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>STATION</ColumnID>
           </Source>
@@ -332,14 +269,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="c812aae7-c53b-49d1-97a2-94e8e0b3ed34">
+    <Attribute dwd:design-time-name="d3d49805-0c3d-4515-98ea-87e1a06c5e47">
       <ID>STOP</ID>
       <Name>STOP</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="7cfc0c8d-6838-4142-a245-77a33b67b360">
+        <KeyColumn dwd:design-time-name="535fd62b-66f1-4a56-9581-35bb707b55fa">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="7f01e79a-4d55-4235-bf9d-0a8c4e2bec72">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="a07888b7-7453-40c7-8974-62c96b243dc8">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>STOP</ColumnID>
           </Source>
@@ -349,14 +285,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="0b6813d1-feab-4054-960e-56d3b60f775e">
+    <Attribute dwd:design-time-name="32575784-8f24-49f7-b97d-179b05735cd1">
       <ID>TRAFFIC CALMING</ID>
       <Name>TRAFFIC CALMING</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="c31a02ec-f36e-49cb-bb8e-daa1aef824aa">
+        <KeyColumn dwd:design-time-name="84ab39aa-9574-45c6-9bbd-64aada9ce5b4">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="d4899156-9a6f-4258-8b6f-436078f12c83">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="cb77a4c5-1053-4d73-8332-6e6308e340bb">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>TRAFFIC_CALMING</ColumnID>
           </Source>
@@ -366,14 +301,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="fe571e76-6492-4bed-9b9c-cfd7cfbd7320">
+    <Attribute dwd:design-time-name="c0950b39-2b20-4469-b904-08140d6efeb2">
       <ID>TRAFFIC SIGNAL</ID>
       <Name>TRAFFIC SIGNAL</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="5c6e66af-625f-4ef6-b961-83af4fb27985">
+        <KeyColumn dwd:design-time-name="b0f0ec6e-7ef2-4fd4-9c1b-527d222dfcf1">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="f4ad5c0e-7660-44ac-8242-19803d969946">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="cfb8bdbf-b599-4d4d-928e-87e7adf7efb0">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>TRAFFIC_SIGNAL</ColumnID>
           </Source>
@@ -383,14 +317,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="45d47685-5f18-4021-bd89-2689d0497fc3">
+    <Attribute dwd:design-time-name="8f8bd684-a24a-45d1-908e-162692e363d5">
       <ID>TURNING LOOP</ID>
       <Name>TURNING LOOP</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="ff6ca514-df10-46f4-a827-3cfbcf4b2347">
+        <KeyColumn dwd:design-time-name="a3b1f51d-06a7-412f-9fc6-385a95403e62">
           <DataType>Boolean</DataType>
-          <NullProcessing>UnknownMember</NullProcessing>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="7b7bd144-d690-4a67-a753-88050bfb537a">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="0e8efa17-14b8-41c7-a076-3e75634ad00b">
             <TableID>dbo_DIM_ENVIRONMENT</TableID>
             <ColumnID>TURNING_LOOP</ColumnID>
           </Source>

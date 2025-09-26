@@ -1,4 +1,4 @@
-﻿<DataSourceView xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="e2790fe8-2560-4602-a462-9f7f09abca3b" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+﻿<DataSourceView xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="aea86256-fbb6-4a87-944f-1ec4f8e5407b" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
   <ID>US Accidents DW</ID>
   <Name>US Accidents DW</Name>
   <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
@@ -42,104 +42,48 @@
   <DataSourceID>US Accidents DW</DataSourceID>
   <Schema>
     <xs:schema id="US_x0020_Accidents_x0020_DW" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
-      <xs:element name="US_x0020_Accidents_x0020_DW" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:design-time-name="1b5c9197-6382-4fed-897e-4ad5e7bf17b9">
+      <xs:element name="US_x0020_Accidents_x0020_DW" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:design-time-name="4a65feb2-0687-4394-8e2d-b44a5f612394">
         <xs:complexType>
           <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="dbo_FACT_ACCIDENT" msprop:DbTableName="FACT_ACCIDENT" msprop:FriendlyName="FACT_ACCIDENT" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="6c1368c9-bf38-41f9-b5fd-a5eed2ed1b58">
+            <xs:element name="dbo_FACT_ACCIDENT" msprop:DbTableName="FACT_ACCIDENT" msprop:FriendlyName="FACT_ACCIDENT" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="51af7166-b506-4a4f-a179-02acffbe8841">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="ACCIDENT_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="ACCIDENT_ID" msprop:DbColumnName="ACCIDENT_ID" msprop:design-time-name="d139fa49-8e38-46a2-a449-33dbefc3da77" type="xs:long" />
-                  <xs:element name="SOURCE_ID" msprop:FriendlyName="SOURCE_ID" msprop:DbColumnName="SOURCE_ID" msprop:design-time-name="98b0ef3f-2304-4ef2-8809-5a82a85b2770" type="xs:int" minOccurs="0" />
-                  <xs:element name="TIME_ID" msprop:FriendlyName="TIME_ID" msprop:DbColumnName="TIME_ID" msprop:design-time-name="4f123491-1fd5-4c39-922d-eff9648069b9" type="xs:int" minOccurs="0" />
-                  <xs:element name="LOCATION_ID" msprop:FriendlyName="LOCATION_ID" msprop:DbColumnName="LOCATION_ID" msprop:design-time-name="8b87bc41-01ae-49a9-b1e8-b65c93687a95" type="xs:int" minOccurs="0" />
-                  <xs:element name="WEATHER_ID" msprop:FriendlyName="WEATHER_ID" msprop:DbColumnName="WEATHER_ID" msprop:design-time-name="1ac1b65a-67bf-4a99-99d9-bb7231cd8b74" type="xs:int" minOccurs="0" />
-                  <xs:element name="ENVIRONMENT_ID" msprop:FriendlyName="ENVIRONMENT_ID" msprop:DbColumnName="ENVIRONMENT_ID" msprop:design-time-name="de84896a-bf7a-4d86-ac61-7a1e2aeeead3" type="xs:int" minOccurs="0" />
-                  <xs:element name="SEVERITY" msprop:FriendlyName="SEVERITY" msprop:DbColumnName="SEVERITY" msprop:design-time-name="58e0b485-61ef-45e7-80bf-69fe3362111a" type="xs:int" />
-                  <xs:element name="DISTANCE" msprop:FriendlyName="DISTANCE" msprop:DbColumnName="DISTANCE" msprop:design-time-name="7134bf2b-0f99-41b5-bc7c-808b1e27e25e" type="xs:decimal" />
+                  <xs:element name="ACCIDENT_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="ACCIDENT_ID" msprop:DbColumnName="ACCIDENT_ID" msprop:design-time-name="9bc3963f-78ee-4b0a-8421-5e5d4f1f1830" type="xs:long" />
+                  <xs:element name="SOURCE_ID" msprop:FriendlyName="SOURCE_ID" msprop:DbColumnName="SOURCE_ID" msprop:design-time-name="0ad42ada-5450-473c-9217-57a4353a122b" type="xs:int" minOccurs="0" />
+                  <xs:element name="TIME_ID" msprop:FriendlyName="TIME_ID" msprop:DbColumnName="TIME_ID" msprop:design-time-name="4315227c-40eb-4868-944a-3f070a03f0cd" type="xs:int" minOccurs="0" />
+                  <xs:element name="LOCATION_ID" msprop:FriendlyName="LOCATION_ID" msprop:DbColumnName="LOCATION_ID" msprop:design-time-name="05ef17ad-9cf9-4c82-904a-b23e867457e2" type="xs:int" minOccurs="0" />
+                  <xs:element name="WEATHER_ID" msprop:FriendlyName="WEATHER_ID" msprop:DbColumnName="WEATHER_ID" msprop:design-time-name="0a916a56-e4da-4176-93a2-d734c52d61cc" type="xs:int" minOccurs="0" />
+                  <xs:element name="ENVIRONMENT_ID" msprop:FriendlyName="ENVIRONMENT_ID" msprop:DbColumnName="ENVIRONMENT_ID" msprop:design-time-name="253e75c6-0b6f-44c3-8d8e-f400574be9c9" type="xs:int" minOccurs="0" />
+                  <xs:element name="SEVERITY" msprop:FriendlyName="SEVERITY" msprop:DbColumnName="SEVERITY" msprop:design-time-name="d54693ea-c8c2-4c0f-8cb0-a4cb0766e042" type="xs:int" />
+                  <xs:element name="DISTANCE" msprop:FriendlyName="DISTANCE" msprop:DbColumnName="DISTANCE" msprop:design-time-name="b97fb3ba-a729-46bd-beb1-c83efe79d8e5" type="xs:decimal" />
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
-            <xs:element name="dbo_DIM_ENVIRONMENT" msprop:DbTableName="DIM_ENVIRONMENT" msprop:FriendlyName="DIM_ENVIRONMENT" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="224720d1-3a8d-4e76-8ce7-724596419480">
+            <xs:element name="dbo_DIM_ENVIRONMENT" msprop:DbTableName="DIM_ENVIRONMENT" msprop:FriendlyName="DIM_ENVIRONMENT" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="6e7ed09a-7574-4669-b5b9-8bea0cd82f1a">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="ENVIRONMENT_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="ENVIRONMENT_ID" msprop:DbColumnName="ENVIRONMENT_ID" msprop:design-time-name="0b21f419-9d1e-4798-9323-892cd2b6ff84" type="xs:int" />
-                  <xs:element name="AMENITY" msprop:FriendlyName="AMENITY" msprop:DbColumnName="AMENITY" msprop:design-time-name="2127d95a-fd34-41d3-b4d8-b0f9e6bb46f1" type="xs:boolean" />
-                  <xs:element name="BUMP" msprop:FriendlyName="BUMP" msprop:DbColumnName="BUMP" msprop:design-time-name="880b2a63-3f11-4471-8500-8c5d4ceb2249" type="xs:boolean" />
-                  <xs:element name="CROSSING" msprop:FriendlyName="CROSSING" msprop:DbColumnName="CROSSING" msprop:design-time-name="d633e1cd-bdfd-42e9-93f6-4a5d06b5a710" type="xs:boolean" />
-                  <xs:element name="GIVE_WAY" msprop:FriendlyName="GIVE_WAY" msprop:DbColumnName="GIVE_WAY" msprop:design-time-name="ad941598-bfa2-4370-b68f-a7a3dbce04be" type="xs:boolean" />
-                  <xs:element name="JUNCTION" msprop:FriendlyName="JUNCTION" msprop:DbColumnName="JUNCTION" msprop:design-time-name="047f9254-ff1a-465a-a5de-7adcf233d7ae" type="xs:boolean" />
-                  <xs:element name="NO_EXIT" msprop:FriendlyName="NO_EXIT" msprop:DbColumnName="NO_EXIT" msprop:design-time-name="388fad77-b544-444b-bc77-51e816236e23" type="xs:boolean" />
-                  <xs:element name="RAILWAY" msprop:FriendlyName="RAILWAY" msprop:DbColumnName="RAILWAY" msprop:design-time-name="1859ca93-1160-4814-9356-19e8ebb2b4ba" type="xs:boolean" />
-                  <xs:element name="ROUNDABOUT" msprop:FriendlyName="ROUNDABOUT" msprop:DbColumnName="ROUNDABOUT" msprop:design-time-name="e7c77488-2004-4587-9ffb-109dc85b32bd" type="xs:boolean" />
-                  <xs:element name="STATION" msprop:FriendlyName="STATION" msprop:DbColumnName="STATION" msprop:design-time-name="223b84aa-9538-4e02-9cfe-93ad42ed164d" type="xs:boolean" />
-                  <xs:element name="STOP" msprop:FriendlyName="STOP" msprop:DbColumnName="STOP" msprop:design-time-name="f4ecfe18-1c6c-4e21-9607-2f3b8c50af78" type="xs:boolean" />
-                  <xs:element name="TRAFFIC_CALMING" msprop:FriendlyName="TRAFFIC_CALMING" msprop:DbColumnName="TRAFFIC_CALMING" msprop:design-time-name="53bc222d-15ec-40a8-9f8f-89da12d7aa43" type="xs:boolean" />
-                  <xs:element name="TRAFFIC_SIGNAL" msprop:FriendlyName="TRAFFIC_SIGNAL" msprop:DbColumnName="TRAFFIC_SIGNAL" msprop:design-time-name="ee80590e-857d-4c8b-a8ff-54d6dd65339c" type="xs:boolean" />
-                  <xs:element name="TURNING_LOOP" msprop:FriendlyName="TURNING_LOOP" msprop:DbColumnName="TURNING_LOOP" msprop:design-time-name="5a6a4296-b3f7-449d-91f9-00f027668cc4" type="xs:boolean" />
+                  <xs:element name="ENVIRONMENT_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="ENVIRONMENT_ID" msprop:DbColumnName="ENVIRONMENT_ID" msprop:design-time-name="4489fd67-a0a7-4858-a311-f9789a0f9a00" type="xs:int" />
+                  <xs:element name="AMENITY" msprop:FriendlyName="AMENITY" msprop:DbColumnName="AMENITY" msprop:design-time-name="0252c618-bed6-49da-92fc-fd01ffad03b5" type="xs:boolean" />
+                  <xs:element name="BUMP" msprop:FriendlyName="BUMP" msprop:DbColumnName="BUMP" msprop:design-time-name="6cbae9b2-ab58-4b7b-aa63-4cb68717d8db" type="xs:boolean" />
+                  <xs:element name="CROSSING" msprop:FriendlyName="CROSSING" msprop:DbColumnName="CROSSING" msprop:design-time-name="8a650f2b-ade6-4410-a97e-6e4e5fe0f4b4" type="xs:boolean" />
+                  <xs:element name="GIVE_WAY" msprop:FriendlyName="GIVE_WAY" msprop:DbColumnName="GIVE_WAY" msprop:design-time-name="7351ae10-ae3e-48b8-856d-b16adbe1b0cc" type="xs:boolean" />
+                  <xs:element name="JUNCTION" msprop:FriendlyName="JUNCTION" msprop:DbColumnName="JUNCTION" msprop:design-time-name="b2c76ce0-79ee-4460-899e-8b70a62eb0b7" type="xs:boolean" />
+                  <xs:element name="NO_EXIT" msprop:FriendlyName="NO_EXIT" msprop:DbColumnName="NO_EXIT" msprop:design-time-name="33d5c99e-ed4c-4166-b83a-1c4fdddd63ca" type="xs:boolean" />
+                  <xs:element name="RAILWAY" msprop:FriendlyName="RAILWAY" msprop:DbColumnName="RAILWAY" msprop:design-time-name="bd05f0ed-442c-42d0-b8ad-c45bd8d55cfc" type="xs:boolean" />
+                  <xs:element name="ROUNDABOUT" msprop:FriendlyName="ROUNDABOUT" msprop:DbColumnName="ROUNDABOUT" msprop:design-time-name="dfb79a75-5c99-43eb-9fb7-70660dbfb10b" type="xs:boolean" />
+                  <xs:element name="STATION" msprop:FriendlyName="STATION" msprop:DbColumnName="STATION" msprop:design-time-name="2437829b-29a0-47d6-a061-2c38b7912a48" type="xs:boolean" />
+                  <xs:element name="STOP" msprop:FriendlyName="STOP" msprop:DbColumnName="STOP" msprop:design-time-name="4474202d-5ff2-4a46-9b95-efaf7ebafbbf" type="xs:boolean" />
+                  <xs:element name="TRAFFIC_CALMING" msprop:FriendlyName="TRAFFIC_CALMING" msprop:DbColumnName="TRAFFIC_CALMING" msprop:design-time-name="743f9c59-de43-4ef3-9c15-f11c3407b225" type="xs:boolean" />
+                  <xs:element name="TRAFFIC_SIGNAL" msprop:FriendlyName="TRAFFIC_SIGNAL" msprop:DbColumnName="TRAFFIC_SIGNAL" msprop:design-time-name="08fd7989-51e6-4f90-b47f-2da339e922d9" type="xs:boolean" />
+                  <xs:element name="TURNING_LOOP" msprop:FriendlyName="TURNING_LOOP" msprop:DbColumnName="TURNING_LOOP" msprop:design-time-name="5811c8bc-c520-4376-b1a8-745088b9b890" type="xs:boolean" />
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
-            <xs:element name="dbo_DIM_SOURCE" msprop:DbTableName="DIM_SOURCE" msprop:FriendlyName="DIM_SOURCE" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="fc108086-b47e-4a18-a905-91ac21257b7e">
+            <xs:element name="dbo_DIM_SOURCE" msprop:DbTableName="DIM_SOURCE" msprop:FriendlyName="DIM_SOURCE" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="fb6d0ec0-2193-4a25-92e1-80859694e1ec">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="SOURCE_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="SOURCE_ID" msprop:DbColumnName="SOURCE_ID" msprop:design-time-name="d20c51f9-df40-42b0-a2f1-d95810f13613" type="xs:int" />
-                  <xs:element name="SOURCE" msprop:FriendlyName="SOURCE" msprop:DbColumnName="SOURCE" msprop:design-time-name="11d52862-44d8-4512-91e0-7122997a56d2">
-                    <xs:simpleType>
-                      <xs:restriction base="xs:string">
-                        <xs:maxLength value="100" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="dbo_DIM_WEATHER" msprop:DbTableName="DIM_WEATHER" msprop:FriendlyName="DIM_WEATHER" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="e11c7569-a20f-4178-a45a-b52f8684cb7c">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="WEATHER_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="WEATHER_ID" msprop:DbColumnName="WEATHER_ID" msprop:design-time-name="27d70c8e-7efa-4d67-9e1c-130303d42fbf" type="xs:int" />
-                  <xs:element name="TEMPERATURE" msprop:FriendlyName="TEMPERATURE" msprop:DbColumnName="TEMPERATURE" msprop:design-time-name="80da3cfc-961e-45f2-aa51-ac488106c77c" type="xs:decimal" minOccurs="0" />
-                  <xs:element name="WIND_CHILL" msprop:FriendlyName="WIND_CHILL" msprop:DbColumnName="WIND_CHILL" msprop:design-time-name="86057307-c790-4b5a-a225-6aff93234b35" type="xs:decimal" minOccurs="0" />
-                  <xs:element name="HUMIDITY" msprop:FriendlyName="HUMIDITY" msprop:DbColumnName="HUMIDITY" msprop:design-time-name="c0501f7d-7738-4097-9e7e-6f8fdad8abfa" type="xs:decimal" minOccurs="0" />
-                  <xs:element name="PRESSURE" msprop:FriendlyName="PRESSURE" msprop:DbColumnName="PRESSURE" msprop:design-time-name="e8473e1f-d335-45a2-973f-b96ad5d833c8" type="xs:decimal" minOccurs="0" />
-                  <xs:element name="VISIBILITY" msprop:FriendlyName="VISIBILITY" msprop:DbColumnName="VISIBILITY" msprop:design-time-name="3dde0db4-6adb-4081-a574-05cc202ec258" type="xs:decimal" minOccurs="0" />
-                  <xs:element name="WIND_DIRECTION" msprop:FriendlyName="WIND_DIRECTION" msprop:DbColumnName="WIND_DIRECTION" msprop:design-time-name="783f8a16-ccae-4521-b948-4252b1aa8c03" minOccurs="0">
-                    <xs:simpleType>
-                      <xs:restriction base="xs:string">
-                        <xs:maxLength value="100" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:element>
-                  <xs:element name="WIND_SPEED" msprop:FriendlyName="WIND_SPEED" msprop:DbColumnName="WIND_SPEED" msprop:design-time-name="0236e312-6c1a-483e-8185-80e2d83e46b4" type="xs:decimal" minOccurs="0" />
-                  <xs:element name="PRECIPITATION" msprop:FriendlyName="PRECIPITATION" msprop:DbColumnName="PRECIPITATION" msprop:design-time-name="21175788-2b65-41b4-b841-271f9847af07" type="xs:decimal" minOccurs="0" />
-                  <xs:element name="WEATHER_CONDITION" msprop:FriendlyName="WEATHER_CONDITION" msprop:DbColumnName="WEATHER_CONDITION" msprop:design-time-name="23c05a1c-4cd3-49eb-a02e-5d9a620c4616" minOccurs="0">
-                    <xs:simpleType>
-                      <xs:restriction base="xs:string">
-                        <xs:maxLength value="100" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:element>
-                  <xs:element name="SUNRISE_SUNSET" msprop:FriendlyName="SUNRISE_SUNSET" msprop:DbColumnName="SUNRISE_SUNSET" msprop:design-time-name="31bbbd34-21c6-4009-92fc-b9236e0f608d" minOccurs="0">
-                    <xs:simpleType>
-                      <xs:restriction base="xs:string">
-                        <xs:maxLength value="100" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:element>
-                  <xs:element name="CIVIL_TWILIGHT" msprop:FriendlyName="CIVIL_TWILIGHT" msprop:DbColumnName="CIVIL_TWILIGHT" msprop:design-time-name="a0b798b5-745c-45e5-b556-8181d17ca6ec" minOccurs="0">
-                    <xs:simpleType>
-                      <xs:restriction base="xs:string">
-                        <xs:maxLength value="100" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:element>
-                  <xs:element name="NAUTICAL_TWILIGHT" msprop:FriendlyName="NAUTICAL_TWILIGHT" msprop:DbColumnName="NAUTICAL_TWILIGHT" msprop:design-time-name="c6696325-acc0-4298-a059-1e4050285449" minOccurs="0">
-                    <xs:simpleType>
-                      <xs:restriction base="xs:string">
-                        <xs:maxLength value="100" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:element>
-                  <xs:element name="ASTRONOMICAL_TWILIGHT" msprop:FriendlyName="ASTRONOMICAL_TWILIGHT" msprop:DbColumnName="ASTRONOMICAL_TWILIGHT" msprop:design-time-name="7258eb99-8085-4b6f-9ca6-0201dd7726d6" minOccurs="0">
+                  <xs:element name="SOURCE_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="SOURCE_ID" msprop:DbColumnName="SOURCE_ID" msprop:design-time-name="0a6c6bb6-1f90-4dea-a879-7e8a5f826a98" type="xs:int" />
+                  <xs:element name="SOURCE" msprop:FriendlyName="SOURCE" msprop:DbColumnName="SOURCE" msprop:design-time-name="fb41fccf-e05b-430c-a088-dc807ef55c82">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
                         <xs:maxLength value="100" />
@@ -149,76 +93,132 @@
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
-            <xs:element name="dbo_DIM_LOCATION" msprop:DbTableName="DIM_LOCATION" msprop:FriendlyName="DIM_LOCATION" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="e30d544b-c955-4c46-9f81-458dc0bcf4b2">
+            <xs:element name="dbo_DIM_WEATHER" msprop:DbTableName="DIM_WEATHER" msprop:FriendlyName="DIM_WEATHER" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="fb39ec9f-9648-4f01-8f0f-d4655a0a2cc2">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="LOCATION_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="LOCATION_ID" msprop:DbColumnName="LOCATION_ID" msprop:design-time-name="9644a2dc-02b3-4736-9681-e134b5e28f87" type="xs:int" />
-                  <xs:element name="STATE" msprop:FriendlyName="STATE" msprop:DbColumnName="STATE" msprop:design-time-name="4fcf8d68-6177-4ebf-93e9-21eee66c8766" minOccurs="0">
+                  <xs:element name="WEATHER_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="WEATHER_ID" msprop:DbColumnName="WEATHER_ID" msprop:design-time-name="b6bd614c-5261-4225-b0be-cd3d977af759" type="xs:int" />
+                  <xs:element name="TEMPERATURE" msprop:FriendlyName="TEMPERATURE" msprop:DbColumnName="TEMPERATURE" msprop:design-time-name="c9e89c70-ab56-49c2-82d8-54b68cf75b6f" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="WIND_CHILL" msprop:FriendlyName="WIND_CHILL" msprop:DbColumnName="WIND_CHILL" msprop:design-time-name="560c6f80-dff9-4a64-b982-567becd5abe0" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="HUMIDITY" msprop:FriendlyName="HUMIDITY" msprop:DbColumnName="HUMIDITY" msprop:design-time-name="a5fb566a-34ef-4451-8075-cd96de6b3604" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="PRESSURE" msprop:FriendlyName="PRESSURE" msprop:DbColumnName="PRESSURE" msprop:design-time-name="3affbced-6588-400d-9e45-0c0ac4a74d81" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="VISIBILITY" msprop:FriendlyName="VISIBILITY" msprop:DbColumnName="VISIBILITY" msprop:design-time-name="faf4ae6a-cf6b-4c9b-85c9-b539ce25784b" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="WIND_DIRECTION" msprop:FriendlyName="WIND_DIRECTION" msprop:DbColumnName="WIND_DIRECTION" msprop:design-time-name="a11384ee-2421-4719-9448-e4ede8a10d68" minOccurs="0">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
                         <xs:maxLength value="100" />
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:element>
-                  <xs:element name="COUNTY" msprop:FriendlyName="COUNTY" msprop:DbColumnName="COUNTY" msprop:design-time-name="d2e3a576-063c-4d72-bb3c-2ccb53b42b08" minOccurs="0">
+                  <xs:element name="WIND_SPEED" msprop:FriendlyName="WIND_SPEED" msprop:DbColumnName="WIND_SPEED" msprop:design-time-name="82f5a882-2a7a-4bc1-9760-c71f06671245" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="PRECIPITATION" msprop:FriendlyName="PRECIPITATION" msprop:DbColumnName="PRECIPITATION" msprop:design-time-name="ec9e626a-8a52-421a-89dc-ebd28ad4e6a4" type="xs:decimal" minOccurs="0" />
+                  <xs:element name="WEATHER_CONDITION" msprop:FriendlyName="WEATHER_CONDITION" msprop:DbColumnName="WEATHER_CONDITION" msprop:design-time-name="ea5efb18-8975-43e7-be95-5fa19278376a" minOccurs="0">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
                         <xs:maxLength value="100" />
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:element>
-                  <xs:element name="CITY" msprop:FriendlyName="CITY" msprop:DbColumnName="CITY" msprop:design-time-name="7995fd0e-d3c9-466e-a2ea-fd012aa01f4c" minOccurs="0">
+                  <xs:element name="SUNRISE_SUNSET" msprop:FriendlyName="SUNRISE_SUNSET" msprop:DbColumnName="SUNRISE_SUNSET" msprop:design-time-name="f458bb94-fb01-4427-8c2f-2739cb6bc1fa" minOccurs="0">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
                         <xs:maxLength value="100" />
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:element>
-                  <xs:element name="STREET" msprop:FriendlyName="STREET" msprop:DbColumnName="STREET" msprop:design-time-name="53f92c8a-4968-48a8-bc73-35762a84e9f7" minOccurs="0">
+                  <xs:element name="CIVIL_TWILIGHT" msprop:FriendlyName="CIVIL_TWILIGHT" msprop:DbColumnName="CIVIL_TWILIGHT" msprop:design-time-name="fb868c07-e755-4ed9-91b0-caad31317f62" minOccurs="0">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
                         <xs:maxLength value="100" />
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:element>
-                  <xs:element name="ZIPCODE" msprop:FriendlyName="ZIPCODE" msprop:DbColumnName="ZIPCODE" msprop:design-time-name="24569309-01e2-498c-b260-f6c74159060e" minOccurs="0">
+                  <xs:element name="NAUTICAL_TWILIGHT" msprop:FriendlyName="NAUTICAL_TWILIGHT" msprop:DbColumnName="NAUTICAL_TWILIGHT" msprop:design-time-name="f65bb8fd-a9e7-4301-b7cb-3dced86c43ef" minOccurs="0">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
                         <xs:maxLength value="100" />
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:element>
-                  <xs:element name="AIRPORT_CODE" msprop:FriendlyName="AIRPORT_CODE" msprop:DbColumnName="AIRPORT_CODE" msprop:design-time-name="67c8ecc5-4a1d-4905-82ae-5f7ebf722b16" minOccurs="0">
+                  <xs:element name="ASTRONOMICAL_TWILIGHT" msprop:FriendlyName="ASTRONOMICAL_TWILIGHT" msprop:DbColumnName="ASTRONOMICAL_TWILIGHT" msprop:design-time-name="eefa2b2e-c561-4856-8d86-016a15a0bb68" minOccurs="0">
                     <xs:simpleType>
                       <xs:restriction base="xs:string">
                         <xs:maxLength value="100" />
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:element>
-                  <xs:element name="TIMEZONE" msprop:FriendlyName="TIMEZONE" msprop:DbColumnName="TIMEZONE" msprop:design-time-name="8881d9c6-c8f7-448b-ade3-94e5fe8b2c5c" minOccurs="0">
-                    <xs:simpleType>
-                      <xs:restriction base="xs:string">
-                        <xs:maxLength value="100" />
-                      </xs:restriction>
-                    </xs:simpleType>
-                  </xs:element>
-                  <xs:element name="LATITUDE" msprop:FriendlyName="LATITUDE" msprop:DbColumnName="LATITUDE" msprop:design-time-name="34297250-e6e6-4866-8c3f-a7b180ecb0b7" type="xs:decimal" />
-                  <xs:element name="LONGITUDE" msprop:FriendlyName="LONGITUDE" msprop:DbColumnName="LONGITUDE" msprop:design-time-name="9ed57487-3bbf-45c0-82db-be13bb080ec5" type="xs:decimal" />
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
-            <xs:element name="dbo_DIM_TIME" msprop:DbTableName="DIM_TIME" msprop:FriendlyName="DIM_TIME" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="96a5b932-b691-4d91-8805-d9aa1aaa8205">
+            <xs:element name="dbo_DIM_LOCATION" msprop:DbTableName="DIM_LOCATION" msprop:FriendlyName="DIM_LOCATION" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="23fff158-b94c-487d-8160-bbac34cbf457">
               <xs:complexType>
                 <xs:sequence>
-                  <xs:element name="TIME_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="TIME_ID" msprop:DbColumnName="TIME_ID" msprop:design-time-name="44849467-8ff2-4090-9f07-75b76e898a3f" type="xs:int" />
-                  <xs:element name="YEAR" msprop:FriendlyName="YEAR" msprop:DbColumnName="YEAR" msprop:design-time-name="226dbc6c-0a3a-4bd0-ba44-543be99295cd" type="xs:int" />
-                  <xs:element name="QUARTER" msprop:FriendlyName="QUARTER" msprop:DbColumnName="QUARTER" msprop:design-time-name="f778e61c-7701-4e0a-b8ed-223d61dfe5a3" type="xs:int" />
-                  <xs:element name="MONTH" msprop:FriendlyName="MONTH" msprop:DbColumnName="MONTH" msprop:design-time-name="39ba216d-ce37-4a17-be14-6151e29e49c0" type="xs:int" />
-                  <xs:element name="DAY" msprop:FriendlyName="DAY" msprop:DbColumnName="DAY" msprop:design-time-name="d318b4a2-083b-4629-baef-9e1ebc662678" type="xs:int" />
-                  <xs:element name="HOUR" msprop:FriendlyName="HOUR" msprop:DbColumnName="HOUR" msprop:design-time-name="138dce0d-6e7a-4929-9f3c-97a2f0c98110" type="xs:int" />
-                  <xs:element name="MINUTE" msprop:FriendlyName="MINUTE" msprop:DbColumnName="MINUTE" msprop:design-time-name="63c2b386-1f34-4a01-a198-021c8bcfa117" type="xs:int" />
-                  <xs:element name="SECOND" msprop:FriendlyName="SECOND" msprop:DbColumnName="SECOND" msprop:design-time-name="1838be1e-174e-448d-bdda-b3d1c5149085" type="xs:int" />
-                  <xs:element name="IS_WEEKEND" msprop:FriendlyName="IS_WEEKEND" msprop:DbColumnName="IS_WEEKEND" msprop:design-time-name="13deba5d-a79b-43c3-858b-11bf648cda73" type="xs:boolean" />
+                  <xs:element name="LOCATION_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="LOCATION_ID" msprop:DbColumnName="LOCATION_ID" msprop:design-time-name="8693f6d7-046b-4d64-9e5b-ef6b37671879" type="xs:int" />
+                  <xs:element name="STATE" msprop:FriendlyName="STATE" msprop:DbColumnName="STATE" msprop:design-time-name="dfef0d28-c883-4617-b354-07d179d676e9" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="COUNTY" msprop:FriendlyName="COUNTY" msprop:DbColumnName="COUNTY" msprop:design-time-name="99580a35-140b-466a-8405-fd240f604966" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="CITY" msprop:FriendlyName="CITY" msprop:DbColumnName="CITY" msprop:design-time-name="a4762991-739c-47e8-a3ec-655b5d105dda" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="STREET" msprop:FriendlyName="STREET" msprop:DbColumnName="STREET" msprop:design-time-name="188b7824-d135-4257-aad9-10f526591a10" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="ZIPCODE" msprop:FriendlyName="ZIPCODE" msprop:DbColumnName="ZIPCODE" msprop:design-time-name="8d6109cc-dea8-4280-9ac1-86699f2e4ad2" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="AIRPORT_CODE" msprop:FriendlyName="AIRPORT_CODE" msprop:DbColumnName="AIRPORT_CODE" msprop:design-time-name="7ccc42e9-0716-419f-930f-86534a505e17" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="TIMEZONE" msprop:FriendlyName="TIMEZONE" msprop:DbColumnName="TIMEZONE" msprop:design-time-name="4bc77294-d3f6-4a09-93fe-5ab43ab3bddd" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="100" />
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="LATITUDE" msprop:FriendlyName="LATITUDE" msprop:DbColumnName="LATITUDE" msprop:design-time-name="cf5e91f7-5085-4f91-b29e-8b23824a2b04" type="xs:decimal" />
+                  <xs:element name="LONGITUDE" msprop:FriendlyName="LONGITUDE" msprop:DbColumnName="LONGITUDE" msprop:design-time-name="0d0dc8e4-d1eb-4191-a4ad-1db957b6afb0" type="xs:decimal" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="dbo_DIM_TIME" msprop:DbTableName="DIM_TIME" msprop:FriendlyName="DIM_TIME" msprop:TableType="Table" msprop:DbSchemaName="dbo" msprop:design-time-name="b6a0c654-649f-4d8d-a82d-a1a0ffcd62d0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="TIME_ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:FriendlyName="TIME_ID" msprop:DbColumnName="TIME_ID" msprop:design-time-name="4c6b908c-69f8-4c9e-9610-888286488a5b" type="xs:int" />
+                  <xs:element name="YEAR" msprop:FriendlyName="YEAR" msprop:DbColumnName="YEAR" msprop:design-time-name="04a89948-b544-444d-9c4c-234faea46119" type="xs:int" />
+                  <xs:element name="QUARTER" msprop:FriendlyName="QUARTER" msprop:DbColumnName="QUARTER" msprop:design-time-name="79a62f30-91e9-4ae2-bc60-ed290c33d670" type="xs:int" />
+                  <xs:element name="MONTH" msprop:FriendlyName="MONTH" msprop:DbColumnName="MONTH" msprop:design-time-name="25ff2225-4218-42e6-971c-cc166896ef5f" type="xs:int" />
+                  <xs:element name="DAY" msprop:FriendlyName="DAY" msprop:DbColumnName="DAY" msprop:design-time-name="1eadc924-cec4-4a45-98cb-87761ecdea13" type="xs:int" />
+                  <xs:element name="HOUR" msprop:FriendlyName="HOUR" msprop:DbColumnName="HOUR" msprop:design-time-name="e0c77701-98a2-45bb-a37d-8fd2c59ec301" type="xs:int" />
+                  <xs:element name="MINUTE" msprop:FriendlyName="MINUTE" msprop:DbColumnName="MINUTE" msprop:design-time-name="abf1d6c0-0e6d-449b-9c19-9ac4012c6309" type="xs:int" />
+                  <xs:element name="SECOND" msprop:FriendlyName="SECOND" msprop:DbColumnName="SECOND" msprop:design-time-name="60113d51-29b4-4836-b29f-8e353fca51dc" type="xs:int" />
+                  <xs:element name="IS_WEEKEND" msprop:FriendlyName="IS_WEEKEND" msprop:DbColumnName="IS_WEEKEND" msprop:design-time-name="d0569391-a256-41c6-b93f-49009935438e" type="xs:boolean" />
                 </xs:sequence>
               </xs:complexType>
             </xs:element>

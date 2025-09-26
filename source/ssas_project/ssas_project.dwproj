@@ -20,24 +20,24 @@
   </Cubes>
   <Dimensions>
     <ProjectItem>
+      <Name>DIM ENVIRONMENT.dim</Name>
+      <FullPath>DIM ENVIRONMENT.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>DIM SOURCE.dim</Name>
       <FullPath>DIM SOURCE.dim</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>DIM TIME.dim</Name>
-      <FullPath>DIM TIME.dim</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>DIM LOCATION.dim</Name>
-      <FullPath>DIM LOCATION.dim</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>DIM WEATHER.dim</Name>
       <FullPath>DIM WEATHER.dim</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>DIM ENVIRONMENT.dim</Name>
-      <FullPath>DIM ENVIRONMENT.dim</FullPath>
+      <Name>DIM LOCATION.dim</Name>
+      <FullPath>DIM LOCATION.dim</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>DIM TIME.dim</Name>
+      <FullPath>DIM TIME.dim</FullPath>
     </ProjectItem>
   </Dimensions>
   <DataSources>
