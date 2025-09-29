@@ -346,10 +346,7 @@ def phase_sql_data_types(df: pd.DataFrame) -> pd.DataFrame:
         elif col in ['QUARTER', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'SECOND']:
             df[col] = df[col].astype('int8')   # tinyint
         else:
-            df[col] = df[col].astype('int32')  # int
-    
-    # Boolean -> bit (giữ nguyên kiểu bool để analyze.py nhận diện đúng)
-    bool_cols = df.select_dtypes(include=['bool']).columns
+            df[col] = df[col].astype('int32')  # int32
     
     # Danh sách các cột environment và IS_WEEKEND luôn là Boolean (BIT)
     environment_boolean_cols = [
@@ -364,11 +361,8 @@ def phase_sql_data_types(df: pd.DataFrame) -> pd.DataFrame:
             if df[col].dtype in ['int8', 'int16', 'int32', 'int64', 'float32', 'float64']:
                 # Convert về bool (0 -> False, non-zero -> True)
                 df[col] = df[col].astype('bool')
-    
-    # Giữ nguyên tất cả cột bool để analyze.py mapping đúng thành BIT
-    # SQL Server sẽ tự động xử lý bool -> BIT khi import
-    
-    # Chuỗi: nvarchar(4000) cho STREET, nvarchar(100) cho các cột khác
+
+    # Chuỗi
     string_cols = df.select_dtypes(include=['object']).columns
     for col in string_cols:
         df[col] = df[col].astype('string')  # Sử dụng string type để mapping SQL
