@@ -131,7 +131,8 @@ CREATE TABLE [dbo].[FACT_ACCIDENT] (
     [WEATHER_ID]      INT NOT NULL,
     [ENVIRONMENT_ID]  INT NOT NULL,
     [SEVERITY]        INT NOT NULL,        
-    [DISTANCE]        DECIMAL(8,4) NOT NULL
+    [DISTANCE]        DECIMAL(8,4) NOT NULL,
+    [DURATION]        INT NOT NULL
 );
 
 -- ============================================

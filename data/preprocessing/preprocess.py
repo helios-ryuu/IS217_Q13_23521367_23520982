@@ -239,7 +239,7 @@ class PreprocessingReporter:
         self.add_to_report("-" * 50)
         
         phases = [
-            ("Pha 1", "Xóa cột không cần thiết", "Loại bỏ các cột ID, Description, End_Time, Country, v.v."),
+            ("Pha 1", "Tính DURATION và xóa cột không cần thiết", "Tính thời lượng tai nạn (giây) và loại bỏ các cột ID, Description, End_Time, Country, v.v."),
             ("Pha 2", "Lọc dữ liệu theo ngày", "Chỉ giữ lại dữ liệu từ 2018 trở lên"),
             ("Pha 3", "Tạo đặc trưng thời gian", "Thêm các cột YEAR, MONTH, DAY, HOUR, v.v."),
             ("Pha 4", "Chuyển đổi kiểu dữ liệu SQL", "Tối ưu hóa kiểu dữ liệu cho SQL Server"),
@@ -285,7 +285,21 @@ class PreprocessingReporter:
 # ==========================================
 
 def phase_delete_columns(df: pd.DataFrame, columns_to_delete: List[str]) -> pd.DataFrame:
-    """Pha 1: Xóa cột không cần thiết"""
+    """Pha 1: Xóa cột không cần thiết và tính DURATION"""
+    # Tính toán DURATION trước khi xóa End_Time
+    if 'Start_Time' in df.columns and 'End_Time' in df.columns:
+        # Chuyển đổi về datetime nếu chưa phải
+        df['Start_Time'] = pd.to_datetime(df['Start_Time'], errors='coerce')
+        df['End_Time'] = pd.to_datetime(df['End_Time'], errors='coerce')
+        
+        # Tính DURATION bằng giây (làm tròn thành số nguyên)
+        df['DURATION'] = (df['End_Time'] - df['Start_Time']).dt.total_seconds()
+        df['DURATION'] = df['DURATION'].fillna(0).round().astype('int64')
+        
+        # Xử lý giá trị âm (đặt về 0)
+        df.loc[df['DURATION'] < 0, 'DURATION'] = 0
+    
+    # Xóa các cột không cần thiết
     columns_to_drop = [col for col in columns_to_delete if col in df.columns]
     return df.drop(columns=columns_to_drop) if columns_to_drop else df
 
@@ -345,6 +359,8 @@ def phase_sql_data_types(df: pd.DataFrame) -> pd.DataFrame:
             df[col] = df[col].astype('int16')  # smallint
         elif col in ['QUARTER', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'SECOND']:
             df[col] = df[col].astype('int8')   # tinyint
+        elif col == 'DURATION':
+            df[col] = df[col].astype('int64')  # bigint cho DURATION (giây)
         else:
             df[col] = df[col].astype('int32')  # int32
     
@@ -401,7 +417,7 @@ def phase_reorder_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Pha 6: Sắp xếp lại thứ tự cột theo DDL SQL Server"""
     
     # Định nghĩa thứ tự cột theo DDL - fact attributes lên đầu
-    fact_columns = ['SEVERITY', 'DISTANCE']
+    fact_columns = ['SEVERITY', 'DISTANCE', 'DURATION']
     
     # Các nhóm cột dimension theo thứ tự DDL
     source_columns = ['SOURCE']
@@ -480,7 +496,7 @@ def process_chunks(input_file: str, output_file: str, chunk_size: int = 2600000,
         'total_rows_input': 0,
         'total_rows_output': 0,
         'columns_deleted': 0,
-        'time_features_added': 7,
+        'time_features_added': 8,  # Bao gồm cả DURATION
         'phase_stats': {},
         'processing_log': [],
         'file_info': {

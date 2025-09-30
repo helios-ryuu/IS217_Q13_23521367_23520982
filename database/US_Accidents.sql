@@ -42,6 +42,7 @@ CREATE TABLE [dbo].[ACCIDENTS] (
     -- Fact measures
     [SEVERITY] INT NOT NULL,
     [DISTANCE] DECIMAL(8,4) NOT NULL,
+    [DURATION] INT NOT NULL,
 
     -- Source
     [SOURCE] NVARCHAR(100) NOT NULL,

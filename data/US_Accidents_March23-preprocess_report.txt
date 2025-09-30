@@ -1,7 +1,7 @@
 ================================================================================
 🔄 BÁO CÁO TIỀN XỬ LÝ DỮ LIỆU
 ================================================================================
-📅 Ngày tạo: 2025-09-25 15:20:46
+📅 Ngày tạo: 2025-09-29 09:45:53
 
 ⚙️ THÔNG TIN CẤU HÌNH
 --------------------------------------------------
@@ -14,22 +14,20 @@ Cột xóa: 7 cột
 📝 CHI TIẾT QUÁ TRÌNH XỬ LÝ
 --------------------------------------------------
 📊 Tổng 7,728,394 dòng, 3 khối
-ℹ️ Pha 4: Không có giá trị trống/null nào cần thay thế
-📝 Tạo file đầu ra với 46 cột
+📝 Tạo file đầu ra với 47 cột
 ✅ Hoàn thành xử lý tất cả khối
 
 🔄 SO SÁNH CHI TIẾT BỘ DỮ LIỆU
 ======================================================================
 📁 FILE:
   Gốc: 2.85 GB
-  Xử lý: 1.42 GB
-  Giảm dung lượng: 50.2%
+  Xử lý: 1.45 GB
+  Giảm dung lượng: 49.2%
 📏 DỮ LIỆU:
   Dòng đầu vào: 7,728,394
   Dòng đầu ra: 5,857,117
   Giảm dòng: 24.2%
-  Cột đã xóa: 7
-  Xử lý NULL/empty: Không có giá trị nào cần thay thế
+  Cột đã xóa: 6
   Đặc trưng thời gian thêm: 8
   Khối đã xử lý: 3
 
@@ -56,15 +54,15 @@ Giá trị thiếu:
 📊 PHÂN TÍCH DỮ LIỆU ĐÃ XỬ LÝ
 --------------------------------------------------
 📁 File: US_Accidents_March23-preprocessed.csv
-💾 Kích thước: 1.42 GB
+💾 Kích thước: 1.45 GB
 📏 Tổng dòng: 5,857,117
-📐 Tổng cột: 46
+📐 Tổng cột: 47
 
 Kiểu dữ liệu:
   bool: 14 cột
   object: 14 cột
   float64: 10 cột
-  int64: 8 cột
+  int64: 9 cột
 
 Giá trị thiếu:
   STREET: 519 (1.04%)
@@ -83,22 +81,21 @@ Dataset gốc:
 
 Dataset đã xử lý:
   - Số dòng: 5,857,117
-  - Số cột: 46
-  - Kích thước file: 1.42 GB
-  - Bộ nhớ: 8.8 MB
+  - Số cột: 47
+  - Kích thước file: 1.45 GB
+  - Bộ nhớ: 8.9 MB
 
 📊 THAY ĐỔI SAU TIỀN XỬ LÝ
 --------------------------------------------------
 Số dòng: -1,871,277 (-24.2%)
-Số cột: +0 cột
-Kích thước file: -1464.2 MB (-50.2%)
-Bộ nhớ: -3.7 MB (-29.6%)
+Số cột: +1 cột
+Kích thước file: -1435.6 MB (-49.2%)
+Bộ nhớ: -3.6 MB (-29.0%)
 
 🔄 CHI TIẾT QUÁ TRÌNH XỬ LÝ
 --------------------------------------------------
 Tổng số khối đã xử lý: 3
-Cột đã xóa: 7
-Xử lý NULL/empty: Không có giá trị nào cần thay thế
+Cột đã xóa: 6
 Đặc trưng thời gian thêm: 8
 
 Cột đã xóa (46):
@@ -149,7 +146,7 @@ Cột đã xóa (46):
   - Wind_Speed(mph)
   - Zipcode
 
-Cột đã thêm (46):
+Cột đã thêm (47):
   - AIRPORT_CODE
   - AMENITY
   - ASTRONOMICAL_TWILIGHT
@@ -160,6 +157,7 @@ Cột đã thêm (46):
   - CROSSING
   - DAY
   - DISTANCE
+  - DURATION
   - GIVE_WAY
   - HOUR
   - HUMIDITY
@@ -199,28 +197,22 @@ Cột đã thêm (46):
 
 🔄 CHI TIẾT CÁC PHA TIỀN XỬ LÝ
 --------------------------------------------------
-Pha 1: Xóa cột không cần thiết
-   Loại bỏ các cột ID, Description, End_Time, Country, v.v.
+Pha 1: Tính DURATION và xóa cột không cần thiết
+   Tính thời lượng tai nạn (giây) và loại bỏ các cột ID, Description, End_Time, Country, v.v.
 
 Pha 2: Lọc dữ liệu theo ngày
    Chỉ giữ lại dữ liệu từ 2018 trở lên
 
-Pha 3: Loại bỏ dữ liệu rỗng
-   Lọc các record không có thông tin cần thiết
-
-Pha 4: Xử lý giá trị NULL và empty strings
-   Thay thế NULL/empty/whitespace bằng 'Unknown' cho các cột phân cấp
-
-Pha 5: Tạo đặc trưng thời gian
+Pha 3: Tạo đặc trưng thời gian
    Thêm các cột YEAR, MONTH, DAY, HOUR, v.v.
 
-Pha 6: Chuyển đổi kiểu dữ liệu SQL
+Pha 4: Chuyển đổi kiểu dữ liệu SQL
    Tối ưu hóa kiểu dữ liệu cho SQL Server
 
-Pha 7: Chuẩn hóa tên cột
+Pha 5: Chuẩn hóa tên cột
    Chuyển tên cột thành chữ hoa và chuẩn hóa
 
-Pha 8: Sắp xếp thứ tự cột
+Pha 6: Sắp xếp thứ tự cột
    Sắp xếp cột theo thứ tự DDL SQL Server
 
 🎆 KẾT QUẢ
