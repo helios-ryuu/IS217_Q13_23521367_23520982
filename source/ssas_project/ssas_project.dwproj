@@ -6,6 +6,18 @@
     <Name>ssas_project.database</Name>
     <FullPath>ssas_project.database</FullPath>
   </Database>
+  <Cubes>
+    <ProjectItem>
+      <Name>US Accidents DW.cube</Name>
+      <FullPath>US Accidents DW.cube</FullPath>
+      <Dependencies>
+        <ProjectItem>
+          <Name>US Accidents DW.partitions</Name>
+          <FullPath>US Accidents DW.partitions</FullPath>
+        </ProjectItem>
+      </Dependencies>
+    </ProjectItem>
+  </Cubes>
   <Dimensions>
     <ProjectItem>
       <Name>DIM ENVIRONMENT.dim</Name>
