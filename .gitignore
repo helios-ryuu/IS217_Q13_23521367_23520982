@@ -13,3 +13,5 @@ obj/
 *.dbmdl
 *.bak
 .idea/
+*.mp4
+*.mlt
