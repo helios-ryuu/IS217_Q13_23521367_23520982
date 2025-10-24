@@ -12,3 +12,4 @@ obj/
 *.log
 *.dbmdl
 *.bak
+.idea/
