@@ -1,7 +1,7 @@
 🚀 STARTING COMPREHENSIVE DATASET ANALYSIS
 ================================================================================
 📁 File: ../US_Accidents_March23-preprocessed.csv
-⏰ Started at: 2025-09-29 09:46:56
+⏰ Started at: 2025-11-05 23:08:02
 🔄 Loading dataset from: ../US_Accidents_March23-preprocessed.csv
 ✅ Successfully loaded 5,857,117 rows and 47 columns
 
@@ -9,7 +9,7 @@
 ============================================================
 📈 Dataset Shape: 5,857,117 rows × 47 columns
 💾 Memory Usage: 5207.16 MB
-📅 Analysis Date: 2025-09-29 09:47:21
+📅 Analysis Date: 2025-11-05 23:08:25
 
 🏷️ DATA TYPES:
   bool           :  14 columns
