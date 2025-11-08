@@ -102,7 +102,7 @@ WHERE ([DIM LOCATION].[STATE].&[CA])
 
 WITH 
 MEMBER [Measures].[YoYGrowth_Percent] AS 
-    IIF(
+    ROUND(IIF(
         ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents]) = 0,
         NULL,
         ROUND((
@@ -110,8 +110,7 @@ MEMBER [Measures].[YoYGrowth_Percent] AS
             - ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents])
         )
         / ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents]),2)
-    ),
-    FORMAT_STRING = "Percent"
+    ),2)
 
 SELECT 
     {
@@ -120,7 +119,7 @@ SELECT
     } ON COLUMNS,
     NON EMPTY
       CrossJoin(
-           [DIM LOCATION].[CITY].[CITY].MEMBERS,
+           [DIM LOCATION].[STATE].[STATE].MEMBERS,
             [DIM TIME].[YEAR].[YEAR].MEMBERS
       )
     ON ROWS
