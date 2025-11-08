@@ -62,10 +62,12 @@ python preprocess.py large_data.csv \
 
 ## 📊 Các Pha Xử Lý Chi Tiết
 
-### **Pha 1: Xóa cột không cần thiết** 🗑️
-- **Mục đích**: Loại bỏ các cột không cần thiết cho Data Warehouse
-- **Cột mặc định xóa**: `ID`, `Description`, `End_Lat`, `End_Lng`, `End_Time`, `Weather_Timestamp`, `Country`
-- **Lý do**: Giảm kích thước dữ liệu, loại bỏ thông tin dư thừa hoặc không phù hợp cho phân tích
+### **Pha 1: Xóa cột, tính DURATION và lọc chuỗi dài** 🗑️
+- **Mục đích**: Loại bỏ cột không cần thiết, tính thời lượng, lọc dữ liệu chất lượng
+- **Cột mặc định xóa**: `ID`, `Description`, `End_Lat`, `End_Lng`, `End_Time`, `Weather_Timestamp`, `Country`, `Civil_Twilight`, `Nautical_Twilight`, `Astronomical_Twilight`, `Airport_Code`, `Timezone`, `Source`
+- **Tính toán**: `DURATION` (giây) = `End_Time` - `Start_Time`
+- **Lọc dữ liệu**: Loại bỏ records có chuỗi > 50 ký tự (silent, đảm bảo chất lượng)
+- **Lý do**: Giảm kích thước, loại bỏ dữ liệu dư thừa và không đủ chất lượng
 - **Tùy chỉnh**: Sử dụng `--delete-columns` để chỉ định danh sách cột khác
 
 ### **Pha 2: Lọc dữ liệu theo ngày** 📅
@@ -83,22 +85,24 @@ python preprocess.py large_data.csv \
   - `MONTH` (int8) - Tháng (1-12)
   - `DAY` (int8) - Ngày (1-31)
   - `HOUR` (int8) - Giờ (0-23)
-  - `MINUTE` (int8) - Phút (0-59)
-  - `SECOND` (int8) - Giây (0-59)
   - `IS_WEEKEND` (bool) - True nếu là cuối tuần
 - **Lợi ích**: Hỗ trợ phân tích theo thời gian, tạo dashboard theo các khoảng thời gian khác nhau
+- **Lưu ý**: Loại bỏ `MINUTE`, `SECOND` để tối ưu hóa
 
 ### **Pha 4: Chuyển đổi kiểu dữ liệu SQL Server** 🔄
-- **Mục đích**: Tối ưu hóa kiểu dữ liệu cho SQL Server
+- **Mục đích**: Tối ưu hóa kiểu dữ liệu cho SQL Server và chuẩn hóa chuỗi
+- **Chuẩn hóa chuỗi**:
+  - **Trim**: Loại bỏ khoảng trắng thừa đầu/cuối
+  - **Replace NULL**: Thay thế null/empty bằng "Unknown"
 - **Mapping chi tiết**:
-  - **Tọa độ** (`Start_Lat`, `Start_Lng`, `LATITUDE`, `LONGITUDE`) → `decimal(9,6)`
+  - **Tọa độ** (`LATITUDE`, `LONGITUDE`) → `decimal(9,6)`
   - **Số thực khác** → `decimal(8,4)`
+  - **DURATION** → `bigint` (giây)
   - **Năm** → `smallint`
-  - **Tháng, ngày, giờ, phút, giây, quý** → `tinyint`
-  - **Số nguyên lớn** → `int`
-  - **Boolean** → `bit` (qua bool type)
+  - **Tháng, ngày, giờ, quý** → `tinyint`
+  - **Boolean** (IS_WEEKEND, environment) → `bit`
   - **Chuỗi** → `nvarchar` (tối ưu kích thước)
-- **Lợi ích**: Giảm dung lượng database, tăng hiệu suất query, đảm bảo tương thích SQL Server
+- **Lợi ích**: Giảm dung lượng database, tăng hiệu suất query, dữ liệu sạch
 
 ### **Pha 5: Chuẩn hóa tên cột** 📝
 - **Mục đích**: Chuẩn hóa tên cột theo convention SQL Server
@@ -112,13 +116,13 @@ python preprocess.py large_data.csv \
 ### **Pha 6: Sắp xếp thứ tự cột theo DDL** 📋
 - **Mục đích**: Sắp xếp cột theo thứ tự logic trong Data Warehouse schema
 - **Thứ tự ưu tiên**:
-  1. **Fact Attributes**: `SEVERITY`, `DISTANCE`
-  2. **Source Dimension**: `SOURCE`
-  3. **Time Dimension**: `YEAR`, `QUARTER`, `MONTH`, `DAY`, `HOUR`, `MINUTE`, `SECOND`, `IS_WEEKEND`
-  4. **Location Dimension**: `STATE`, `COUNTY`, `CITY`, `STREET`, `ZIPCODE`, `AIRPORT_CODE`, `TIMEZONE`, `LATITUDE`, `LONGITUDE`
-  5. **Weather Dimension**: `TEMPERATURE`, `WIND_CHILL`, `HUMIDITY`, `PRESSURE`, `VISIBILITY`, `WIND_DIRECTION`, `WIND_SPEED`, `PRECIPITATION`, `WEATHER_CONDITION`, `SUNRISE_SUNSET`, `CIVIL_TWILIGHT`, `NAUTICAL_TWILIGHT`, `ASTRONOMICAL_TWILIGHT`
-  6. **Environment Dimension**: `AMENITY`, `BUMP`, `CROSSING`, `GIVE_WAY`, `JUNCTION`, `NO_EXIT`, `RAILWAY`, `ROUNDABOUT`, `STATION`, `STOP`, `TRAFFIC_CALMING`, `TRAFFIC_SIGNAL`, `TURNING_LOOP`
+  1. **Fact Attributes**: `SEVERITY`, `DISTANCE`, `DURATION`
+  2. **Time Dimension**: `YEAR`, `QUARTER`, `MONTH`, `DAY`, `HOUR`, `IS_WEEKEND`
+  3. **Location Dimension**: `STATE`, `COUNTY`, `CITY`, `STREET`, `ZIPCODE`, `LATITUDE`, `LONGITUDE`
+  4. **Weather Dimension**: `TEMPERATURE`, `WIND_CHILL`, `HUMIDITY`, `PRESSURE`, `VISIBILITY`, `WIND_DIRECTION`, `WIND_SPEED`, `PRECIPITATION`, `WEATHER_CONDITION`, `SUNRISE_SUNSET`
+  5. **Environment Dimension**: `AMENITY`, `BUMP`, `CROSSING`, `GIVE_WAY`, `JUNCTION`, `NO_EXIT`, `RAILWAY`, `ROUNDABOUT`, `STATION`, `STOP`, `TRAFFIC_CALMING`, `TRAFFIC_SIGNAL`, `TURNING_LOOP`
 - **Lợi ích**: Dễ import vào SQL Server, khớp với DDL schema, dễ maintain
+- **Lưu ý**: Loại bỏ SOURCE dimension, các cột twilight, timezone, airport_code
 
 ## 📈 Kết Quả & Báo Cáo
 
@@ -129,11 +133,15 @@ python preprocess.py large_data.csv \
 ### 📊 Thống kê điển hình (US Accidents Dataset)
 ```
 📁 FILE:
-  Gốc: 2.85 GB → Xử lý: 1.42 GB (giảm 50.2%)
+  Gốc: 2.85 GB → Xử lý: ~1.35 GB (giảm ~52%)
 📏 DỮ LIỆU:
-  Dòng: 7,728,394 → 5,857,117 (giảm 24.2%)
-  Cột: 46 → 46 (7 cột xóa + 8 cột thời gian thêm)
+  Dòng: 7,728,394 → ~5,800,000 (giảm ~25%, do lọc ngày + chuỗi dài)
+  Cột: 46 → 39 (13 cột xóa + 6 cột thời gian thêm)
   Khối xử lý: 3 khối (2.6M dòng/khối)
+🔄 TỐI ƯU:
+  - Loại bỏ records có chuỗi > 50 ký tự
+  - Chuẩn hóa: trim + replace null với "Unknown"
+  - Tối ưu kiểu dữ liệu cho SQL Server
 ```
 
 ### 📋 Nội dung báo cáo
@@ -154,6 +162,8 @@ python preprocess.py large_data.csv \
 - **Type Optimization**: Mapping chính xác kiểu dữ liệu SQL Server
 - **Column Order**: Thứ tự cột khớp với DDL schema
 - **Data Validation**: Kiểm tra và làm sạch dữ liệu
+- **String Normalization**: Trim + replace null với "Unknown"
+- **Quality Filter**: Loại bỏ records có chuỗi > 50 ký tự
 - **Size Reduction**: Giảm 50%+ dung lượng sau xử lý
 
 ### 📊 Báo Cáo Chi Tiết
@@ -225,6 +235,8 @@ python preprocess.py data.csv -d "2020-01-01"
 
 ✅ **Xử lý thành công** dataset 7.7M+ records  
 ✅ **Giảm 50%+ dung lượng** file  
+✅ **Lọc chất lượng** loại bỏ chuỗi > 50 ký tự  
+✅ **Chuẩn hóa dữ liệu** trim + null handling  
 ✅ **Tối ưu hóa** cho SQL Server Data Warehouse  
 ✅ **Báo cáo chi tiết** quá trình xử lý  
 ✅ **Error handling** robust  
@@ -233,4 +245,4 @@ python preprocess.py data.csv -d "2020-01-01"
 ---
 
 *💻 Phát triển bởi: IS217 - Data Warehouse Team*  
-*📅 Cập nhật: September 2025*
+*📅 Cập nhật: November 2025*

@@ -1,7 +1,7 @@
 ================================================================================
 🔄 BÁO CÁO TIỀN XỬ LÝ DỮ LIỆU
 ================================================================================
-📅 Ngày tạo: 2025-11-05 23:07:57
+📅 Ngày tạo: 2025-11-08 02:46:24
 
 ⚙️ THÔNG TIN CẤU HÌNH
 --------------------------------------------------
@@ -9,26 +9,26 @@ File đầu vào: ../US_Accidents_March23.csv
 File đầu ra: ../US_Accidents_March23-preprocessed.csv
 Kích thước khối: 2,600,000 dòng
 Ngày cắt: 2018-01-01
-Cột xóa: 7 cột
+Cột xóa: 13 cột
 
 📝 CHI TIẾT QUÁ TRÌNH XỬ LÝ
 --------------------------------------------------
 📊 Tổng 7,728,394 dòng, 3 khối
-📝 Tạo file đầu ra với 47 cột
+📝 Tạo file đầu ra với 39 cột
 ✅ Hoàn thành xử lý tất cả khối
 
 🔄 SO SÁNH CHI TIẾT BỘ DỮ LIỆU
 ======================================================================
 📁 FILE:
   Gốc: 2.85 GB
-  Xử lý: 1.45 GB
-  Giảm dung lượng: 49.2%
+  Xử lý: 1.21 GB
+  Giảm dung lượng: 57.4%
 📏 DỮ LIỆU:
   Dòng đầu vào: 7,728,394
-  Dòng đầu ra: 5,857,117
+  Dòng đầu ra: 5,857,109
   Giảm dòng: 24.2%
-  Cột đã xóa: 6
-  Đặc trưng thời gian thêm: 8
+  Cột đã xóa: 12
+  Đặc trưng thời gian thêm: 6
   Khối đã xử lý: 3
 
 📊 PHÂN TÍCH DỮ LIỆU GỐC
@@ -54,22 +54,22 @@ Giá trị thiếu:
 📊 PHÂN TÍCH DỮ LIỆU ĐÃ XỬ LÝ
 --------------------------------------------------
 📁 File: US_Accidents_March23-preprocessed.csv
-💾 Kích thước: 1.45 GB
-📏 Tổng dòng: 5,857,117
-📐 Tổng cột: 47
+💾 Kích thước: 1.21 GB
+📏 Tổng dòng: 5,857,109
+📐 Tổng cột: 39
 
 Kiểu dữ liệu:
   bool: 14 cột
-  object: 14 cột
   float64: 10 cột
-  int64: 9 cột
+  object: 8 cột
+  int64: 7 cột
 
 Giá trị thiếu:
-  STREET: 519 (1.04%)
-  ZIPCODE: 4 (0.01%)
-  AIRPORT_CODE: 143 (0.29%)
-  TIMEZONE: 45 (0.09%)
   TEMPERATURE: 1,174 (2.35%)
+  WIND_CHILL: 1,542 (3.08%)
+  HUMIDITY: 1,332 (2.66%)
+  PRESSURE: 851 (1.7%)
+  VISIBILITY: 1,048 (2.1%)
 
 🔍 THÔNG TIN TỔNG QUAN
 --------------------------------------------------
@@ -80,23 +80,23 @@ Dataset gốc:
   - Bộ nhớ: 12.5 MB
 
 Dataset đã xử lý:
-  - Số dòng: 5,857,117
-  - Số cột: 47
-  - Kích thước file: 1.45 GB
-  - Bộ nhớ: 8.9 MB
+  - Số dòng: 5,857,109
+  - Số cột: 39
+  - Kích thước file: 1.21 GB
+  - Bộ nhớ: 5.6 MB
 
 📊 THAY ĐỔI SAU TIỀN XỬ LÝ
 --------------------------------------------------
-Số dòng: -1,871,277 (-24.2%)
-Số cột: +1 cột
-Kích thước file: -1435.6 MB (-49.2%)
-Bộ nhớ: -3.6 MB (-29.0%)
+Số dòng: -1,871,285 (-24.2%)
+Số cột: -7 cột
+Kích thước file: -1674.0 MB (-57.4%)
+Bộ nhớ: -6.9 MB (-54.9%)
 
 🔄 CHI TIẾT QUÁ TRÌNH XỬ LÝ
 --------------------------------------------------
 Tổng số khối đã xử lý: 3
-Cột đã xóa: 6
-Đặc trưng thời gian thêm: 8
+Cột đã xóa: 12
+Đặc trưng thời gian thêm: 6
 
 Cột đã xóa (46):
   - Airport_Code
@@ -146,13 +146,10 @@ Cột đã xóa (46):
   - Wind_Speed(mph)
   - Zipcode
 
-Cột đã thêm (47):
-  - AIRPORT_CODE
+Cột đã thêm (39):
   - AMENITY
-  - ASTRONOMICAL_TWILIGHT
   - BUMP
   - CITY
-  - CIVIL_TWILIGHT
   - COUNTY
   - CROSSING
   - DAY
@@ -165,25 +162,20 @@ Cột đã thêm (47):
   - JUNCTION
   - LATITUDE
   - LONGITUDE
-  - MINUTE
   - MONTH
-  - NAUTICAL_TWILIGHT
   - NO_EXIT
   - PRECIPITATION
   - PRESSURE
   - QUARTER
   - RAILWAY
   - ROUNDABOUT
-  - SECOND
   - SEVERITY
-  - SOURCE
   - STATE
   - STATION
   - STOP
   - STREET
   - SUNRISE_SUNSET
   - TEMPERATURE
-  - TIMEZONE
   - TRAFFIC_CALMING
   - TRAFFIC_SIGNAL
   - TURNING_LOOP
@@ -197,17 +189,17 @@ Cột đã thêm (47):
 
 🔄 CHI TIẾT CÁC PHA TIỀN XỬ LÝ
 --------------------------------------------------
-Pha 1: Tính DURATION và xóa cột không cần thiết
-   Tính thời lượng tai nạn (giây) và loại bỏ các cột ID, Description, End_Time, Country, v.v.
+Pha 1: Tính DURATION, xóa cột và lọc chuỗi dài
+   Tính thời lượng, loại bỏ cột không cần, lọc records có chuỗi > 50 ký tự
 
 Pha 2: Lọc dữ liệu theo ngày
    Chỉ giữ lại dữ liệu từ 2018 trở lên
 
 Pha 3: Tạo đặc trưng thời gian
-   Thêm các cột YEAR, MONTH, DAY, HOUR, v.v.
+   Thêm YEAR, QUARTER, MONTH, DAY, HOUR, IS_WEEKEND
 
 Pha 4: Chuyển đổi kiểu dữ liệu SQL
-   Tối ưu hóa kiểu dữ liệu cho SQL Server
+   Chuẩn hóa chuỗi (trim, Unknown), tối ưu kiểu dữ liệu
 
 Pha 5: Chuẩn hóa tên cột
    Chuyển tên cột thành chữ hoa và chuẩn hóa

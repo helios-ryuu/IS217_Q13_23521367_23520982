@@ -24,7 +24,22 @@ def get_sql_server_type(pandas_dtype: str, column_name: str, max_length: int = 0
     if any(coord in column_name.upper() for coord in ['LATITUDE', 'LONGITUDE', 'LAT', 'LNG']):
         return 'DECIMAL(9,6)'
     
-    # Cột đường phố và các cột chuỗi khác - sử dụng max_length để xác định kích thước
+    # Chuẩn hóa chuỗi: trim và replace null với "Unknown"
+    if pandas_dtype in ['object', 'string']:
+        # Cột Boolean (BIT) - environment columns
+        boolean_columns = [
+            'AMENITY', 'BUMP', 'CROSSING', 'GIVE_WAY', 'JUNCTION', 
+            'NO_EXIT', 'RAILWAY', 'ROUNDABOUT', 'STATION', 'STOP', 
+            'TRAFFIC_CALMING', 'TRAFFIC_SIGNAL', 'TURNING_LOOP'
+        ]
+        if column_name.upper() in boolean_columns:
+            return 'BIT'
+    
+    # IS_WEEKEND là boolean
+    if column_name.upper() == 'IS_WEEKEND':
+        return 'BIT'
+    
+    # Cột chuỗi - sử dụng max_length để xác định kích thước
     if pandas_dtype in ['object', 'string']:
         if max_length <= 50:
             return 'NVARCHAR(50)'
@@ -39,21 +54,15 @@ def get_sql_server_type(pandas_dtype: str, column_name: str, max_length: int = 0
         else:
             return 'NVARCHAR(MAX)'
     
-    # Các cột Boolean (BIT) - bao gồm cả IS_WEEKEND và environment columns
-    boolean_columns = [
-        'IS_WEEKEND', 'AMENITY', 'BUMP', 'CROSSING', 'GIVE_WAY', 'JUNCTION', 
-        'NO_EXIT', 'RAILWAY', 'ROUNDABOUT', 'STATION', 'STOP', 
-        'TRAFFIC_CALMING', 'TRAFFIC_SIGNAL', 'TURNING_LOOP'
-    ]
-    if column_name.upper() in boolean_columns:
-        return 'BIT'
-    
-    # Kiểu số
+    # Các cột số
     if pandas_dtype in ['int8']:
         return 'TINYINT'
     elif pandas_dtype in ['int16']:
         return 'SMALLINT'
     elif pandas_dtype in ['int32', 'int64']:
+        # DURATION là BIGINT
+        if column_name.upper() == 'DURATION':
+            return 'BIGINT'
         return 'INT'
     elif pandas_dtype in ['bool']:
         return 'BIT'
@@ -82,7 +91,6 @@ def get_sql_server_type(pandas_dtype: str, column_name: str, max_length: int = 0
 def get_ssis_data_type(sql_type: str) -> str:
     """Chuyển đổi kiểu SQL Server sang SSIS Data Type"""
     
-    # Mapping SQL Server types to SSIS data types
     ssis_mapping = {
         'BIT': 'DT_BOOL',
         'TINYINT': 'DT_UI1', 

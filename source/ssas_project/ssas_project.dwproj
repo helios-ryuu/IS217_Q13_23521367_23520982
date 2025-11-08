@@ -24,10 +24,6 @@
       <FullPath>DIM ENVIRONMENT.dim</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>DIM SOURCE.dim</Name>
-      <FullPath>DIM SOURCE.dim</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>DIM WEATHER.dim</Name>
       <FullPath>DIM WEATHER.dim</FullPath>
     </ProjectItem>

@@ -1,10 +1,6 @@
 USE US_Accidents_DW;
 GO
 
--- DIM_SOURCE
-SELECT * FROM [dbo].[DIM_SOURCE];
-GO
-
 -- DIM_TIME
 SELECT * FROM [dbo].[DIM_TIME];
 GO

@@ -239,10 +239,10 @@ class PreprocessingReporter:
         self.add_to_report("-" * 50)
         
         phases = [
-            ("Pha 1", "Tính DURATION và xóa cột không cần thiết", "Tính thời lượng tai nạn (giây) và loại bỏ các cột ID, Description, End_Time, Country, v.v."),
+            ("Pha 1", "Tính DURATION, xóa cột và lọc chuỗi dài", "Tính thời lượng, loại bỏ cột không cần, lọc records có chuỗi > 50 ký tự"),
             ("Pha 2", "Lọc dữ liệu theo ngày", "Chỉ giữ lại dữ liệu từ 2018 trở lên"),
-            ("Pha 3", "Tạo đặc trưng thời gian", "Thêm các cột YEAR, MONTH, DAY, HOUR, v.v."),
-            ("Pha 4", "Chuyển đổi kiểu dữ liệu SQL", "Tối ưu hóa kiểu dữ liệu cho SQL Server"),
+            ("Pha 3", "Tạo đặc trưng thời gian", "Thêm YEAR, QUARTER, MONTH, DAY, HOUR, IS_WEEKEND"),
+            ("Pha 4", "Chuyển đổi kiểu dữ liệu SQL", "Chuẩn hóa chuỗi (trim, Unknown), tối ưu kiểu dữ liệu"),
             ("Pha 5", "Chuẩn hóa tên cột", "Chuyển tên cột thành chữ hoa và chuẩn hóa"),
             ("Pha 6", "Sắp xếp thứ tự cột", "Sắp xếp cột theo thứ tự DDL SQL Server")
         ]
@@ -301,7 +301,15 @@ def phase_delete_columns(df: pd.DataFrame, columns_to_delete: List[str]) -> pd.D
     
     # Xóa các cột không cần thiết
     columns_to_drop = [col for col in columns_to_delete if col in df.columns]
-    return df.drop(columns=columns_to_drop) if columns_to_drop else df
+    df = df.drop(columns=columns_to_drop) if columns_to_drop else df
+    
+    # Lọc records có chuỗi dài > 50 ký tự (silent)
+    string_cols = df.select_dtypes(include=['object']).columns
+    if len(string_cols) > 0:
+        mask = df[string_cols].apply(lambda x: x.astype(str).str.len() <= 50).all(axis=1)
+        df = df[mask]
+    
+    return df
 
 def phase_filter_date(df: pd.DataFrame, time_column: str = 'Start_Time', 
                      date_cutoff: str = "2018-01-01") -> pd.DataFrame:
@@ -324,14 +332,12 @@ def phase_create_time_features(df: pd.DataFrame, time_column: str = 'Start_Time'
     # Chuyển đổi sang datetime nếu cần
     df[time_column] = pd.to_datetime(df[time_column], errors='coerce')
     
-    # Tạo đặc trưng thời gian cơ bản
+    # Tạo đặc trưng thời gian cơ bản (loại bỏ MINUTE, SECOND)
     df['YEAR'] = df[time_column].dt.year.astype('int16')
     df['QUARTER'] = df[time_column].dt.quarter.astype('int8')
     df['MONTH'] = df[time_column].dt.month.astype('int8')
     df['DAY'] = df[time_column].dt.day.astype('int8')
     df['HOUR'] = df[time_column].dt.hour.astype('int8')
-    df['MINUTE'] = df[time_column].dt.minute.astype('int8')
-    df['SECOND'] = df[time_column].dt.second.astype('int8')
     df['IS_WEEKEND'] = df[time_column].dt.dayofweek.isin([5, 6]).astype('bool')
     
     # Loại bỏ cột thời gian gốc để tránh dư thừa
@@ -339,6 +345,12 @@ def phase_create_time_features(df: pd.DataFrame, time_column: str = 'Start_Time'
 
 def phase_sql_data_types(df: pd.DataFrame) -> pd.DataFrame:
     """Pha 4: Chuyển đổi kiểu dữ liệu SQL Server"""
+    
+    # Chuẩn hóa chuỗi: trim khoảng trắng, thay null bằng "Unknown"
+    string_cols = df.select_dtypes(include=['object']).columns
+    for col in string_cols:
+        df[col] = df[col].astype(str).str.strip()
+        df[col] = df[col].replace(['nan', 'None', ''], 'Unknown')
     
     # Tọa độ: decimal(9,6)
     coord_cols = ['Start_Lat', 'Start_Lng', 'LATITUDE', 'LONGITUDE']
@@ -357,7 +369,7 @@ def phase_sql_data_types(df: pd.DataFrame) -> pd.DataFrame:
     for col in int_cols:
         if col in ['YEAR']:
             df[col] = df[col].astype('int16')  # smallint
-        elif col in ['QUARTER', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'SECOND']:
+        elif col in ['QUARTER', 'MONTH', 'DAY', 'HOUR']:
             df[col] = df[col].astype('int8')   # tinyint
         elif col == 'DURATION':
             df[col] = df[col].astype('int64')  # bigint cho DURATION (giây)
@@ -378,10 +390,10 @@ def phase_sql_data_types(df: pd.DataFrame) -> pd.DataFrame:
                 # Convert về bool (0 -> False, non-zero -> True)
                 df[col] = df[col].astype('bool')
 
-    # Chuỗi
+    # Chuỗi: chuyển về string type
     string_cols = df.select_dtypes(include=['object']).columns
     for col in string_cols:
-        df[col] = df[col].astype('string')  # Sử dụng string type để mapping SQL
+        df[col] = df[col].astype('string')
     
     return df
 
@@ -419,16 +431,14 @@ def phase_reorder_columns(df: pd.DataFrame) -> pd.DataFrame:
     # Định nghĩa thứ tự cột theo DDL - fact attributes lên đầu
     fact_columns = ['SEVERITY', 'DISTANCE', 'DURATION']
     
-    # Các nhóm cột dimension theo thứ tự DDL
-    source_columns = ['SOURCE']
+    # Các nhóm cột dimension theo thứ tự DDL (loại bỏ SOURCE)
+    time_columns = ['YEAR', 'QUARTER', 'MONTH', 'DAY', 'HOUR', 'IS_WEEKEND']
     
-    time_columns = ['YEAR', 'QUARTER', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'SECOND', 'IS_WEEKEND']
-    
-    location_columns = ['STATE', 'COUNTY', 'CITY', 'STREET', 'ZIPCODE', 'AIRPORT_CODE', 'TIMEZONE', 'LATITUDE', 'LONGITUDE']
+    location_columns = ['STATE', 'COUNTY', 'CITY', 'STREET', 'ZIPCODE', 'LATITUDE', 'LONGITUDE']
     
     weather_columns = ['TEMPERATURE', 'WIND_CHILL', 'HUMIDITY', 'PRESSURE', 'VISIBILITY', 
                       'WIND_DIRECTION', 'WIND_SPEED', 'PRECIPITATION', 'WEATHER_CONDITION',
-                      'SUNRISE_SUNSET', 'CIVIL_TWILIGHT', 'NAUTICAL_TWILIGHT', 'ASTRONOMICAL_TWILIGHT']
+                      'SUNRISE_SUNSET']
     
     environment_columns = ['AMENITY', 'BUMP', 'CROSSING', 'GIVE_WAY', 'JUNCTION', 'NO_EXIT',
                           'RAILWAY', 'ROUNDABOUT', 'STATION', 'STOP', 'TRAFFIC_CALMING',
@@ -443,7 +453,7 @@ def phase_reorder_columns(df: pd.DataFrame) -> pd.DataFrame:
             desired_order.append(col)
     
     # Thêm các dimension columns theo thứ tự DDL
-    for group in [source_columns, time_columns, location_columns, weather_columns, environment_columns]:
+    for group in [time_columns, location_columns, weather_columns, environment_columns]:
         for col in group:
             if col in df.columns:
                 desired_order.append(col)
@@ -481,7 +491,11 @@ def process_chunks(input_file: str, output_file: str, chunk_size: int = 2600000,
     """Xử lý dữ liệu theo khối - Tối ưu hóa tốc độ (Minimal printing)"""
     
     if columns_to_delete is None:
-        columns_to_delete = ['ID', 'Description', 'End_Lat', 'End_Lng', 'End_Time', 'Weather_Timestamp', 'Country']
+        columns_to_delete = [
+            'ID', 'Description', 'End_Lat', 'End_Lng', 'End_Time', 'Weather_Timestamp', 'Country',
+            'Civil_Twilight', 'Nautical_Twilight', 'Astronomical_Twilight',
+            'Airport_Code', 'Timezone', 'Source'
+        ]
     
     if not os.path.exists(input_file):
         return None
@@ -496,7 +510,7 @@ def process_chunks(input_file: str, output_file: str, chunk_size: int = 2600000,
         'total_rows_input': 0,
         'total_rows_output': 0,
         'columns_deleted': 0,
-        'time_features_added': 8,  # Bao gồm cả DURATION
+        'time_features_added': 6,  # YEAR, QUARTER, MONTH, DAY, HOUR, IS_WEEKEND
         'phase_stats': {},
         'processing_log': [],
         'file_info': {
@@ -747,7 +761,11 @@ def main(input_file: str = "../US_Accidents_March23.csv",
     """Hàm chính (Minimal output)"""
     
     if columns_to_delete is None:
-        columns_to_delete = ['ID', 'Description', 'End_Lat', 'End_Lng', 'End_Time', 'Weather_Timestamp', 'Country']
+        columns_to_delete = [
+            'ID', 'Description', 'End_Lat', 'End_Lng', 'End_Time', 'Weather_Timestamp', 'Country',
+            'Civil_Twilight', 'Nautical_Twilight', 'Astronomical_Twilight',
+            'Airport_Code', 'Timezone', 'Source'
+        ]
     
     # Tạo reporter
     reporter = PreprocessingReporter(input_file, output_file)
