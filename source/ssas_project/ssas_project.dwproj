@@ -56,7 +56,7 @@
           <ConfigurationSetting>
             <Id>US Accidents DW</Id>
             <Name>US Accidents DW</Name>
-            <Value xsi:type="xsd:string">Provider=MSOLEDBSQL.1;Data Source=HELIOS\MSSQLDEV2025;Integrated Security=SSPI;Initial Catalog=US_Accidents_DW</Value>
+            <Value xsi:type="xsd:string">Provider=MSOLEDBSQL.1;Data Source=26.192.64.111\MSSQLDEV2025;Integrated Security=SSPI;Initial Catalog=US_Accidents_DW</Value>
           </ConfigurationSetting>
         </ConnectionMappings>
         <ConnectionSecurityMappings>

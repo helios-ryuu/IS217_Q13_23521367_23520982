@@ -15,7 +15,7 @@
             <Name>US Accidents DW</Name>
           </ConfigurationSetting>
         </UserPasswords>
-        <TargetServer>HELIOS\MSSQLDEV2025</TargetServer>
+        <TargetServer>26.192.64.111\MSSQLDEV2025</TargetServer>
         <TargetDatabase>ssas_project</TargetDatabase>
         <StartObject>
           <ObjectId></ObjectId>
