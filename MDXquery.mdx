@@ -1,0 +1,310 @@
+﻿-- Câu 1: Liệt kê Top 10 bang có nhiều vụ tai nạn nhất. --ok
+
+SELECT 
+    [Measures].[Total Accidents] ON COLUMNS,
+    TOPCOUNT (
+        [DIM LOCATION].[STATE].[STATE].MEMBERS, 10, [Measures].[Total Accidents]
+    ) ON ROWS
+FROM [US Accidents DW]
+
+-- Câu 2: Hiển thị các thành phố có số vụ tai nạn lớn hơn 1000 trong quý 1 năm 2023. --ok
+
+SELECT 
+    [Measures].[Total Accidents] ON COLUMNS,
+    FILTER([DIM LOCATION].[CITY].children,
+    [Measures].[Total Accidents] > 1000
+    ) ON ROWS
+FROM [US Accidents DW]
+WHERE ([DIM TIME].[Hierarchy].[QUARTER].&[1]&[2023]);
+
+
+-- Câu 3: Ảnh hưởng của điều kiện thời tiết đến độ nguy hiểm tai nạn trong năm 2020 ở khu vực gần các tiện ích (trường học, bệnh viện) ở các bang. --ok
+
+SELECT 
+    [Measures].[DangerIndex] ON COLUMNS,
+    NON EMPTY CROSSJOIN (
+    [DIM LOCATION].[STATE].[STATE].Members,
+    [DIM WEATHER].[WEATHER CONDITION].[WEATHER CONDITION].Members
+    ) ON ROWS
+FROM [US Accidents DW]
+WHERE ([DIM TIME].[YEAR].&[2020], [DIM ENVIRONMENT].[AMENITY].&[True]);
+
+-- Câu 4: Hiển thị tần suất xảy ra tai nạn theo quý qua từng năm. --ok
+
+SELECT 
+    {[Measures].[Total Accidents]} ON COLUMNS,
+    NON EMPTY
+    [Dim Time].[Year].[Year].Members * 
+    [Dim Time].[Quarter].[Quarter].Members ON ROWS
+FROM [US Accidents DW];
+
+-- Câu 5: Hiển thị mức độ nguy hiểm theo ngày và đêm theo từng bang. --ok
+
+SELECT
+    {[Measures].[DangerIndex]} ON COLUMNS,
+    CROSSJOIN (
+    [DIM LOCATION].[STATE].[STATE].MEMBERS,
+    EXCEPT([DIM WEATHER].[SUNRISE SUNSET].[SUNRISE SUNSET].MEMBERS, [DIM WEATHER].[SUNRISE SUNSET].[Unknown])
+    )ON ROWS
+FROM [US Accidents DW];
+
+
+-- Câu 6: Hiển thi 10 con đường nguy hiểm nhất trong năm 2022. --ok
+
+WITH 
+MEMBER [Measures].[AvgSeverity] AS
+    ROUND([Measures].[SEVERITY] / [Measures].[Total Accidents],2)
+MEMBER [Measures].[DangerIndex] AS
+    ([Measures].[Total Accidents] * [Measures].[AvgSeverity])
+
+SELECT 
+    {[Measures].[DangerIndex], [Measures].[Total Accidents], [Measures].[AvgSeverity]} ON COLUMNS,
+    HEAD(
+    ORDER([DIM LOCATION].[STREET].[STREET].MEMBERS, [Measures].[DangerIndex], DESC),
+        10
+    ) ON ROWS
+FROM [US Accidents DW]
+WHERE ([DIM TIME].[YEAR].&[2022]);
+
+
+-- Câu 7: Với từng bang, liệt kê top 3 thành phố có nhiều vụ tai nạn nhất trong năm 2022. --ok
+
+SELECT
+  {[Measures].[Total Accidents]} ON COLUMNS,
+  {
+    GENERATE(
+        [DIM LOCATION].[STATE].[STATE].members,
+        TOPCOUNT(
+           {[DIM LOCATION].[STATE].currentmember *
+            [DIM LOCATION].[CITY].children},
+            3,
+            [Measures].[Total Accidents])
+    )
+  } ON ROWS
+FROM [US Accidents DW]
+WHERE ([DIM TIME].[YEAR].&[2022]);
+
+
+
+-- Câu 8: Xếp hạng 5 thành phố có tỷ lệ tai nạn nghiêm trọng nhất trong tiểu bang california. --ok
+
+SELECT 
+    {[Measures].[DangerIndex]} ON COLUMNS,
+    TOPCOUNT(
+        [DIM LOCATION].[CITY].[CITY].MEMBERS,
+        5,
+        [Measures].[DangerIndex]
+    ) ON ROWS
+FROM [US Accidents DW]
+WHERE ([DIM LOCATION].[STATE].&[CA])
+
+-- Câu 9: Phân tích tốc độ tăng trưởng số vụ tai nạn qua từng năm theo tiểu bang. --ok
+
+WITH 
+MEMBER [Measures].[YoYGrowth_Percent] AS 
+    IIF(
+        ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents]) = 0,
+        NULL,
+        ROUND((
+            ([DIM TIME].[YEAR].CurrentMember, [Measures].[Total Accidents])
+            - ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents])
+        )
+        / ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents]),2)
+    ),
+    FORMAT_STRING = "Percent"
+
+SELECT 
+    {
+        [Measures].[Total Accidents],
+        [Measures].[YoYGrowth_Percent]
+    } ON COLUMNS,
+    NON EMPTY
+      CrossJoin(
+           [DIM LOCATION].[CITY].[CITY].MEMBERS,
+            [DIM TIME].[YEAR].[YEAR].MEMBERS
+      )
+    ON ROWS
+FROM [US Accidents DW]
+
+-- Câu 10: Hiển thị Top 5 thành phố có tăng trưởng trung bình số vụ tai nạn cao nhất giai đoạn 2018–2023. --ok
+
+WITH 
+MEMBER [Measures].[Avg YoY Growth Range] AS
+    ROUND(AVG(
+    EXISTING [DIM TIME].[YEAR].[YEAR].MEMBERS,
+    IIF(
+        ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents]) = 0,
+        NULL,
+            (
+                ([DIM TIME].[YEAR].CurrentMember, [Measures].[Total Accidents])
+                - ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents])
+            ) / ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents])
+        
+        )     
+    ),2)
+SELECT 
+    TOPCOUNT(
+        [DIM LOCATION].[CITY].[CITY].Members,
+        20,
+        [Measures].[Avg YoY Growth Range]
+    ) ON ROWS,
+    {[Measures].[Avg YoY Growth Range]} ON COLUMNS
+FROM [US Accidents DW];
+
+
+
+-- Câu 15 
+
+SELECT
+  [DIM TIME].[YEAR].[YEAR].MEMBERS ON COLUMNS,
+  TOPCOUNT ([DIM WEATHER].[WEATHER CONDITION].children, 5,  [Measures].[DangerIndex]
+  ) ON ROWS
+FROM [US Accidents DW]
+WHERE ([Measures].[Total Accidents]);
+
+
+
+
+SELECT
+  [DIM TIME].[YEAR].[YEAR].MEMBERS ON COLUMNS,
+  TOPCOUNT(EXCEPT([DIM LOCATION].[STATE].MEMBERS,[DIM LOCATION].[STATE].[All]), 3, [Measures].[Total Accidents]) ON ROWS
+FROM [US Accidents DW];
+
+
+
+-- Câu 7: Danh sách tai nạn gần đường sắt hoặc trạm xe lửa theo từng năm.
+
+SELECT 
+    [DIM TIME].[YEAR].Members ON ROWS,
+    [Measures].[Total Accidents] ON COLUMNS
+FROM [US Accidents DW]
+WHERE ([DIM ENVIRONMENT].[RAILWAY].[True])
+
+-- Câu 8: Tần suất và mức độ nghiêm trọng của tai nạn gần các tiện ích theo từng bang.
+
+SELECT 
+    {[Measures].[Total Accidents], [Measures].[Avg SEVERITY]} ON COLUMNS,
+    [DIM LOCATION].[STATE].[STATE].MEMBERS ON ROWS
+FROM [US Accidents DW]
+WHERE ([DIM ENVIRONMENT].[AMENITY].[TRUE]);
+
+-- Câu 11: Phân tích mối liên hệ giữa điều kiện thời tiết khắc nghiệt và số lượng/mức độ tai nạn.
+
+SELECT 
+    {[Measures].[Total Accidents], [Measures].[Avg SEVERITY]} ON COLUMNS,
+    NON EMPTY 
+    {
+      [DIM WEATHER].[WEATHER CONDITION].[Heavy Rain],
+      [DIM WEATHER].[WEATHER CONDITION].[Heavy Snow],
+      [DIM WEATHER].[WEATHER CONDITION].[Thunderstorm],
+      [DIM WEATHER].[WEATHER CONDITION].[Fog]
+    } ON ROWS
+FROM [US Accidents DW];
+
+IIF(
+    ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents]) = 0,
+    NULL,
+    (
+        ([DIM TIME].[YEAR].CurrentMember, [Measures].[Total Accidents])
+        - ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents])
+    ) / ([DIM TIME].[YEAR].PrevMember, [Measures].[Total Accidents])
+)
+
+IIF(
+    ([Measures].[Total Accidents], [DIM TIME].[YEAR].[YEAR].CurrentMember.PrevMember) = 0,
+    NULL,
+    (
+        [Measures].[Total Accidents]
+        - ([Measures].[Total Accidents], [DIM TIME].[YEAR].[YEAR].CurrentMember.PrevMember)
+    ) / ([Measures].[Total Accidents], [DIM TIME].[YEAR].[YEAR].CurrentMember.PrevMember)
+)
+
+IIF(
+        ([DIM TIME].[YEAR].[YEAR].CurrentMember.PrevMember, [Measures].[Total Accidents]) = 0,
+        NULL,
+            (
+                [Measures].[Total Accidents]
+                - ([DIM TIME].[YEAR].[YEAR].CurrentMember.PrevMember, [Measures].[Total Accidents])
+            ) / ([DIM TIME].[YEAR].[YEAR].CurrentMember.PrevMember, [Measures].[Total Accidents])
+        )   
+
+
+        ROUND(
+    AVG(
+        EXISTING [DIM TIME].[YEAR].[YEAR].MEMBERS,
+        
+        
+        IIF(
+            (
+                [Measures].[Total Accidents],
+                // Dùng ParallelPeriod để tìm năm trước đó
+                ,
+            NULL,
+            (
+                [Measures].[Total Accidents] // Năm hiện tại
+                -
+                ( // Giá trị của năm trước đó
+                    
+                    )
+                )
+            )
+            /
+            ( // Giá trị của năm trước đó
+                [Measures].[Total Accidents],
+                ParallelPeriod(
+                    [DIM TIME].[YEAR].[YEAR],
+                    1,
+                    [DIM TIME].[YEAR].CurrentMember
+                )
+            )
+        )
+        // Kết thúc tính YoY
+    ),
+    2
+)
+
+
+
+
+[Measures].[Total Accidents],
+                    ParallelPeriod(
+                        [DIM TIME].[YEAR].[YEAR],
+                        1,
+                        [DIM TIME].[YEAR].CurrentMember
+
+
+ROUND (
+    AVG (
+        EXISTING [DIM TIME].[YEAR].[YEAR].Members,
+        IIF(
+            (
+                [Measures].[Total Accidents],
+                ParallelPeriod (
+                    [DIM TIME].[YEAR].[YEAR],
+                    1,[DIM TIME].[YEAR].CurrentMember
+                    )
+            )= 0, NULL,
+            (
+            [Measures].[Total Accidents] -
+            (
+            [Measures].[Total Accidents],
+            ParallelPeriod (
+                [DIM TIME].[YEAR].[YEAR],
+                1,[DIM TIME].[YEAR].CurrentMember
+                )
+            )
+        ) /
+        (
+        [Measures].[Total Accidents],
+        ParallelPeriod (
+            [DIM TIME].[YEAR].[YEAR],
+            1,[DIM TIME].[YEAR].CurrentMember
+            )
+        )
+    ), 2
+)
+
+ParallelPeriod (
+    [DIM TIME].[YEAR].[YEAR],
+    1,[DIM TIME].[YEAR].CurrentMember
+)
