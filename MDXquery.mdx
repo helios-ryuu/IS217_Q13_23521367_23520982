@@ -273,38 +273,3 @@ IIF(
                         [DIM TIME].[YEAR].CurrentMember
 
 
-ROUND (
-    AVG (
-        EXISTING [DIM TIME].[YEAR].[YEAR].Members,
-        IIF(
-            (
-                [Measures].[Total Accidents],
-                ParallelPeriod (
-                    [DIM TIME].[YEAR].[YEAR],
-                    1,[DIM TIME].[YEAR].CurrentMember
-                    )
-            )= 0, NULL,
-            (
-            [Measures].[Total Accidents] -
-            (
-            [Measures].[Total Accidents],
-            ParallelPeriod (
-                [DIM TIME].[YEAR].[YEAR],
-                1,[DIM TIME].[YEAR].CurrentMember
-                )
-            )
-        ) /
-        (
-        [Measures].[Total Accidents],
-        ParallelPeriod (
-            [DIM TIME].[YEAR].[YEAR],
-            1,[DIM TIME].[YEAR].CurrentMember
-            )
-        )
-    ), 2
-)
-
-ParallelPeriod (
-    [DIM TIME].[YEAR].[YEAR],
-    1,[DIM TIME].[YEAR].CurrentMember
-)
