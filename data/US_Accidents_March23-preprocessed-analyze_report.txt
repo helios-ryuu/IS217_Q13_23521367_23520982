@@ -1,24 +1,24 @@
 🚀 STARTING COMPREHENSIVE DATASET ANALYSIS
 ================================================================================
 📁 File: ../US_Accidents_March23-preprocessed.csv
-⏰ Started at: 2025-11-08 02:46:29
+⏰ Started at: 2025-11-10 10:03:06
 🔄 Loading dataset from: ../US_Accidents_March23-preprocessed.csv
-✅ Successfully loaded 5,857,109 rows and 39 columns
+✅ Successfully loaded 5,857,109 rows and 41 columns
 
 📊 BASIC DATASET INFORMATION
 ============================================================
-📈 Dataset Shape: 5,857,109 rows × 39 columns
-💾 Memory Usage: 3307.36 MB
-📅 Analysis Date: 2025-11-08 02:46:47
+📈 Dataset Shape: 5,857,109 rows × 41 columns
+💾 Memory Usage: 3921.79 MB
+📅 Analysis Date: 2025-11-10 10:03:24
 
 🏷️ DATA TYPES:
   bool           :  14 columns
   float64        :  10 columns
-  object         :   8 columns
+  object         :  10 columns
   int64          :   7 columns
 
 ❓ MISSING VALUES OVERVIEW:
-  Total missing values: 2,998,945 (1.31%)
+  Total missing values: 2,998,945 (1.25%)
   Columns with missing data: 7
 
 ❓ MISSING VALUES DETAILED ANALYSIS
@@ -34,18 +34,20 @@
   TEMPERATURE                         125,257           2.14%         float64
   PRESSURE                            107,464           1.83%         float64
 
-📋 COLUMNS WITHOUT NULL VALUES (32 columns):
+📋 COLUMNS WITHOUT NULL VALUES (34 columns):
   Column                               Data Type
   --------------------------------------------------
   SEVERITY                                 int64
   DISTANCE                               float64
   DURATION                                 int64
+  DATE                                    object
   YEAR                                     int64
   QUARTER                                  int64
   MONTH                                    int64
   DAY                                      int64
   HOUR                                     int64
   IS_WEEKEND                                bool
+  COUNTRY                                 object
   STATE                                   object
   COUNTY                                  object
   CITY                                    object
@@ -110,11 +112,13 @@
 
 🏷️ CATEGORICAL COLUMNS ANALYSIS
 ============================================================
-📊 Found 8 categorical columns
+📊 Found 10 categorical columns
 
 📝 CATEGORICAL STATISTICS:
   Column                          Unique  Cardinality Most Frequent
   -----------------------------------------------------------------
+  DATE                             1,880       0.000   2021-02-11
+  COUNTRY                              1       0.000           US
   STATE                               49       0.000           CA
   COUNTY                           1,836       0.000  Los Angeles
   CITY                            13,207       0.002        Miami
@@ -126,11 +130,13 @@
 
 📏 STRING LENGTH ANALYSIS
 ============================================================
-📊 Found 8 string columns
+📊 Found 10 string columns
 
 📈 STRING LENGTH STATISTICS:
   Column                         Min      Max      Avg   Median  Recommended
   ---------------------------------------------------------------------------
+  DATE                            10       10     10.0     10.0 NVARCHAR(50)
+  COUNTRY                          2        2      2.0      2.0 NVARCHAR(50)
   STATE                            2        2      2.0      2.0 NVARCHAR(50)
   COUNTY                           3       30      8.1      8.0 NVARCHAR(50)
   CITY                             3       32      8.8      9.0 NVARCHAR(50)
@@ -141,7 +147,7 @@
   SUNRISE_SUNSET                   3        7      3.6      3.0 NVARCHAR(50)
 
 📊 STRING LENGTH CATEGORIES:
-  Short strings (≤50 chars):     8 columns
+  Short strings (≤50 chars):     10 columns
   Medium strings (51-255 chars): 0 columns
   Long strings (256-4000 chars): 0 columns
   Very long strings (>4000):     0 columns
@@ -155,12 +161,14 @@
   SEVERITY                  int64           INT                DT_I4                    0.0%   44.69
   DISTANCE                  float64         DECIMAL(8,4)       DT_NUMERIC(8,4)          0.0%   44.69
   DURATION                  int64           BIGINT             DT_I8                    0.0%   44.69
+  DATE                      object          DATE               DT_DBDATE                0.0%  329.56
   YEAR                      int64           INT                DT_I4                    0.0%   44.69
   QUARTER                   int64           INT                DT_I4                    0.0%   44.69
   MONTH                     int64           INT                DT_I4                    0.0%   44.69
   DAY                       int64           INT                DT_I4                    0.0%   44.69
   HOUR                      int64           INT                DT_I4                    0.0%   44.69
   IS_WEEKEND                bool            BIT                DT_BOOL                  0.0%    5.59
+  COUNTRY                   object          NVARCHAR(50)       DT_WSTR(50)              0.0%  284.87
   STATE                     object          NVARCHAR(50)       DT_WSTR(50)              0.0%  284.87
   COUNTY                    object          NVARCHAR(50)       DT_WSTR(50)              0.0%  318.75
   CITY                      object          NVARCHAR(50)       DT_WSTR(50)              0.0%  322.77
@@ -195,18 +203,20 @@
 📊 SQL SERVER TYPE DISTRIBUTION:
   BIGINT              :   1 columns
   BIT                 :  14 columns
+  DATE                :   1 columns
   DECIMAL(8,4)        :   8 columns
   DECIMAL(9,6)        :   2 columns
   INT                 :   6 columns
-  NVARCHAR(50)        :   8 columns
+  NVARCHAR(50)        :   9 columns
 
 📊 SSIS DATA TYPE DISTRIBUTION:
   DT_BOOL             :  14 columns
+  DT_DBDATE           :   1 columns
   DT_I4               :   6 columns
   DT_I8               :   1 columns
   DT_NUMERIC(8,4)     :   8 columns
   DT_NUMERIC(9,6)     :   2 columns
-  DT_WSTR(50)         :   8 columns
+  DT_WSTR(50)         :   9 columns
 
 📦 SSIS PACKAGE CONFIGURATION GUIDE:
 ------------------------------------------------------------
@@ -218,26 +228,26 @@
 🎯 Data Flow Task Recommendations:
   - Boolean columns (14): Use Data Conversion for proper handling
   - Numeric columns (16): Validate precision/scale in Derived Column
-  - String columns (8): Optimized lengths based on actual data
+  - String columns (9): Optimized lengths based on actual data
 
 📏 String Length Optimization:
-  - 8 short columns (≤50 chars): Memory efficient
+  - 10 short columns (≤50 chars): Memory efficient
 
 💡 OPTIMIZATION RECOMMENDATIONS:
-  💾 Total estimated memory: 3307.4 MB
-  💰 8 columns optimized for memory with smaller NVARCHAR sizes
+  💾 Total estimated memory: 3921.8 MB
+  💰 10 columns optimized for memory with smaller NVARCHAR sizes
 
 🔍 DATA QUALITY ASSESSMENT
 ============================================================
-📊 OVERALL QUALITY SCORE: 98.7/100
+📊 OVERALL QUALITY SCORE: 98.8/100
 🌟 Quality Level: Excellent
 
 📋 ANALYSIS SUMMARY
 ============================================================
-📊 Dataset: 5,857,109 rows × 39 columns
-💾 Memory: 3307.4 MB
-❓ Missing data: 1.31%
-🏆 Quality score: 98.7/100 (Excellent)
-📏 String columns: 8 (optimized sizing)
-🔄 SQL Server mapping: 6 different types
-📦 SSIS mapping: 6 different types
+📊 Dataset: 5,857,109 rows × 41 columns
+💾 Memory: 3921.8 MB
+❓ Missing data: 1.25%
+🏆 Quality score: 98.8/100 (Excellent)
+📏 String columns: 10 (optimized sizing)
+🔄 SQL Server mapping: 7 different types
+📦 SSIS mapping: 7 different types

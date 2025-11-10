@@ -241,7 +241,7 @@ class PreprocessingReporter:
         phases = [
             ("Pha 1", "Tính DURATION, xóa cột và lọc chuỗi dài", "Tính thời lượng, loại bỏ cột không cần, lọc records có chuỗi > 50 ký tự"),
             ("Pha 2", "Lọc dữ liệu theo ngày", "Chỉ giữ lại dữ liệu từ 2018 trở lên"),
-            ("Pha 3", "Tạo đặc trưng thời gian", "Thêm YEAR, QUARTER, MONTH, DAY, HOUR, IS_WEEKEND"),
+            ("Pha 3", "Tạo đặc trưng thời gian", "Thêm DATE, YEAR, QUARTER, MONTH, DAY, HOUR, IS_WEEKEND"),
             ("Pha 4", "Chuyển đổi kiểu dữ liệu SQL", "Chuẩn hóa chuỗi (trim, Unknown), tối ưu kiểu dữ liệu"),
             ("Pha 5", "Chuẩn hóa tên cột", "Chuyển tên cột thành chữ hoa và chuẩn hóa"),
             ("Pha 6", "Sắp xếp thứ tự cột", "Sắp xếp cột theo thứ tự DDL SQL Server")
@@ -332,7 +332,8 @@ def phase_create_time_features(df: pd.DataFrame, time_column: str = 'Start_Time'
     # Chuyển đổi sang datetime nếu cần
     df[time_column] = pd.to_datetime(df[time_column], errors='coerce')
     
-    # Tạo đặc trưng thời gian cơ bản (loại bỏ MINUTE, SECOND)
+    # Tạo đặc trưng thời gian cơ bản (bao gồm DATE)
+    df['DATE'] = df[time_column].dt.date
     df['YEAR'] = df[time_column].dt.year.astype('int16')
     df['QUARTER'] = df[time_column].dt.quarter.astype('int8')
     df['MONTH'] = df[time_column].dt.month.astype('int8')
@@ -351,6 +352,10 @@ def phase_sql_data_types(df: pd.DataFrame) -> pd.DataFrame:
     for col in string_cols:
         df[col] = df[col].astype(str).str.strip()
         df[col] = df[col].replace(['nan', 'None', ''], 'Unknown')
+    
+    # Chuyển DATE sang string để lưu vào CSV (sẽ là DATE trong SQL)
+    if 'DATE' in df.columns:
+        df['DATE'] = df['DATE'].astype(str)
     
     # Tọa độ: decimal(9,6)
     coord_cols = ['Start_Lat', 'Start_Lng', 'LATITUDE', 'LONGITUDE']
@@ -432,9 +437,9 @@ def phase_reorder_columns(df: pd.DataFrame) -> pd.DataFrame:
     fact_columns = ['SEVERITY', 'DISTANCE', 'DURATION']
     
     # Các nhóm cột dimension theo thứ tự DDL (loại bỏ SOURCE)
-    time_columns = ['YEAR', 'QUARTER', 'MONTH', 'DAY', 'HOUR', 'IS_WEEKEND']
+    time_columns = ['DATE', 'YEAR', 'QUARTER', 'MONTH', 'DAY', 'HOUR', 'IS_WEEKEND']
     
-    location_columns = ['STATE', 'COUNTY', 'CITY', 'STREET', 'ZIPCODE', 'LATITUDE', 'LONGITUDE']
+    location_columns = ['COUNTRY', 'STATE', 'COUNTY', 'CITY', 'STREET', 'ZIPCODE', 'LATITUDE', 'LONGITUDE']
     
     weather_columns = ['TEMPERATURE', 'WIND_CHILL', 'HUMIDITY', 'PRESSURE', 'VISIBILITY', 
                       'WIND_DIRECTION', 'WIND_SPEED', 'PRECIPITATION', 'WEATHER_CONDITION',
@@ -492,7 +497,7 @@ def process_chunks(input_file: str, output_file: str, chunk_size: int = 2600000,
     
     if columns_to_delete is None:
         columns_to_delete = [
-            'ID', 'Description', 'End_Lat', 'End_Lng', 'End_Time', 'Weather_Timestamp', 'Country',
+            'ID', 'Description', 'End_Lat', 'End_Lng', 'End_Time', 'Weather_Timestamp',
             'Civil_Twilight', 'Nautical_Twilight', 'Astronomical_Twilight',
             'Airport_Code', 'Timezone', 'Source'
         ]
@@ -510,7 +515,7 @@ def process_chunks(input_file: str, output_file: str, chunk_size: int = 2600000,
         'total_rows_input': 0,
         'total_rows_output': 0,
         'columns_deleted': 0,
-        'time_features_added': 6,  # YEAR, QUARTER, MONTH, DAY, HOUR, IS_WEEKEND
+        'time_features_added': 7,  # DATE, YEAR, QUARTER, MONTH, DAY, HOUR, IS_WEEKEND
         'phase_stats': {},
         'processing_log': [],
         'file_info': {
@@ -762,7 +767,7 @@ def main(input_file: str = "../US_Accidents_March23.csv",
     
     if columns_to_delete is None:
         columns_to_delete = [
-            'ID', 'Description', 'End_Lat', 'End_Lng', 'End_Time', 'Weather_Timestamp', 'Country',
+            'ID', 'Description', 'End_Lat', 'End_Lng', 'End_Time', 'Weather_Timestamp',
             'Civil_Twilight', 'Nautical_Twilight', 'Astronomical_Twilight',
             'Airport_Code', 'Timezone', 'Source'
         ]

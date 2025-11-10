@@ -1,20 +1,92 @@
+# ==============================================
+# Data Files
+# ==============================================
 *.csv
-.vs/
-__pycache__/
 *.mdf
 *.ldf
-bin/
-obj/
+
+# ==============================================
+# Visual Studio
+# ==============================================
+.vs/
+__pycache__/
 *.pyc
 *.user
 *.suo
 *.cache
 *.log
-*.dbmdl
 *.bak
 .idea/
+
+# ==============================================
+# SSIS (SQL Server Integration Services)
+# ==============================================
+# Build outputs
+bin/
+obj/
+*.ispac
+*.dtsx.user
+*.dtproj.user
+
+# SSIS deployment files
+*.SSISDeploymentManifest
+*.deploymenttargets
+*.configsettings
+*.deploymentoptions
+
+# SSIS backup files
+*.dtsx.backup
+*.dtproj.backup
+
+# SSIS temporary files
+BuildLog.xml
+IncrementalSnapshot.xml
+LastBuilt.xml
+
+# ==============================================
+# SSAS (SQL Server Analysis Services)
+# ==============================================
+# Build outputs - SSAS
+*.asdatabase
+*.configsettings
+*.deploymentoptions
+*.deploymenttargets
+
+# SSAS backup files
+*.dwproj.backup
+*.cube.backup
+*.dim.backup
+*.ds.backup
+*.dsv.backup
+
+# SSAS temporary files
+*.asdatabase.bak
+
+# SSAS deployment files
+*.xmla
+*.asdatabase.user
+
+# ==============================================
+# SQL Server
+# ==============================================
+*.dbmdl
+*.jfm
+*.sqlsuo
+
+# ==============================================
+# Video/Audio Files
+# ==============================================
 *.mp4
 *.mlt
 *.pkf
 *.wav
 *.sesx
+
+# ==============================================
+# Other
+# ==============================================
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db

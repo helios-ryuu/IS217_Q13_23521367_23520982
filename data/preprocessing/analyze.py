@@ -20,6 +20,10 @@ from typing import Dict, List, Optional
 def get_sql_server_type(pandas_dtype: str, column_name: str, max_length: int = 0) -> str:
     """Chuyển đổi kiểu pandas sang SQL Server"""
     
+    # DATE column - đặc biệt cho time dimension
+    if column_name.upper() == 'DATE':
+        return 'DATE'
+    
     # Tọa độ
     if any(coord in column_name.upper() for coord in ['LATITUDE', 'LONGITUDE', 'LAT', 'LNG']):
         return 'DECIMAL(9,6)'
@@ -101,6 +105,7 @@ def get_ssis_data_type(sql_type: str) -> str:
         'DECIMAL(9,6)': 'DT_NUMERIC(9,6)', 
         'FLOAT': 'DT_R8',
         'REAL': 'DT_R4',
+        'DATE': 'DT_DBDATE',
         'NVARCHAR(50)': 'DT_WSTR(50)',
         'NVARCHAR(100)': 'DT_WSTR(100)',
         'NVARCHAR(255)': 'DT_WSTR(255)',
@@ -112,7 +117,6 @@ def get_ssis_data_type(sql_type: str) -> str:
         'TEXT': 'DT_TEXT',
         'DATETIME': 'DT_DBTIMESTAMP',
         'DATETIME2': 'DT_DBTIMESTAMP2',
-        'DATE': 'DT_DBDATE',
         'TIME': 'DT_DBTIME',
         'UNIQUEIDENTIFIER': 'DT_GUID'
     }

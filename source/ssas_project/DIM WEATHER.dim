@@ -1,4 +1,4 @@
-﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="dd00e85b-b65e-4238-b157-738bafa2077f" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:ddl300="http://schemas.microsoft.com/analysisservices/2011/engine/300" xmlns:ddl300_300="http://schemas.microsoft.com/analysisservices/2011/engine/300/300" xmlns:ddl400="http://schemas.microsoft.com/analysisservices/2012/engine/400" xmlns:ddl400_400="http://schemas.microsoft.com/analysisservices/2012/engine/400/400" xmlns:ddl500="http://schemas.microsoft.com/analysisservices/2013/engine/500" xmlns:ddl500_500="http://schemas.microsoft.com/analysisservices/2013/engine/500/500" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="a3f780c9-a32b-46cc-b386-b62924dc3495" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
   <ID>DIM WEATHER</ID>
   <Name>DIM WEATHER</Name>
   <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
@@ -6,32 +6,6 @@
   <Annotations>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
-      <Value>
-        <dds xmlns="">
-          <diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="MSDDS.Rectilinear" defaultlineroute="MSDDS.Rectilinear" version="7" nextobject="3" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-7137" scrolltop="-5384" gridx="150" gridy="150" marginx="5000" marginy="5000" zoom="100" x="16722" y="15187" backcolor="16119285" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="0" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}">
-            <font>
-              <ddsxmlobjectstreamwrapper binary="01000000900144420100065461686f6d61" />
-            </font>
-            <mouseicon>
-              <ddsxmlobjectstreamwrapper binary="6c74000000000000" />
-            </mouseicon>
-          </diagram>
-          <layoutmanager>
-            <ddsxmlobj />
-          </layoutmanager>
-          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge" tooltip="DIM_WEATHER" left="20" top="0" logicalid="2" controlid="1" masterid="0" hint1="0" hint2="0" width="4419" height="5000" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
-            <control>
-              <ddsxmlobjectstreaminitwrapper binary="000e00004311000088130000" />
-            </control>
-            <layoutobject>
-              <ddsxmlobj>
-                <property name="LogicalObject" value="dbo_DIM_WEATHER" vartype="8" />
-              </ddsxmlobj>
-            </layoutobject>
-            <shape groupshapeid="0" groupnode="0" />
-          </ddscontrol>
-        </dds>
-      </Value>
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
@@ -47,15 +21,15 @@
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
-      <Value>-7137</Value>
+      <Value>0</Value>
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
-      <Value>-5384</Value>
+      <Value>0</Value>
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
-      <Value>20</Value>
+      <Value>0</Value>
     </Annotation>
     <Annotation>
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
@@ -65,95 +39,70 @@
       <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
       <Value>100</Value>
     </Annotation>
-    <Annotation>
-      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ARDiagramLayout</Name>
-      <Value>
-        <DiagramLayout ZoomPercent="100" ViewPortX="0" ViewPortY="0" xmlns="">
-          <Shapes NodeWidth="165">
-            <Shape Id="WEATHER ID" Expanded="true">
-              <Attributes>
-                <Attribute Id="WEATHER ID" />
-                <Attribute Id="HUMIDITY" />
-                <Attribute Id="PRECIPITATION" />
-                <Attribute Id="PRESSURE" />
-                <Attribute Id="SUNRISE SUNSET" />
-                <Attribute Id="TEMPERATURE" />
-                <Attribute Id="VISIBILITY" />
-                <Attribute Id="WEATHER CONDITION" />
-                <Attribute Id="WIND CHILL" />
-                <Attribute Id="WIND DIRECTION" />
-                <Attribute Id="WIND SPEED" />
-              </Attributes>
-              <Position x="20" y="20" />
-            </Shape>
-          </Shapes>
-        </DiagramLayout>
-      </Value>
-    </Annotation>
   </Annotations>
   <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
   <State>Unprocessed</State>
-  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="f470bf0d-9c5d-4a79-bce0-322983db70c8">
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="3e5ad84e-ad60-4844-aa3b-b098047574d9">
     <DataSourceViewID>US Accidents DW</DataSourceViewID>
   </Source>
-  <ErrorConfiguration dwd:design-time-name="bb85042d-bb2b-46b5-a315-5c64b343ae50">
+  <ErrorConfiguration dwd:design-time-name="7014c4f6-a3ce-491a-b3a5-83007ffc84ed">
     <KeyNotFound>ReportAndStop</KeyNotFound>
     <KeyDuplicate>ReportAndStop</KeyDuplicate>
     <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
   </ErrorConfiguration>
   <CurrentStorageMode>Molap</CurrentStorageMode>
   <Attributes>
-    <Attribute dwd:design-time-name="14b3e115-07bf-40f4-8fc7-a66500d49791">
+    <Attribute dwd:design-time-name="da8bdcf3-d0da-4627-bcbf-36a3f695a332">
       <ID>WEATHER ID</ID>
       <Name>WEATHER ID</Name>
       <Usage>Key</Usage>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="db1a1ade-0a4c-49d4-a0c6-772db8cfb1a7">
+        <KeyColumn dwd:design-time-name="cbd9cccc-10bf-48bd-948e-1b6030663d48">
           <DataType>Integer</DataType>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="ecf24be3-3961-4291-a184-11566dc2c15a">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="5bda0eb6-0b1f-4f6a-a183-9d0b271a5741">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>WEATHER_ID</ColumnID>
           </Source>
         </KeyColumn>
       </KeyColumns>
       <AttributeRelationships>
-        <AttributeRelationship dwd:design-time-name="498ce5a9-f701-4d8a-b12e-464371941bae">
+        <AttributeRelationship dwd:design-time-name="500158d6-786b-4cc3-b2ba-4507eaa9df2b">
           <AttributeID>TEMPERATURE</AttributeID>
           <Name>TEMPERATURE</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="04d16a15-c213-4a5e-8355-6b4f9bbafaf0">
+        <AttributeRelationship dwd:design-time-name="b06ecf15-a414-4bce-91ad-1890435bea3b">
           <AttributeID>WIND CHILL</AttributeID>
           <Name>WIND CHILL</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="1743424c-f3e8-4486-9673-99db52de012a">
+        <AttributeRelationship dwd:design-time-name="f39f8756-5873-414d-b45a-2825d54ac8be">
           <AttributeID>HUMIDITY</AttributeID>
           <Name>HUMIDITY</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="034a951e-edf5-40d6-9d58-87a5ce9a2575">
+        <AttributeRelationship dwd:design-time-name="f63208ed-c492-43cd-b18f-07a6fd2f80d7">
           <AttributeID>PRESSURE</AttributeID>
           <Name>PRESSURE</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="2a801cf7-704b-427d-b352-e2d705cbfdc4">
+        <AttributeRelationship dwd:design-time-name="4576f8b0-9dae-4000-9bc8-62b7a03f4177">
           <AttributeID>VISIBILITY</AttributeID>
           <Name>VISIBILITY</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="2362438b-f237-4606-bf27-283b77354293">
+        <AttributeRelationship dwd:design-time-name="ce75de99-3778-410e-906c-ad0ea862b00e">
           <AttributeID>WIND DIRECTION</AttributeID>
           <Name>WIND DIRECTION</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="4498b6fc-1fb3-4105-846d-72664b3be80a">
+        <AttributeRelationship dwd:design-time-name="8387a42c-b6a5-4d45-8b57-86b070d4f45d">
           <AttributeID>WIND SPEED</AttributeID>
           <Name>WIND SPEED</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="0a489ac3-c3e4-4b34-9fa0-b42f10b8e0f3">
+        <AttributeRelationship dwd:design-time-name="f2b86933-d927-4b6a-84fa-6b48860beee4">
           <AttributeID>PRECIPITATION</AttributeID>
           <Name>PRECIPITATION</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="1c9db281-d768-4fd9-a660-cafe8634511f">
+        <AttributeRelationship dwd:design-time-name="c5f48dc9-2dbd-4e9a-be4d-a14a1c24b6ba">
           <AttributeID>WEATHER CONDITION</AttributeID>
           <Name>WEATHER CONDITION</Name>
         </AttributeRelationship>
-        <AttributeRelationship dwd:design-time-name="3556e38f-8994-4a76-8ec2-683da19324dc">
+        <AttributeRelationship dwd:design-time-name="b5c4d168-098f-4860-ae2c-bfc41016dab9">
           <AttributeID>SUNRISE SUNSET</AttributeID>
           <Name>SUNRISE SUNSET</Name>
         </AttributeRelationship>
@@ -162,13 +111,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="a9e9fa7b-eb33-49a9-854d-2624149ea3c7">
+    <Attribute dwd:design-time-name="9610aa33-2b2d-4e5a-9077-61d9e3a0006a">
       <ID>TEMPERATURE</ID>
       <Name>TEMPERATURE</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="d57d083c-adc9-40ab-b8bb-e63ad31dbd29">
+        <KeyColumn dwd:design-time-name="50cdd093-51b0-43b3-be09-6388df26e13a">
           <DataType>Double</DataType>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="e9baf279-2c45-4880-a6a3-cd03d282b907">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="8c783c96-64ae-4ac5-b006-4d19a697fff9">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>TEMPERATURE</ColumnID>
           </Source>
@@ -178,13 +127,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="5ba317cb-9e04-4d0b-9899-f10177eac701">
+    <Attribute dwd:design-time-name="cd3e7a09-3ecd-4d65-a07b-d9298ddbb562">
       <ID>WIND CHILL</ID>
       <Name>WIND CHILL</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="a80f2aa2-8982-4738-8c57-acb89f35af54">
+        <KeyColumn dwd:design-time-name="9106be07-47c5-4de9-ab65-49a4c38cc2df">
           <DataType>Double</DataType>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="58e7823b-8ed4-40b0-9d60-50c394c755fb">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="76f57f3d-46e3-4e83-9af0-06ef5ccad29f">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>WIND_CHILL</ColumnID>
           </Source>
@@ -194,13 +143,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="42857d31-a54a-4500-a4cd-5336e09196b8">
+    <Attribute dwd:design-time-name="65335aff-601e-4cb3-873c-b3f85ef8a1d5">
       <ID>HUMIDITY</ID>
       <Name>HUMIDITY</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="cb043add-512e-48c5-b334-646b1f476748">
+        <KeyColumn dwd:design-time-name="fe628abb-f9db-45e6-a034-1905f14ff9fc">
           <DataType>Double</DataType>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="3e85f6e3-9653-45cd-856f-227930ad3d29">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="cedf30d1-961b-410e-b4b1-1e0977f141c0">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>HUMIDITY</ColumnID>
           </Source>
@@ -210,13 +159,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="3899a07e-bff8-4296-bcec-80938f63283b">
+    <Attribute dwd:design-time-name="c727309f-16f9-4040-b619-d6f32aa2588c">
       <ID>PRESSURE</ID>
       <Name>PRESSURE</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="43111f38-0044-4854-b392-01441d35ad92">
+        <KeyColumn dwd:design-time-name="9045f76e-398d-4d58-ac6a-8b0a91d1365b">
           <DataType>Double</DataType>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="d03d4534-c73b-4ff5-90d3-2533a29127a7">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="28e4bd16-e052-486c-bcbf-15950a05e33e">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>PRESSURE</ColumnID>
           </Source>
@@ -226,13 +175,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="b8ef4ccc-a0cd-4d29-b2e2-a485796d29ab">
+    <Attribute dwd:design-time-name="92d25d0a-6381-45f0-b8df-878a2195f5f5">
       <ID>VISIBILITY</ID>
       <Name>VISIBILITY</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="5a241aae-67cb-4d96-a20f-e34099109713">
+        <KeyColumn dwd:design-time-name="76cd33ab-b536-4010-80ff-746fad9fbebf">
           <DataType>Double</DataType>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="abd94005-593d-47a0-a284-f1b5e053afa6">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="ddc1cd28-05fe-432e-a7dc-37a201a83e22">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>VISIBILITY</ColumnID>
           </Source>
@@ -242,14 +191,14 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="66950a0d-340a-4fc0-9ba0-447f7ec63dab">
+    <Attribute dwd:design-time-name="58092987-7f2f-42e3-81e2-615501ad8d06">
       <ID>WIND DIRECTION</ID>
       <Name>WIND DIRECTION</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="13437974-9591-40a5-b117-04474041d69b">
+        <KeyColumn dwd:design-time-name="68bacc3a-feb2-4162-aaaf-ff03b7eeccf8">
           <DataType>WChar</DataType>
           <DataSize>50</DataSize>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="eee251ea-fec8-4f4c-830c-3d655949a3a0">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="058ae342-8472-41c5-8c6d-0eabf9c16e1c">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>WIND_DIRECTION</ColumnID>
           </Source>
@@ -259,13 +208,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="b3d369dd-17ae-4863-b1d1-881947675a0f">
+    <Attribute dwd:design-time-name="52dcf65d-6435-4013-b442-e44c399f5434">
       <ID>WIND SPEED</ID>
       <Name>WIND SPEED</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="efafb052-5cc0-4f98-b980-081740f936b0">
+        <KeyColumn dwd:design-time-name="db929434-32bb-497e-b64b-e265d3db44cc">
           <DataType>Double</DataType>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="f70fd7c5-2af4-42ef-948b-0a8ae78ef6e0">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="19891ffb-da3d-476b-8b48-ef5e6010209a">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>WIND_SPEED</ColumnID>
           </Source>
@@ -275,13 +224,13 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="51ab8c77-6868-4778-9d91-951ab05abb75">
+    <Attribute dwd:design-time-name="772af873-0340-479f-bf73-6e3a499263f3">
       <ID>PRECIPITATION</ID>
       <Name>PRECIPITATION</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="599c9d36-7138-4066-9d78-1124329c4891">
+        <KeyColumn dwd:design-time-name="e6b6f3b5-65ec-4d8b-afcd-42ca40e597ea">
           <DataType>Double</DataType>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="449427d4-cf64-438e-8994-e750cab5084a">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="725a94b1-2e89-4d67-be8d-ba33ebda8203">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>PRECIPITATION</ColumnID>
           </Source>
@@ -291,14 +240,14 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="6f518a64-7cf5-4d25-b92c-8ae226093d65">
+    <Attribute dwd:design-time-name="c1f65196-1f29-4ee5-9740-750f99f6e15f">
       <ID>WEATHER CONDITION</ID>
       <Name>WEATHER CONDITION</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="d014bbb7-06ed-4aaa-8eb9-366dfbef7d6f">
+        <KeyColumn dwd:design-time-name="01faaac0-dde1-44fd-b594-4935042e43c3">
           <DataType>WChar</DataType>
           <DataSize>50</DataSize>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="63531221-c0d6-4b26-838f-c886ed8395a2">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="c4398b53-1396-4e0d-9c10-4988dbf80c8c">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>WEATHER_CONDITION</ColumnID>
           </Source>
@@ -308,14 +257,14 @@
       <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
       <ddl300:AttributeHierarchyProcessingState>Unprocessed</ddl300:AttributeHierarchyProcessingState>
     </Attribute>
-    <Attribute dwd:design-time-name="8d15e618-cd0b-42ca-9713-b4f84c5c6765">
+    <Attribute dwd:design-time-name="d151bb0f-b40f-4122-82ab-0deba5c9a8a4">
       <ID>SUNRISE SUNSET</ID>
       <Name>SUNRISE SUNSET</Name>
       <KeyColumns>
-        <KeyColumn dwd:design-time-name="37cc005a-d606-45b4-9293-479955e1e484">
+        <KeyColumn dwd:design-time-name="e97105ae-d2cf-4b7a-b16b-96757ff8c2c9">
           <DataType>WChar</DataType>
           <DataSize>50</DataSize>
-          <Source xsi:type="ColumnBinding" dwd:design-time-name="055c9107-cc1c-4fd9-a2fa-0c8271fcac23">
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="1b824a2c-c17f-48ce-8918-63bf74bf937c">
             <TableID>dbo_DIM_WEATHER</TableID>
             <ColumnID>SUNRISE_SUNSET</ColumnID>
           </Source>

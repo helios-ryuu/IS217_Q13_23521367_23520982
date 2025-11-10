@@ -1,7 +1,7 @@
 ================================================================================
 🔄 BÁO CÁO TIỀN XỬ LÝ DỮ LIỆU
 ================================================================================
-📅 Ngày tạo: 2025-11-08 02:46:24
+📅 Ngày tạo: 2025-11-10 10:00:27
 
 ⚙️ THÔNG TIN CẤU HÌNH
 --------------------------------------------------
@@ -9,26 +9,26 @@ File đầu vào: ../US_Accidents_March23.csv
 File đầu ra: ../US_Accidents_March23-preprocessed.csv
 Kích thước khối: 2,600,000 dòng
 Ngày cắt: 2018-01-01
-Cột xóa: 13 cột
+Cột xóa: 12 cột
 
 📝 CHI TIẾT QUÁ TRÌNH XỬ LÝ
 --------------------------------------------------
 📊 Tổng 7,728,394 dòng, 3 khối
-📝 Tạo file đầu ra với 39 cột
+📝 Tạo file đầu ra với 41 cột
 ✅ Hoàn thành xử lý tất cả khối
 
 🔄 SO SÁNH CHI TIẾT BỘ DỮ LIỆU
 ======================================================================
 📁 FILE:
   Gốc: 2.85 GB
-  Xử lý: 1.21 GB
-  Giảm dung lượng: 57.4%
+  Xử lý: 1.29 GB
+  Giảm dung lượng: 54.7%
 📏 DỮ LIỆU:
   Dòng đầu vào: 7,728,394
   Dòng đầu ra: 5,857,109
   Giảm dòng: 24.2%
-  Cột đã xóa: 12
-  Đặc trưng thời gian thêm: 6
+  Cột đã xóa: 11
+  Đặc trưng thời gian thêm: 7
   Khối đã xử lý: 3
 
 📊 PHÂN TÍCH DỮ LIỆU GỐC
@@ -54,14 +54,14 @@ Giá trị thiếu:
 📊 PHÂN TÍCH DỮ LIỆU ĐÃ XỬ LÝ
 --------------------------------------------------
 📁 File: US_Accidents_March23-preprocessed.csv
-💾 Kích thước: 1.21 GB
+💾 Kích thước: 1.29 GB
 📏 Tổng dòng: 5,857,109
-📐 Tổng cột: 39
+📐 Tổng cột: 41
 
 Kiểu dữ liệu:
   bool: 14 cột
   float64: 10 cột
-  object: 8 cột
+  object: 10 cột
   int64: 7 cột
 
 Giá trị thiếu:
@@ -81,22 +81,22 @@ Dataset gốc:
 
 Dataset đã xử lý:
   - Số dòng: 5,857,109
-  - Số cột: 39
-  - Kích thước file: 1.21 GB
-  - Bộ nhớ: 5.6 MB
+  - Số cột: 41
+  - Kích thước file: 1.29 GB
+  - Bộ nhớ: 6.7 MB
 
 📊 THAY ĐỔI SAU TIỀN XỬ LÝ
 --------------------------------------------------
 Số dòng: -1,871,285 (-24.2%)
-Số cột: -7 cột
-Kích thước file: -1674.0 MB (-57.4%)
-Bộ nhớ: -6.9 MB (-54.9%)
+Số cột: -5 cột
+Kích thước file: -1595.8 MB (-54.7%)
+Bộ nhớ: -5.8 MB (-46.5%)
 
 🔄 CHI TIẾT QUÁ TRÌNH XỬ LÝ
 --------------------------------------------------
 Tổng số khối đã xử lý: 3
-Cột đã xóa: 12
-Đặc trưng thời gian thêm: 6
+Cột đã xóa: 11
+Đặc trưng thời gian thêm: 7
 
 Cột đã xóa (46):
   - Airport_Code
@@ -146,12 +146,14 @@ Cột đã xóa (46):
   - Wind_Speed(mph)
   - Zipcode
 
-Cột đã thêm (39):
+Cột đã thêm (41):
   - AMENITY
   - BUMP
   - CITY
+  - COUNTRY
   - COUNTY
   - CROSSING
+  - DATE
   - DAY
   - DISTANCE
   - DURATION
@@ -196,7 +198,7 @@ Pha 2: Lọc dữ liệu theo ngày
    Chỉ giữ lại dữ liệu từ 2018 trở lên
 
 Pha 3: Tạo đặc trưng thời gian
-   Thêm YEAR, QUARTER, MONTH, DAY, HOUR, IS_WEEKEND
+   Thêm DATE, YEAR, QUARTER, MONTH, DAY, HOUR, IS_WEEKEND
 
 Pha 4: Chuyển đổi kiểu dữ liệu SQL
    Chuẩn hóa chuỗi (trim, Unknown), tối ưu kiểu dữ liệu

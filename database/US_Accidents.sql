@@ -45,6 +45,7 @@ CREATE TABLE [dbo].[ACCIDENTS] (
     [DURATION] INT NOT NULL,
 
     -- Time
+    [DATE] DATE NOT NULL,
     [YEAR] INT NOT NULL,
     [QUARTER] INT NOT NULL,
     [MONTH] INT NOT NULL,
@@ -53,6 +54,7 @@ CREATE TABLE [dbo].[ACCIDENTS] (
     [IS_WEEKEND] BIT NOT NULL,
 
     -- Location
+    [COUNTRY]      VARCHAR(50) NOT NULL DEFAULT ('Unknown'),
     [STATE]        VARCHAR(50) NOT NULL DEFAULT ('Unknown'),
     [COUNTY]       VARCHAR(50) NOT NULL DEFAULT ('Unknown'),
     [CITY]         VARCHAR(50) NOT NULL DEFAULT ('Unknown'),

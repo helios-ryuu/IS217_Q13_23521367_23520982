@@ -45,6 +45,7 @@ DROP TABLE IF EXISTS [dbo].[DIM_ENVIRONMENT];
 -- ============================================
 CREATE TABLE [dbo].[DIM_TIME] (
     [TIME_ID] INT IDENTITY(1,1) PRIMARY KEY,
+    [DATE] DATE NOT NULL,
     [YEAR] INT NOT NULL,
     [QUARTER] INT NOT NULL,
     [MONTH] INT NOT NULL,
@@ -58,6 +59,7 @@ CREATE TABLE [dbo].[DIM_TIME] (
 -- ============================================
 CREATE TABLE [dbo].[DIM_LOCATION] (
     [LOCATION_ID]   INT IDENTITY(1,1) PRIMARY KEY,
+    [COUNTRY]       VARCHAR(50) NOT NULL,
     [STATE]         VARCHAR(50) NOT NULL,
     [COUNTY]        VARCHAR(50) NOT NULL,
     [CITY]          VARCHAR(50) NOT NULL,
