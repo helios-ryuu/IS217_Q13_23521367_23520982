@@ -811,10 +811,12 @@ def main(input_file: str = "../US_Accidents_March23.csv",
         print(f"✅ TIỀN XỬ LÝ HOÀN THÀNH!")
         print(f"📁 Kết quả: {output_file}")
         print(f"📄 Báo cáo: {reporter.report_file}")
+        print(f"\n{'='*80}")
         
         return True
         
     except Exception as e:
+        print(f"❌ LỖI: {e}")
         return False
 
 if __name__ == "__main__":
@@ -832,6 +834,7 @@ if __name__ == "__main__":
         if validation_errors:
             for error in validation_errors:
                 print(f"   {error}")
+            input("\n❌ Có lỗi xảy ra. Nhấn Enter để đóng...")
             exit(1)
         
         # Xử lý danh sách cột xóa
@@ -850,9 +853,16 @@ if __name__ == "__main__":
         )
         
         if not success:
+            input("\n❌ Xử lý thất bại. Nhấn Enter để đóng...")
             exit(1)
+        else:
+            input("\n✅ Hoàn thành! Nhấn Enter để đóng...")
             
     except KeyboardInterrupt:
+        print("\n⚠️ Đã hủy bởi người dùng")
+        input("\nNhấn Enter để đóng...")
         exit(1)
     except Exception as e:
+        print(f"\n❌ Lỗi không mong đợi: {e}")
+        input("\nNhấn Enter để đóng...")
         exit(1)
