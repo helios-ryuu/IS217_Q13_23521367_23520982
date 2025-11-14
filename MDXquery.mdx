@@ -24,7 +24,7 @@ WITH
 MEMBER [Measures].[AvgSeverity] AS
     ROUND([Measures].[SEVERITY] / [Measures].[Total Accidents],2)
 MEMBER [Measures].[DangerIndex] AS
-    ([Measures].[Total Accidents] * [Measures].[AvgSeverity])
+    ROUND([Measures].[Total Accidents] * ([Measures].[AvgSeverity]^2),2)
 SELECT 
     [Measures].[DangerIndex] ON COLUMNS,
     NON EMPTY CROSSJOIN (
@@ -67,11 +67,12 @@ FROM [US Accidents DW];
 
 -- Câu 6: Hiển thi 10 con đường nguy hiểm nhất trong năm 2022. --ok
 
+
 SELECT 
     {[Measures].[DangerIndex], [Measures].[Total Accidents], [Measures].[AvgSeverity]} ON COLUMNS,
     HEAD(
-    ORDER([DIM LOCATION].[STREET].[STREET].MEMBERS, [Measures].[DangerIndex], DESC),
-        10
+        ORDER([DIM LOCATION].[STREET].[STREET].MEMBERS, [Measures].[DangerIndex], DESC)
+        ,10
     ) ON ROWS
 FROM [US Accidents DW]
 WHERE ([DIM TIME].[YEAR].&[2022]);
@@ -95,6 +96,21 @@ FROM [US Accidents DW]
 WHERE ([DIM TIME].[YEAR].&[2022]);
 
 
+SELECT
+  {[Measures].[Total Accidents]} ON COLUMNS,
+  {
+    GENERATE(
+        [DIM TIME].[YEAR].[YEAR].members,
+        [DIM TIME].[YEAR].currentmember*
+        TOPCOUNT(
+           [DIM LOCATION].[STATE].[STATE].MEMBERs,
+            3,
+            [Measures].[Total Accidents])
+    )
+  } ON ROWS
+FROM [US Accidents DW];
+
+
 
 
 -- Câu 8: Xếp hạng 5 thành phố có tỷ lệ tai nạn nghiêm trọng nhất trong tiểu bang california. --ok
@@ -107,7 +123,7 @@ SELECT
         [Measures].[DangerIndex]
     ) ON ROWS
 FROM [US Accidents DW]
-WHERE ([DIM LOCATION].[STATE].&[CA])
+WHERE [DIM LOCATION].[STATE].&[CA]&[US]
 
 
 
@@ -139,7 +155,7 @@ SELECT
     ON ROWS
 FROM [US Accidents DW]
 
--- Câu 10: Hiển thị Top 5 thành phố có tăng trưởng trung bình số vụ tai nạn cao nhất giai đoạn 2018–2023. --ok
+-- Câu 10: Hiển thị Top 20 thành phố có tăng trưởng trung bình số vụ tai nạn cao nhất giai đoạn 2018–2023. --ok
 
 WITH 
 MEMBER [Measures].[Avg YoY Growth Range] AS
@@ -170,3 +186,38 @@ SELECT
     NON EMPTY [DIM LOCATION].[STATE].[STATE].MEMBERS ON ROWS
 FROM [US Accidents DW];
 
+
+
+--Với từng địa điểm, liệt kê điều kiện thời tiết xảy ra nhiều tai nạn nhất
+
+SELECT 
+    [Measures].[Total Accidents] ON COLUMNS,
+    GENERATE (
+        [DIM LOCATION].[STATE].[STATE].MEMBERS,
+        [DIM LOCATION].[STATE].CURRENTMEMBER *
+        TOPCOUNT ([DIM WEATHER].[WEATHER CONDITION].[WEATHER CONDITION].MEMBERS, 1, [Measures].[Total Accidents])
+    ) ON ROWS
+FROM [US Accidents DW]
+        
+
+
+
+
+SELECT 
+    [Measures].[Total Accidents] ON COLUMNS,
+	DrillDownLevel(
+        [DIM TIME].[Hierarchy].[YEAR].&[2020],
+	  [DIM TIME].[Hierarchy].[YEAR]) ON ROWS
+FROM [US Accidents DW]
+
+
+
+
+        
+SELECT 
+    [Measures].[Total Accidents] ON COLUMNS,
+    TOPCOUNT (
+        [DIM LOCATION].[STATE].[STATE].MEMBERS, 3, [Measures].[Total Accidents]
+    ) ON ROWS
+FROM [US Accidents DW]
+WHERE {[DIM TIME].[YEAR].&[2022],[DIM TIME].[YEAR].&[2023]}
