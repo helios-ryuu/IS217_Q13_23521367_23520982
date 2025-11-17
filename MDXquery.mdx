@@ -38,10 +38,10 @@ WHERE ([DIM TIME].[YEAR].&[2020], [DIM ENVIRONMENT].[AMENITY].&[True]);
 
 SELECT 
     {[Measures].[Total Accidents], [Measures].[AvgSeverity]} ON COLUMNS,
-    NON EMPTY
-    [Dim Time].[Year].[Year].Members * 
-    [Dim Time].[Quarter].[Quarter].Members ON ROWS
-FROM [US Accidents DW];
+	DrillDownLevel(
+        [DIM TIME].[Hierarchy].[YEAR].MEMBERS,
+        [DIM TIME].[Hierarchy].[YEAR]) ON ROWS
+FROM [US Accidents DW]
 
 -- Câu 5: Phân tích mức độ nguy hiểm theo trạng thái Ngày/Đêm, phân loại 
 -- theo từng bang. --ok
@@ -186,6 +186,220 @@ SELECT
     NON EMPTY [DIM LOCATION].[STATE].[STATE].MEMBERS ON ROWS
 FROM [US Accidents DW];
 
+-- Câu 12: Liệt kê Top 10 thành phố có nhiều tai nạn nhất xảy ra tại các Nút giao (Junction) 
+-- mà đồng thời cũng là nơi có Vạch qua đường (Crossing).
+
+SELECT
+    [Measures].[Total Accidents] ON COLUMNS,
+    TOPCOUNT ([DIM LOCATION].[CITY].[CITY].MEMBERS, 
+        10,
+        [Measures].[Total Accidents]) ON ROWS
+FROM [US Accidents DW]
+WHERE ([DIM ENVIRONMENT].[JUNCTION].&[True],
+    [DIM ENVIRONMENT].[CROSSING].&[True])
+
+-- Câu 13: Hiển thị Quãng đường trung bình (AvgDistance) và Thời gian trung bình (AvgDuration) 
+-- của tai nạn, phân loại theo Top 20 bang có nhiều tai nạn nhất
+
+WITH 
+MEMBER [Measures].[AvgDistance] AS
+    ROUND([Measures].[DISTANCE] / [Measures].[Total Accidents],2)
+MEMBER [Measures].[AvgDuration] AS
+    ROUND([Measures].[DURATION] / [Measures].[Total Accidents],2)
+
+SELECT
+    {[Measures].[AvgDistance], [Measures].[AvgDuration]} ON COLUMNS,
+    TOPCOUNT([DIM LOCATION].[STATE].[STATE].MEMBERS, 20,
+        [Measures].[Total Accidents]) ON ROWS
+FROM [US Accidents DW];
+
+-- Câu 14: Câu 14:	Phân tích ảnh hưởng của Lượng mưa (Precipitation) đến số vụ tai nạn theo từng bang, 
+-- bằng cách nhóm dữ liệu thành 3 nhóm: Không mưa, Mưa nhẹ (dưới 0.25 inch), và Mưa nặng (trên 0.25 inch)
+
+WITH
+MEMBER [Measures].[Accidents (No Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue = 0),
+    [Measures].[Total Accidents]
+    )
+MEMBER [Measures].[Accidents (Light Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue > 0
+        AND
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue < 0.25),
+    [Measures].[Total Accidents]
+    )
+MEMBER [Measures].[Accidents (Heavy Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue >= 0.25),
+    [Measures].[Total Accidents]
+    )
+SELECT
+    {[Measures].[Accidents (No Rain)],
+    [Measures].[Accidents (Light Rain)],
+    [Accidents (Heavy Rain)]} ON COLUMNS,
+    NON EMPTY [DIM LOCATION].[STATE].[STATE].MEMBERS ON ROWS
+FROM [US Accidents DW]
+
+
+-- Câu 15: Phân tích xu hướng tai nạn tổng hợp của khu vực 'West Coast' 
+-- (bao gồm các bang CA, OR, WA) qua từng năm.
+
+WITH
+MEMBER [Measures].[West Coast] AS
+    Aggregate(
+        {  [DIM LOCATION].[STATE].&[CA]&[US],
+            [DIM LOCATION].[STATE].&[OR]&[US],
+            [DIM LOCATION].[STATE].&[WA]&[US]},
+        [Measures].[Total Accidents]
+    )
+SELECT
+    {[Measures].[Total Accidents],[Measures].[West Coast]} ON COLUMNS,
+    NON EMPTY 
+        [DIM TIME].[YEAR].[YEAR].MEMBERS *
+        {[DIM LOCATION].[STATE].&[CA]&[US],
+            [DIM LOCATION].[STATE].&[OR]&[US],
+            [DIM LOCATION].[STATE].&[WA]&[US]}
+    ON ROWS
+FROM [US Accidents DW]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+WITH
+MEMBER [Measures].[Accidents (No Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue = 0),
+    [Measures].[Total Accidents]
+    )
+MEMBER [Measures].[Severity (No Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue = 0),
+    [Measures].[SEVERITY]
+    )
+
+MEMBER [Measures].[AvgSeverity (No Rain)] AS
+    ROUND(IIF([Measures].[Accidents (No Rain)] = 0, NULL,
+    [Measures].[Severity (No Rain)]/[Measures].[Accidents (No Rain)]
+    ),2)
+
+MEMBER [Measures].[Accidents (Light Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue > 0
+        AND
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue < 0.25),
+    [Measures].[Total Accidents]
+    )
+MEMBER [Measures].[Severity (Light Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue > 0
+        AND
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue < 0.25),
+    [Measures].[SEVERITY]
+    )
+
+MEMBER [Measures].[AvgSeverity (Light Rain)] AS
+    ROUND(IIF([Measures].[Accidents (Light Rain)] = 0, NULL,
+    [Measures].[Severity (Light Rain)]/[Measures].[Accidents (Light Rain)]
+    ),2)
+MEMBER [Measures].[Accidents (Heavy Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue >= 0.25),
+    [Measures].[Total Accidents]
+    )
+MEMBER [Measures].[Severity (Heavy Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue >= 0.25),
+    [Measures].[SEVERITY]
+    )
+
+MEMBER [Measures].[AvgSeverity (Heavy Rain)] AS
+    ROUND(IIF([Measures].[Accidents (Heavy Rain)] = 0, NULL,
+    [Measures].[Severity (Heavy Rain)]/[Measures].[Accidents (Heavy Rain)]
+    ),2)
+SELECT
+    {[Measures].[Accidents (No Rain)],[Measures].[AvgSeverity (No Rain)],
+    [Measures].[Accidents (Light Rain)],[Measures].[AvgSeverity (Light Rain)],
+    [Accidents (Heavy Rain)],[Measures].[AvgSeverity (Heavy Rain)]} ON COLUMNS,
+    NON EMPTY [DIM LOCATION].[STATE].[STATE].MEMBERS ON ROWS
+FROM [US Accidents DW]
+
+
+
+
+
+
+
+
+
+WITH
+MEMBER [Measures].[Accidents (No Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue = 0),
+    [Measures].[Total Accidents]
+    )
+MEMBER [Measures].[Accidents (Light Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue > 0
+        AND
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue < 0.25),
+    [Measures].[Total Accidents]
+    )
+MEMBER [Measures].[Accidents (Heavy Rain)] AS
+    Aggregate(
+        FILTER(
+        [DIM WEATHER].[PRECIPITATION].[PRECIPITATION].MEMBERS,
+        [DIM WEATHER].[PRECIPITATION].CurrentMember.Membervalue >= 0.25),
+    [Measures].[Total Accidents]
+    )
+SELECT
+    {[Measures].[Accidents (No Rain)],
+    [Measures].[Accidents (Light Rain)],
+    [Accidents (Heavy Rain)]} ON COLUMNS,
+    NON EMPTY [DIM LOCATION].[STATE].[STATE].MEMBERS ON ROWS
+FROM [US Accidents DW]
+
+
+
+
 
 
 --Với từng địa điểm, liệt kê điều kiện thời tiết xảy ra nhiều tai nạn nhất
@@ -204,10 +418,10 @@ FROM [US Accidents DW]
 
 
 SELECT 
-    [Measures].[Total Accidents] ON COLUMNS,
+    {[Measures].[Total Accidents], [Measures].[AvgSeverity]} ON COLUMNS,
 	DrillDownLevel(
-        [DIM TIME].[Hierarchy].[YEAR].&[2020],
-	  [DIM TIME].[Hierarchy].[YEAR]) ON ROWS
+        [DIM TIME].[Hierarchy].[YEAR].MEMBERS,
+        [DIM TIME].[Hierarchy].[YEAR]) ON ROWS
 FROM [US Accidents DW]
 
 
