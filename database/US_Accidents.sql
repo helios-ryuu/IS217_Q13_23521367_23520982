@@ -5,7 +5,7 @@ CREATE DATABASE US_Accidents
 ON PRIMARY 
 (
     NAME = US_Accidents_Data,
-    FILENAME = 'D:\Projects\IS217_Q13_23521367_23520982\database\US_Accidents_Data.mdf',
+    FILENAME = 'D:\2025\School\IS217_Q13_23521367_23520982\database\US_Accidents_Data.mdf',
     SIZE = 200MB,        -- Initial size
     MAXSIZE = UNLIMITED, -- Allow growth as needed
     FILEGROWTH = 100MB   -- Increase gradually by block
@@ -13,7 +13,7 @@ ON PRIMARY
 LOG ON
 (
     NAME = US_Accidents_Log,
-    FILENAME = 'D:\Projects\IS217_Q13_23521367_23520982\database\US_Accidents_Log.ldf',
+    FILENAME = 'D:\2025\School\IS217_Q13_23521367_23520982\database\US_Accidents_Log.ldf',
     SIZE = 50MB,
     MAXSIZE = UNLIMITED,
     FILEGROWTH = 50MB

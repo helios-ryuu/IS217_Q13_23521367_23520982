@@ -3,7 +3,7 @@
     <Configuration>
       <Name>Development</Name>
       <Options>
-        <TargetServer>HELIOS\MSSQLDEV2025</TargetServer>
+        <TargetServer>SINISTER</TargetServer>
         <TargetDatabase>ssas_project</TargetDatabase>
         <StartObject>
           <ObjectId></ObjectId>
